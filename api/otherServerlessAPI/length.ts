@@ -1,22 +1,22 @@
-import { parseQueryParams } from '../utils/parseQueryParams';
+import { parseQueryParams } from '../../utils/parseQueryParams';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 
-const convertVolume = ({ from, to, value }: { from: string; to: string; value: number }) => {
+const convertLength = ({ from, to, value }: { from: string; to: string; value: number }) => {
 	let convertedValue: number | null = null;
 	let stringValue: string | null = null;
 
-	if (from === 'liters' && to === 'gallons') {
-		convertedValue = parseFloat((value * 0.264172).toFixed(2));
-		stringValue = `${convertedValue} gal`;
-	} else if (from === 'gallons' && to === 'liters') {
-		convertedValue = parseFloat((value / 0.264172).toFixed(2));
-		stringValue = `${convertedValue} L`;
-	} else if (from === 'milliliters' && to === 'fluidOunces') {
-		convertedValue = parseFloat((value * 0.033814).toFixed(2));
-		stringValue = `${convertedValue} fl oz`;
-	} else if (from === 'fluidOunces' && to === 'milliliters') {
-		convertedValue = parseFloat((value / 0.033814).toFixed(2));
-		stringValue = `${convertedValue} mL`;
+	if (from === 'meters' && to === 'feet') {
+		convertedValue = parseFloat((value * 3.28084).toFixed(2));
+		stringValue = `${convertedValue} ft`;
+	} else if (from === 'feet' && to === 'meters') {
+		convertedValue = parseFloat((value / 3.28084).toFixed(2));
+		stringValue = `${convertedValue} m`;
+	} else if (from === 'inches' && to === 'centimeters') {
+		convertedValue = parseFloat((value * 2.54).toFixed(2));
+		stringValue = `${convertedValue} cm`;
+	} else if (from === 'centimeters' && to === 'inches') {
+		convertedValue = parseFloat((value / 2.54).toFixed(2));
+		stringValue = `${convertedValue} in`;
 	}
 
 	const status = convertedValue !== null;
@@ -30,53 +30,46 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 
 		if (request.method === 'OPTIONS') {
 			const interfaceDescription = {
-				description: 'This endpoint converts volumes between liters, gallons, milliliters, and fluid ounces.',
+				description: 'This endpoint converts lengths between meters, feet, inches, and centimeters.',
 				requiredParams: {
-					from: 'liters, gallons, milliliters, or fluidOunces',
-					to: 'liters, gallons, milliliters, or fluidOunces',
-					value: 'numeric volume value to convert',
+					from: 'meters, feet, inches, or centimeters',
+					to: 'meters, feet, inches, or centimeters',
+					value: 'numeric length value to convert',
 				},
 				demoBody: [
 					{
-						from: 'liters',
-						to: 'gallons',
+						from: 'meters',
+						to: 'feet',
 						value: 1,
 					},
 					{
-						from: 'gallons',
-						to: 'liters',
+						from: 'feet',
+						to: 'meters',
 						value: 1,
 					},
 					{
-						from: 'milliliters',
-						to: 'fluidOunces',
-						value: 100,
+						from: 'inches',
+						to: 'centimeters',
+						value: 1,
 					},
 				],
 				demoResponse: {
 					status: true,
-					message: 'Volumes converted successfully.',
+					message: 'Lengths converted successfully.',
 					conversions: [
 						{
-							from: 'liters',
-							to: 'gallons',
+							from: 'meters',
+							to: 'feet',
 							originalValue: 1,
-							convertedValue: 0.26,
-							stringValue: '0.26 gal',
+							convertedValue: 3.28,
+							stringValue: '3.28 ft',
 						},
 						{
-							from: 'gallons',
-							to: 'liters',
+							from: 'feet',
+							to: 'meters',
 							originalValue: 1,
-							convertedValue: 3.79,
-							stringValue: '3.79 L',
-						},
-						{
-							from: 'milliliters',
-							to: 'fluidOunces',
-							originalValue: 100,
-							convertedValue: 3.38,
-							stringValue: '3.38 fl oz',
+							convertedValue: 0.3,
+							stringValue: '0.3 m',
 						},
 					],
 				},
@@ -108,22 +101,19 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		for (const req of requests) {
 			const { from, to, value } = req;
 
-			if (
-				['liters', 'gallons', 'milliliters', 'fluidOunces'].includes(from) &&
-				['liters', 'gallons', 'milliliters', 'fluidOunces'].includes(to)
-			) {
+			if (['meters', 'feet', 'inches', 'centimeters'].includes(from) && ['meters', 'feet', 'inches', 'centimeters'].includes(to)) {
 				const numericValue = parseFloat(value);
 
 				if (isNaN(numericValue)) {
 					results.push({
 						status: false,
-						message: 'Invalid value for volume conversion. It should be a number.',
+						message: 'Invalid value for length conversion. It should be a number.',
 						from,
 						to,
 						originalValue: value,
 					});
 				} else {
-					const result = convertVolume({ from, to, value: numericValue });
+					const result = convertLength({ from, to, value: numericValue });
 
 					if (result.status) {
 						results.push({
@@ -138,8 +128,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 					} else {
 						results.push({
 							status: false,
-							message:
-								'Invalid conversion parameters. Use "liters", "gallons", "milliliters", or "fluidOunces" for from and to parameters.',
+							message: 'Invalid conversion parameters. Use "meters", "feet", "inches", or "centimeters" for from and to parameters.',
 							from,
 							to,
 							originalValue: value,
