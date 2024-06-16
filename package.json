@@ -8,7 +8,9 @@
 		"typescript": "^4.7.3"
 	},
 	"dependencies": {
+		"@types/puppeteer": "^7.0.4",
 		"axios": "^1.7.2",
+		"busboy": "^1.6.0",
 		"cheerio": "^1.0.0-rc.12",
 		"envholster": "^1.0.0",
 		"g-i-s": "^2.1.7",
@@ -22,6 +24,9 @@
 		"node-geocoder": "^4.3.0",
 		"node-open-geocoder": "^4.0.1",
 		"npm": "^10.8.1",
+		"puppeteer": "^22.11.0",
+		"puppeteer-extra": "^3.3.6",
+		"puppeteer-extra-plugin-stealth": "^2.11.2",
 		"top-user-agents": "^2.1.22",
 		"unique-random-array": "^4.0.0"
 	}

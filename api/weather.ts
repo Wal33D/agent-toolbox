@@ -6,6 +6,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 const handler = async (request: VercelRequest, response: VercelResponse) => {
 	try {
 		let locations: any[] = [];
+		let today: boolean = false;
 
 		if (request.method === 'OPTIONS') {
 			const interfaceDescription = {
@@ -18,6 +19,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 					state: 'State code (optional)',
 					country: 'Country code (required if city is provided)',
 					source: 'Data source (optional, "openweather" or "visualweather")',
+					today: "Boolean flag to get only today's weather (optional)",
 				},
 				demoBody: [
 					{
@@ -41,6 +43,12 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 						state: 'Michigan',
 						city: 'Portage',
 						source: 'visualweather',
+					},
+					{
+						city: 'Portage',
+						state: 'MI',
+						country: 'US',
+						today: true,
 					},
 				],
 				demoResponse: {
@@ -77,9 +85,12 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		}
 
 		if (request.method === 'GET') {
-			locations = [parseQueryParams(request.query) as any];
+			const queryParams = parseQueryParams(request.query) as any;
+			locations = [queryParams];
+			today = queryParams.today === 'true';
 		} else if (request.method === 'POST') {
 			locations = Array.isArray(request.body) ? request.body : [request.body];
+			today = request.body.today === true;
 		} else {
 			throw new Error('Invalid request method');
 		}
@@ -91,11 +102,18 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 				throw new Error('Provide either city/state, zip code, or lat/lon, not multiple or neither.');
 			}
 
+			let weatherData;
 			if (source === 'openweather') {
-				return await getOpenWeather(request);
+				weatherData = await getOpenWeather(request);
 			} else {
-				return await getVisualWeather(request);
+				weatherData = await getVisualWeather(request);
 			}
+
+			if (today && weatherData && weatherData.data && weatherData.data.forecast) {
+				weatherData.data.forecast = weatherData.data.forecast.slice(0, 1);
+			}
+
+			return weatherData;
 		};
 
 		if (Array.isArray(locations)) {
