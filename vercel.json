@@ -11,6 +11,6 @@
 	},
 	"rewrites": [
 		{ "source": "/", "destination": "/api/serverless" },
-		{ "source": "/toolbelt", "destination": "/api/toolsHandler" }
+		{ "source": "/belt", "destination": "/api/toolsHandler" }
 	]
 }
