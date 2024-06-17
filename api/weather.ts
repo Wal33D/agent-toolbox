@@ -1,5 +1,5 @@
 import { parseQueryParams } from '../utils/parseQueryParams';
-import { handleWeatherOptions } from '../functions/weather/handleWeatherOptions';
+import { handleWeatherOptions } from '../functions/handleWeatherOptions';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import {
 	getTodaysTemp,
@@ -24,7 +24,7 @@ import {
 	getTodaysWeather,
 	getTodaysWeatherDescription,
 	fetchTodaysWeatherData,
-} from '../functions/weather/todaysWeather';
+} from '../functions/todaysWeather';
 import {
 	fetchWeeklyWeatherData,
 	getWeeklyAvgHumidity,
@@ -44,7 +44,7 @@ import {
 	getWeeklyForecast,
 	getWeeklyTotalPrecipitation,
 	getWeeklyForecastDescription,
-} from '../functions/weather/weeklyWeather';
+} from '../functions/weeklyWeather';
 
 export interface StreetAddress {
 	city?: string;

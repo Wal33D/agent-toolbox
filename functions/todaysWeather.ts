@@ -1,14 +1,5 @@
 import axios from 'axios';
 import { getNextEnvKey } from 'envholster';
-import fs from 'fs';
-import path from 'path';
-
-const CACHE_DIR = './cache';
-
-// Ensure the cache directory exists
-if (!fs.existsSync(CACHE_DIR)) {
-	fs.mkdirSync(CACHE_DIR);
-}
 
 export interface StreetAddress {
 	city?: string;
@@ -27,38 +18,7 @@ export interface GEOCODE {
 
 export interface LocationInput extends StreetAddress, ZipCode, GEOCODE {}
 
-const getCacheFilePath = location => {
-	const fileName = `${encodeURIComponent(JSON.stringify(location))}.json`;
-	return path.join(CACHE_DIR, fileName);
-};
-
-const readCache = cacheFilePath => {
-	if (fs.existsSync(cacheFilePath)) {
-		const cacheData = JSON.parse(fs.readFileSync(cacheFilePath, 'utf-8'));
-		const cacheAge = (Date.now() - new Date(cacheData.timestamp).getTime()) / 1000 / 60; // in minutes
-		if (cacheAge < 30) {
-			return cacheData.data;
-		}
-	}
-	return null;
-};
-
-const writeCache = (cacheFilePath, data) => {
-	const cacheData = {
-		timestamp: new Date(),
-		data,
-	};
-	fs.writeFileSync(cacheFilePath, JSON.stringify(cacheData));
-};
-
 export const fetchTodaysWeatherData = async ({ city, state, country, zipCode, lat, lon }: any) => {
-	const cacheFilePath = getCacheFilePath({ city, state, country, zipCode, lat, lon });
-	const cachedData = readCache(cacheFilePath);
-
-	if (cachedData) {
-		return cachedData;
-	}
-
 	const { key: weatherApiKey } = await getNextEnvKey({
 		baseEnvName: 'VISUAL_CROSSING_WEATHER_API_KEY_',
 	});
@@ -112,7 +72,6 @@ export const fetchTodaysWeatherData = async ({ city, state, country, zipCode, la
 		},
 	};
 
-	writeCache(cacheFilePath, result);
 	return result;
 };
 
