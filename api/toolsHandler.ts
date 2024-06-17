@@ -2,7 +2,7 @@ import { IPAddressLookUp } from '../functions/ip/ip';
 import { parseQueryParams } from '../utils/parseQueryParams';
 import { handleToolOptions } from '../functions/handleToolOptions';
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { getTodaysWeather, fetchTodaysWeatherData } from '../functions/todaysWeather';
+import { getTodaysWeather, fetchTodaysWeatherData } from '../functions/weather/todaysWeather';
 import { fetchWeeklyWeatherData, getWeeklyForecast, getWeeklyForecastDescription } from '../functions/weather/weeklyWeather';
 
 const handler = async (request: VercelRequest, response: VercelResponse) => {

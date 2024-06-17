@@ -32,10 +32,6 @@ interface IpInfo {
 	detailedDescription?: string;
 }
 
-interface IpRequestBody {
-	ip: string;
-}
-
 const createDescription = (ipInfo: IpInfo): string => {
 	return `IP ${ipInfo.ip} is located in ${ipInfo.city}, ${ipInfo.region}, ${ipInfo.country_name}.`;
 };
