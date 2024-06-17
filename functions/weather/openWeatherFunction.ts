@@ -1,26 +1,8 @@
 import axios from 'axios';
 import { VercelRequest } from '@vercel/node';
 import { getNextEnvKey } from 'envholster';
-import { resolveLocation, LocationOutput } from '../resolveLocation';
-
-export interface StreetAddress {
-	city?: string;
-	state?: string;
-	country?: string;
-}
-
-export interface ZipCode {
-	zipCode?: string;
-}
-
-export interface GEOCODE {
-	lat?: number;
-	lon?: number;
-}
-
-export interface LocationInput extends StreetAddress, ZipCode, GEOCODE {
-	timezone?: number;
-}
+import { resolveLocation } from '../locationResolver/resolveLocation';
+import { LocationInput, LocationOutput } from '../locationTypes';
 
 const fetchWeatherData = async ({ lat, lon, zipCode }: { lat?: number; lon?: number; zipCode?: string }) => {
 	const { key: weatherApiKey } = await getNextEnvKey({

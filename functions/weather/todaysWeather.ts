@@ -1,23 +1,6 @@
 import axios from 'axios';
 import { getNextEnvKey } from 'envholster';
 
-export interface StreetAddress {
-	city?: string;
-	state?: string;
-	country?: string;
-}
-
-export interface ZipCode {
-	zipCode?: string;
-}
-
-export interface GEOCODE {
-	lat?: number;
-	lon?: number;
-}
-
-export interface LocationInput extends StreetAddress, ZipCode, GEOCODE {}
-
 export const fetchTodaysWeatherData = async ({ city, state, country, zipCode, lat, lon }: any) => {
 	const { key: weatherApiKey } = await getNextEnvKey({
 		baseEnvName: 'VISUAL_CROSSING_WEATHER_API_KEY_',

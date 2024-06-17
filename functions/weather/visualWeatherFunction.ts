@@ -2,9 +2,6 @@ import axios from 'axios';
 import { VercelRequest } from '@vercel/node';
 import { getNextEnvKey } from 'envholster';
 import { parseQueryParams } from '../../utils/parseQueryParams';
-import { GEOCODE, StreetAddress, ZipCode } from './openWeatherFunction';
-
-export interface LocationInput extends StreetAddress, ZipCode, GEOCODE {}
 
 const fetchWeatherData = async ({ city, state, country, zipCode, lat, lon }: any) => {
 	const { key: weatherApiKey } = await getNextEnvKey({

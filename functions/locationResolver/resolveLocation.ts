@@ -1,26 +1,8 @@
 import axios from 'axios';
 import gps2zip from 'gps2zip';
 import { getNextEnvKey } from 'envholster';
-import { connectToMongo } from '../utils/mongo';
-
-export interface LocationInput {
-	zipCode?: string;
-	lat?: number;
-	lon?: number;
-	city?: string;
-	state?: string;
-	country?: string;
-}
-
-export interface LocationOutput {
-	zipCode: string;
-	lat: number;
-	lon: number;
-	city: string;
-	state: string;
-	country: string;
-	address: string;
-}
+import { connectToMongo } from '../../utils/mongo';
+import { LocationInput, LocationOutput } from '../locationTypes';
 
 const fetchCoordinates = async (url: string) => {
 	console.log(`Fetching data from URL: ${url}`);

@@ -1,3 +1,4 @@
+import { getLocationData } from '../functions/locationResolver/location';
 import { IPAddressLookUp } from '../functions/ip/ip';
 import { parseQueryParams } from '../utils/parseQueryParams';
 import { handleToolOptions } from '../functions/handleToolOptions';
@@ -31,6 +32,8 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 
 			if (functionName === 'IPAddressLookUp') {
 				return await IPAddressLookUp(locationInput.ip);
+			} else if (functionName === 'locationResolver') {
+				return await getLocationData(request);
 			} else if (functionName && (functionName.startsWith('getTodays') || functionName.startsWith('getCurrent'))) {
 				data = await fetchTodaysWeatherData(locationInput);
 				if (!data.currentWeather) {
