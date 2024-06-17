@@ -3,7 +3,7 @@ import { getNextEnvKey } from 'envholster';
 import { parseQueryParams } from '../utils/parseQueryParams';
 import { SerpSearchRequest } from './searchGoogleTypes';
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { interfaceDescriptionSearchGoogleWeb } from './search-googleOptions';
+import { interfaceDescriptionSearchGoogleWeb } from '../functions/searchGoogle/search-googleOptions';
 
 const handler = async (request: VercelRequest, response: VercelResponse) => {
 	if (request.method === 'OPTIONS') {

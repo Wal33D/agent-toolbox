@@ -2,6 +2,7 @@ import { getLocationData } from '../functions/locationResolver/location';
 import { IPAddressLookUp } from '../functions/ip/ip';
 import { parseQueryParams } from '../utils/parseQueryParams';
 import { handleToolOptions } from '../functions/handleToolOptions';
+import { takeScreenshotAndUpload } from '../functions/screenshot/getWebsiteScreenshot';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { getTodaysWeather, fetchTodaysWeatherData } from '../functions/weather/todaysWeather';
 import { fetchWeeklyWeatherData, getWeeklyForecast, getWeeklyForecastDescription } from '../functions/weather/weeklyWeather';
@@ -34,6 +35,8 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 				return await IPAddressLookUp(locationInput.ip);
 			} else if (functionName === 'locationResolver') {
 				return await getLocationData(request);
+			} else if (functionName === 'getWebsiteScreenshot') {
+				return await takeScreenshotAndUpload(request);
 			} else if (functionName && (functionName.startsWith('getTodays') || functionName.startsWith('getCurrent'))) {
 				data = await fetchTodaysWeatherData(locationInput);
 				if (!data.currentWeather) {
@@ -68,8 +71,8 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		};
 
 		if (Array.isArray(locations) && locations.length > 1) {
-			const weatherDataArray = await Promise.all(locations.map(processRequest));
-			response.status(200).json(weatherDataArray);
+			const dataArray = await Promise.all(locations.map(processRequest));
+			response.status(200).json(dataArray);
 		} else {
 			const weatherData = await processRequest(locations[0]);
 			response.status(200).json(weatherData);
