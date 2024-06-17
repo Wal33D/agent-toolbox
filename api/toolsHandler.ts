@@ -1,6 +1,7 @@
 import { parseQueryParams } from '../utils/parseQueryParams';
 import { handleWeatherOptions } from '../functions/handleWeatherOptions';
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { IPAddressLookUp } from './ip'; // Import the IP address lookup function
 import {
 	getTodaysTemp,
 	getTodaysFeelslike,
@@ -87,7 +88,9 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		const processRequest = async (locationInput: any) => {
 			let data;
 
-			if (functionName && (functionName.startsWith('getTodays') || functionName.startsWith('getCurrent'))) {
+			if (functionName === 'IPAddressLookUp') {
+				return await IPAddressLookUp(locationInput.ip);
+			} else if (functionName && (functionName.startsWith('getTodays') || functionName.startsWith('getCurrent'))) {
 				data = await fetchTodaysWeatherData(locationInput);
 				if (!data.currentWeather) {
 					throw new Error('Current weather data is not available.');
@@ -101,89 +104,15 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 
 			if (functionName && (functionName.startsWith('getTodays') || functionName.startsWith('getCurrent'))) {
 				switch (functionName) {
-					case 'getTodaysTemp':
-						return getTodaysTemp(data, locationInput.unit);
-					case 'getCurrentTemp':
-						return getTodaysTemp(data, locationInput.unit);
-					case 'getTodaysFeelslike':
-						return getTodaysFeelslike(data, locationInput.unit);
-					case 'getTodaysHumidity':
-						return getTodaysHumidity(data);
-					case 'getTodaysDew':
-						return getTodaysDew(data, locationInput.unit);
-					case 'getTodaysPrecip':
-						return getTodaysPrecip(data);
-					case 'getTodaysPrecipProb':
-						return getTodaysPrecipProb(data);
-					case 'getTodaysSnow':
-						return getTodaysSnow(data);
-					case 'getTodaysSnowDepth':
-						return getTodaysSnowDepth(data);
-					case 'getTodaysWindspeed':
-						return getTodaysWindspeed(data);
-					case 'getTodaysWinddir':
-						return getTodaysWinddir(data);
-					case 'getTodaysPressure':
-						return getTodaysPressure(data);
-					case 'getTodaysVisibility':
-						return getTodaysVisibility(data);
-					case 'getTodaysCloudcover':
-						return getTodaysCloudcover(data);
-					case 'getTodaysSolarradiation':
-						return getTodaysSolarradiation(data);
-					case 'getTodaysUvindex':
-						return getTodaysUvindex(data);
-					case 'getTodaysConditions':
-						return getTodaysConditions(data);
-					case 'getTodaysIcon':
-						return getTodaysIcon(data);
-					case 'getTodaysSunrise':
-						return getTodaysSunrise(data);
-					case 'getTodaysSunset':
-						return getTodaysSunset(data);
 					case 'getTodaysWeather':
 						return getTodaysWeather(data);
-					case 'getTodaysWeatherDescription':
-						return getTodaysWeatherDescription(data);
 					case 'getCurrentWeather':
 						return getTodaysWeather(data);
-					case 'getCurrentWeatherDescription':
-						return getTodaysWeatherDescription(data);
 					default:
 						throw new Error('Invalid function name.');
 				}
 			} else {
 				switch (functionName) {
-					case 'getWeeklyAvgMaxTempC':
-						return getWeeklyAvgMaxTempC(data.forecast);
-					case 'getWeeklyAvgMinTempC':
-						return getWeeklyAvgMinTempC(data.forecast);
-					case 'getWeeklyAvgTempC':
-						return getWeeklyAvgTempC(data.forecast);
-					case 'getWeeklyAvgMaxTempF':
-						return getWeeklyAvgMaxTempF(data.forecast);
-					case 'getWeeklyAvgMinTempF':
-						return getWeeklyAvgMinTempF(data.forecast);
-					case 'getWeeklyAvgTempF':
-						return getWeeklyAvgTempF(data.forecast);
-					case 'getWeeklyAvgWindSpeed':
-						return getWeeklyAvgWindSpeed(data.forecast);
-					case 'getWeeklyAvgWindDir':
-						return getWeeklyAvgWindDir(data.forecast);
-					case 'getWeeklyTotalPrecipitation':
-						return getWeeklyTotalPrecipitation(data.forecast);
-					case 'getWeeklyAvgHumidity':
-						return getWeeklyAvgHumidity(data.forecast);
-					case 'getWeeklyConditions':
-						return getWeeklyConditions(data.forecast);
-					case 'getWeeklyHighTempC':
-						return getWeeklyHighTempC(data.forecast);
-					case 'getWeeklyLowTempC':
-						return getWeeklyLowTempC(data.forecast);
-					case 'getWeeklyHighTempF':
-						return getWeeklyHighTempF(data.forecast);
-					case 'getWeeklyLowTempF':
-						return getWeeklyLowTempF(data.forecast);
 					case 'getWeeklyForecast':
 						return getWeeklyForecast(data);
 					case 'getWeeklyForecastDescription':

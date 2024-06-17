@@ -66,7 +66,6 @@ export const fetchTodaysWeatherData = async ({ city, state, country, zipCode, la
 			solarradiation: data.currentConditions.solarradiation,
 			uvindex: data.currentConditions.uvindex,
 			conditions: data.currentConditions.conditions,
-			icon: data.currentConditions.icon,
 			sunrise: convertTo12HourFormat(data.currentConditions.sunrise),
 			sunset: convertTo12HourFormat(data.currentConditions.sunset),
 		},
@@ -105,7 +104,6 @@ export const getTodaysWeatherDescription = data => {
 		solarradiation,
 		uvindex,
 		conditions,
-		icon,
 		sunrise,
 		sunset,
 	} = data.currentWeather;
@@ -118,7 +116,7 @@ export const getTodaysWeatherDescription = data => {
 	)}°F), feels like ${feelslike}°C (${convertTemp(
 		feelslike,
 		'F'
-	)}°F). ${conditions.toLowerCase()} skies, with a wind speed of ${windspeed} km/h coming from ${windDirection} (${winddir}°). The precipitation is ${precip} mm (${precipprob}% probability), humidity is ${humidity}%, dew point is ${dew}°C (${convertTemp(
+	)}°F). ${conditions.toLowerCase()} skies, with a wind speed of ${windspeed} km/h coming from ${windDirection} (${winddir}°). The precipitation (rain) is ${precip} mm (${precipprob}% probability), with ${snow} mm of snow and a snow depth of ${snowdepth} mm. Humidity is ${humidity}%, dew point is ${dew}°C (${convertTemp(
 		dew,
 		'F'
 	)}°F). The atmospheric pressure is ${pressure} hPa, visibility is ${visibility} km, cloud cover is ${cloudcover}%, solar radiation is ${solarradiation} W/m², and UV index is ${uvindex}. Sunrise at ${sunrise} and sunset at ${sunset}.`;
@@ -171,12 +169,6 @@ const getUnitInitial = unit => {
 };
 
 export const getTodaysTemp = (data, unit = 'F') => {
-	const tempC = data.currentWeather.temp;
-	const temp = convertTemp(tempC, getUnitInitial(unit));
-	return temp;
-};
-
-export const getCurrentTemp = (data, unit = 'F') => {
 	const tempC = data.currentWeather.temp;
 	const temp = convertTemp(tempC, getUnitInitial(unit));
 	return temp;

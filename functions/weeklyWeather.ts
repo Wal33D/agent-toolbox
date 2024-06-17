@@ -88,7 +88,13 @@ export const getWeeklyLowTempC = forecast => Math.min(...forecast.map(entry => e
 export const getWeeklyHighTempF = forecast => Math.max(...forecast.map(entry => entry.maxTempF));
 export const getWeeklyLowTempF = forecast => Math.min(...forecast.map(entry => entry.minTempF));
 
-export const getWeeklyForecast = data => data.forecast;
+export const getWeeklyForecast = data => {
+	const description = getWeeklyForecastDescription(data);
+	return {
+		forecast: data.forecast,
+		description: description,
+	};
+};
 
 export const getWeeklyForecastDescription = data => {
 	const forecast = data.forecast;

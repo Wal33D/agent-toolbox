@@ -48,7 +48,7 @@ const createDetailedDescription = (ipInfo: IpInfo): string => {
 
 const findInDB = async (ip: string): Promise<IpInfo | null> => {
 	const db = await connectToMongo();
-	const collection = db.collection('ipInfo');
+	const collection = db.collection('ipAddressLookupCache');
 	const result = await collection.findOne({ ip });
 	if (result) {
 		const { _id, ...ipInfo } = result; // Remove _id field
@@ -59,7 +59,7 @@ const findInDB = async (ip: string): Promise<IpInfo | null> => {
 
 const storeInDB = async (ipInfo: IpInfo): Promise<void> => {
 	const db = await connectToMongo();
-	const collection = db.collection('ipInfo');
+	const collection = db.collection('ipAddressLookupCache');
 	await collection.updateOne({ ip: ipInfo.ip }, { $set: ipInfo }, { upsert: true });
 };
 
@@ -87,6 +87,15 @@ const processIp = async (ip: string): Promise<IpInfo> => {
 	return ipInfo;
 };
 
+export const IPAddressLookUp = async (ip: string): Promise<IpInfo> => {
+	if (!ip) {
+		throw new Error('IP address is required');
+	}
+	const ipInfo = await processIp(ip);
+	return ipInfo;
+};
+
+// Handler for Vercel requests
 const handler = async (request: VercelRequest, response: VercelResponse) => {
 	if (request.method === 'OPTIONS') {
 		const interfaceDescription = {
@@ -107,66 +116,38 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 				message: 'IP information retrieved successfully.',
 				data: [
 					{
-						ip: '4.2.2.1',
-						network: '4.2.2.0/24',
-						version: 'IPv4',
-						city: 'Greenville',
-						region: 'South Carolina',
-						region_code: 'SC',
-						country: 'US',
-						country_name: 'United States',
-						country_code: 'US',
-						country_code_iso3: 'USA',
-						country_capital: 'Washington',
-						country_tld: '.us',
-						continent_code: 'NA',
-						in_eu: false,
-						postal: '29607',
-						latitude: 34.8308,
-						longitude: -82.3507,
-						utc_offset: '-0400',
-						country_calling_code: '+1',
-						currency: 'USD',
-						currency_name: 'Dollar',
-						languages: 'en-US,es-US,haw,fr',
-						country_area: 9629091,
-						country_population: 327167434,
-						asn: 'AS3356',
-						org: 'LEVEL3',
-						description: 'IP 4.2.2.1 is located in Greenville, South Carolina, United States.',
-						detailedDescription:
-							'IP 4.2.2.1 belongs to the network 4.2.2.0/24. It is an IPv4 address located in Greenville, South Carolina (SC), United States (USA). The location has the postal code 29607 and is situated at latitude 34.8308 and longitude -82.3507. The timezone is America/New_York with an offset of -0400. The currency used is USD (Dollar), and the calling code is +1. The ISP is LEVEL3 with ASN AS3356.',
-					},
-					{
-						ip: '108.65.112.74',
-						network: '108.65.112.0/24',
-						version: 'IPv4',
-						city: 'Greenville',
-						region: 'South Carolina',
-						region_code: 'SC',
-						country: 'US',
-						country_name: 'United States',
-						country_code: 'US',
-						country_code_iso3: 'USA',
-						country_capital: 'Washington',
-						country_tld: '.us',
-						continent_code: 'NA',
-						in_eu: false,
-						postal: '29607',
-						latitude: 34.8308,
-						longitude: -82.3507,
-						utc_offset: '-0400',
-						country_calling_code: '+1',
-						currency: 'USD',
-						currency_name: 'Dollar',
-						languages: 'en-US,es-US,haw,fr',
-						country_area: 9629091,
-						country_population: 327167434,
-						asn: 'AS3356',
-						org: 'LEVEL3',
-						description: 'IP 108.65.112.74 is located in Greenville, South Carolina, United States.',
-						detailedDescription:
-							'IP 108.65.112.74 belongs to the network 108.65.112.0/24. It is an IPv4 address located in Greenville, South Carolina (SC), United States (USA). The location has the postal code 29607 and is situated at latitude 34.8308 and longitude -82.3507. The timezone is America/New_York with an offset of -0400. The currency used is USD (Dollar), and the calling code is +1. The ISP is LEVEL3 with ASN AS3356.',
+						status: true,
+						data: {
+							ip: '108.65.112.74',
+							network: '108.65.112.0/21',
+							version: 'IPv4',
+							city: 'Austin',
+							region: 'Texas',
+							region_code: 'TX',
+							country: 'US',
+							country_name: 'United States',
+							country_code: 'US',
+							country_code_iso3: 'USA',
+							country_capital: 'Washington',
+							country_tld: '.us',
+							continent_code: 'NA',
+							in_eu: false,
+							postal: '78717',
+							latitude: 30.5034,
+							longitude: -97.7494,
+							utc_offset: '-0500',
+							country_calling_code: '+1',
+							currency: 'USD',
+							currency_name: 'Dollar',
+							languages: 'en-US,es-US,haw,fr',
+							country_area: 9629091,
+							country_population: 327167434,
+							asn: 'AS7018',
+							org: 'ATT-INTERNET4',
+							description: 'IP 108.65.112.74 is located in Austin, Texas, United States.',
+							detailedDescription:
+								'IP 108.65.112.74 belongs to the network 108.65.112.0/21. It is an IPv4 address located in Austin, Texas (TX), United States (USA). The location has the postal code 78717 and is situated at latitude 30.5034 and longitude -97.7494. The currency used is USD (Dollar), and the calling code is +1. The ISP is ATT-INTERNET4 with ASN AS7018.',
+						},
 					},
 				],
 			},
@@ -202,7 +183,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 						message: 'IP address is required',
 					};
 				}
-				const ipInfo = await processIp(ip);
+				const ipInfo = await IPAddressLookUp(ip);
 				return {
 					status: true,
 					data: ipInfo,
