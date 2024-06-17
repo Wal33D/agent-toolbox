@@ -31,13 +31,13 @@ const fetchWeatherData = async ({ city, state, country, zipCode, lat, lon }: any
 	return weatherResponse.data;
 };
 
-const getDayOfWeek = (dateString: string) => {
-	const date = new Date(dateString);
-	return date.toLocaleDateString('en-US', { weekday: 'long' });
+const getDayOfWeek = (epoch: number, timezone: string) => {
+	const date = new Date(epoch * 1000);
+	return date.toLocaleDateString('en-US', { weekday: 'long', timeZone: timezone });
 };
 
 const convertToImperial = (tempCelsius: number) => {
-	return parseFloat((tempCelsius * (9 / 5) + 32).toFixed(2));
+	return Math.round(tempCelsius * (9 / 5) + 32);
 };
 
 const createDescriptionString = (day: any) => {
@@ -51,14 +51,14 @@ const createDescriptionString = (day: any) => {
 };
 
 const organizeWeatherData = (data: any) => {
-	const { resolvedAddress, days } = data;
+	const { resolvedAddress, days, timezone } = data;
 	const organizedData = days.map((day: any) => {
 		const dayData = {
-			dayOfWeek: getDayOfWeek(day.datetime),
 			date: day.datetime,
-			maxTempC: day.tempmax,
-			minTempC: day.tempmin,
-			avgTempC: day.temp,
+			dayOfWeek: getDayOfWeek(day.datetimeEpoch, timezone),
+			maxTempC: Math.round(day.tempmax),
+			minTempC: Math.round(day.tempmin),
+			avgTempC: Math.round(day.temp),
 			maxTempF: convertToImperial(day.tempmax),
 			minTempF: convertToImperial(day.tempmin),
 			avgTempF: convertToImperial(day.temp),
@@ -70,7 +70,7 @@ const organizeWeatherData = (data: any) => {
 		};
 		return {
 			...dayData,
-			detailedDescription: createDescriptionString(dayData),
+			description: createDescriptionString(dayData),
 		};
 	});
 

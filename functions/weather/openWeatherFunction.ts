@@ -46,17 +46,17 @@ const fetchWeatherData = async ({ lat, lon, zipCode }: { lat?: number; lon?: num
 };
 
 const getDayOfWeek = (dateString: string) => {
-	const date = new Date(dateString);
-	return date.toLocaleDateString('en-US', { weekday: 'long' });
+	const date = new Date(dateString + 'T00:00:00Z');
+	return date.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' });
 };
 
 const convertToImperial = (tempKelvin: number) => {
 	const tempCelsius = tempKelvin - 273.15;
-	return parseFloat((tempCelsius * (9 / 5) + 32).toFixed(2));
+	return Math.round(tempCelsius * (9 / 5) + 32);
 };
 
 const convertToCelsius = (tempKelvin: number) => {
-	return parseFloat((tempKelvin - 273.15).toFixed(2));
+	return Math.round(tempKelvin - 273.15);
 };
 
 const createDescriptionString = (day: any) => {
@@ -87,7 +87,7 @@ const organizeWeatherData = (data: any, timezoneOffset: number) => {
 			const localDate = new Date(utcDate.getTime() + timezoneOffset * 60 * 1000);
 			const dayData = {
 				date: localDate.toISOString().split('T')[0],
-				dayOfWeek: getDayOfWeek(localDate.toISOString()),
+				dayOfWeek: getDayOfWeek(localDate.toISOString().split('T')[0]),
 				maxTempC: convertToCelsius(entry.main.temp_max),
 				minTempC: convertToCelsius(entry.main.temp_min),
 				avgTempC: convertToCelsius(entry.main.temp),
@@ -99,9 +99,9 @@ const organizeWeatherData = (data: any, timezoneOffset: number) => {
 				precipitation: entry.pop * 100,
 				humidity: entry.main.humidity,
 				conditions: entry.weather[0].main,
-				detailedDescription: '',
+				description: '',
 			};
-			dayData.detailedDescription = createDescriptionString(dayData);
+			dayData.description = createDescriptionString(dayData);
 			return dayData;
 		});
 
