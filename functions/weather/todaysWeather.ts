@@ -207,6 +207,12 @@ export const getTodaysTemp = (data, unit = 'F') => {
 	return temp;
 };
 
+export const getCurrentTemp = (data, unit = 'F') => {
+	const tempC = data.currentWeather.temp;
+	const temp = convertTemp(tempC, unit);
+	return temp;
+};
+
 export const getTodaysFeelslike = (data, unit = 'F') => {
 	const feelslikeC = data.currentWeather.feelslike;
 	const feelslike = convertTemp(feelslikeC, unit);

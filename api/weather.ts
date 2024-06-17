@@ -87,7 +87,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		const processRequest = async (locationInput: any) => {
 			let data;
 
-			if (functionName && functionName.startsWith('getTodays')) {
+			if (functionName && (functionName.startsWith('getTodays') || functionName.startsWith('getCurrent'))) {
 				data = await fetchTodaysWeatherData(locationInput);
 				if (!data.currentWeather) {
 					throw new Error('Current weather data is not available.');
@@ -99,7 +99,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 				}
 			}
 
-			if (functionName && functionName.startsWith('getTodays')) {
+			if (functionName && (functionName.startsWith('getTodays') || functionName.startsWith('getCurrent'))) {
 				switch (functionName) {
 					case 'getTodaysTemp':
 						return getTodaysTemp(data, locationInput.unit);
