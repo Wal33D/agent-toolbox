@@ -201,26 +201,36 @@ const convertTemp = (temp, unit) => {
 	return Math.round(temp); // Default is Celsius
 };
 
+const getUnitInitial = unit => {
+	if (typeof unit === 'string') {
+		const upperUnit = unit.toUpperCase();
+		if (upperUnit === 'CELSIUS') return 'C';
+		if (upperUnit === 'FAHRENHEIT') return 'F';
+		return upperUnit.charAt(0);
+	}
+	return 'F';
+};
+
 export const getTodaysTemp = (data, unit = 'F') => {
 	const tempC = data.currentWeather.temp;
-	const temp = convertTemp(tempC, unit);
+	const temp = convertTemp(tempC, getUnitInitial(unit));
 	return temp;
 };
 
 export const getCurrentTemp = (data, unit = 'F') => {
 	const tempC = data.currentWeather.temp;
-	const temp = convertTemp(tempC, unit);
+	const temp = convertTemp(tempC, getUnitInitial(unit));
 	return temp;
 };
 
 export const getTodaysFeelslike = (data, unit = 'F') => {
 	const feelslikeC = data.currentWeather.feelslike;
-	const feelslike = convertTemp(feelslikeC, unit);
+	const feelslike = convertTemp(feelslikeC, getUnitInitial(unit));
 	return feelslike;
 };
 
 export const getTodaysDew = (data, unit = 'F') => {
 	const dewC = data.currentWeather.dew;
-	const dew = convertTemp(dewC, unit);
+	const dew = convertTemp(dewC, getUnitInitial(unit));
 	return dew;
 };
