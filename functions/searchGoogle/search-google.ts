@@ -1,15 +1,10 @@
 import axios from 'axios';
 import { getNextEnvKey } from 'envholster';
-import { parseQueryParams } from '../utils/parseQueryParams';
-import { SerpSearchRequest } from './searchGoogleTypes';
-import { VercelRequest, VercelResponse } from '@vercel/node';
-import { interfaceDescriptionSearchGoogleWeb } from '../functions/searchGoogle/search-googleOptions';
+import { parseQueryParams } from '../../utils/parseQueryParams';
+import { SerpSearchRequest } from '../../api/searchGoogleTypes';
+import { VercelRequest } from '@vercel/node';
 
-const handler = async (request: VercelRequest, response: VercelResponse) => {
-	if (request.method === 'OPTIONS') {
-		return response.status(200).json(interfaceDescriptionSearchGoogleWeb);
-	}
-
+export const searchGoogle = async (request: VercelRequest) => {
 	try {
 		const { key: apiKey } = await getNextEnvKey({ baseEnvName: 'SCALE_SERP_API_KEY_' });
 
@@ -24,10 +19,10 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		}
 
 		if (requests.length > 50) {
-			return response.status(400).json({
+			return {
 				status: false,
 				message: 'Too many requests. Please provide 50 or fewer requests in a single call.',
-			});
+			};
 		}
 
 		const results = await Promise.all(
@@ -39,8 +34,8 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 					hl: req.hostLanguage || 'en',
 					gl: req.geolocation || 'us',
 					device: req.device || 'desktop',
-					num: req.numberOfResults ? req.numberOfResults.toString() : '1',
-					max_page: req.max_page || 1,
+					num: req.numberOfResults ? req.numberOfResults.toString() : '2',
+					max_page: req.max_page || '1',
 					include_html: req.include_html || 'false',
 					output: req.output || 'json',
 					include_answer_box: req.include_answer_box || 'false',
@@ -70,17 +65,23 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 			})
 		);
 
-		return response.status(200).json({
+		if (results.length === 1) {
+			return {
+				status: true,
+				message: 'SERP search result retrieved successfully.',
+				data: results[0],
+			};
+		}
+
+		return {
 			status: true,
 			message: 'SERP search results retrieved successfully.',
 			data: results,
-		});
+		};
 	} catch (error: any) {
-		return response.status(500).json({
+		return {
 			status: false,
 			message: `Error: ${error.message}`,
-		});
+		};
 	}
 };
-
-export default handler;

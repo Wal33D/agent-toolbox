@@ -1,3 +1,4 @@
+import { searchGoogle } from '../functions/searchGoogle/search-google';
 import { getLocationData } from '../functions/locationResolver/location';
 import { IPAddressLookUp } from '../functions/ip/ip';
 import { parseQueryParams } from '../utils/parseQueryParams';
@@ -37,6 +38,8 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 				return await getLocationData(request);
 			} else if (functionName === 'getWebsiteScreenshot') {
 				return await takeScreenshotAndUpload(request);
+			} else if (functionName === 'searchTheInternet') {
+				return await searchGoogle(request);
 			} else if (functionName && (functionName.startsWith('getTodays') || functionName.startsWith('getCurrent'))) {
 				data = await fetchTodaysWeatherData(locationInput);
 				if (!data.currentWeather) {

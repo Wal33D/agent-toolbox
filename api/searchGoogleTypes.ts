@@ -71,7 +71,7 @@ export interface SerpSearchRequest {
 	geolocation?: string;
 	device?: string;
 	numberOfResults?: string;
-	max_page?: number;
+	max_page?: string;
 	include_html?: string;
 	include_answer_box?: string;
 	time_period?: string;
