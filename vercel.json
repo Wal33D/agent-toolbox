@@ -7,7 +7,14 @@
 		"api/landing.ts": {
 			"memory": 1024,
 			"maxDuration": 60
+		},
+		"api/weather.ts": {
+			"memory": 1024,
+			"maxDuration": 60
 		}
 	},
-	"rewrites": [{ "source": "/", "destination": "/api/serverless" }]
+	"rewrites": [
+		{ "source": "/", "destination": "/api/serverless" },
+		{ "source": "/weather", "destination": "/api/weather" }
+	]
 }
