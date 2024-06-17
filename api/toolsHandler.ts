@@ -1,68 +1,9 @@
+import { IPAddressLookUp } from '../functions/ip/ip';
 import { parseQueryParams } from '../utils/parseQueryParams';
-import { handleWeatherOptions } from '../functions/handleWeatherOptions';
+import { handleToolOptions } from '../functions/handleToolOptions';
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { IPAddressLookUp } from './ip'; // Import the IP address lookup function
-import {
-	getTodaysTemp,
-	getTodaysFeelslike,
-	getTodaysHumidity,
-	getTodaysDew,
-	getTodaysPrecip,
-	getTodaysPrecipProb,
-	getTodaysSnow,
-	getTodaysSnowDepth,
-	getTodaysWindspeed,
-	getTodaysWinddir,
-	getTodaysPressure,
-	getTodaysVisibility,
-	getTodaysCloudcover,
-	getTodaysSolarradiation,
-	getTodaysUvindex,
-	getTodaysConditions,
-	getTodaysIcon,
-	getTodaysSunrise,
-	getTodaysSunset,
-	getTodaysWeather,
-	getTodaysWeatherDescription,
-	fetchTodaysWeatherData,
-} from '../functions/todaysWeather';
-import {
-	fetchWeeklyWeatherData,
-	getWeeklyAvgHumidity,
-	getWeeklyAvgMaxTempC,
-	getWeeklyAvgMaxTempF,
-	getWeeklyAvgMinTempC,
-	getWeeklyAvgMinTempF,
-	getWeeklyAvgTempC,
-	getWeeklyAvgTempF,
-	getWeeklyAvgWindDir,
-	getWeeklyAvgWindSpeed,
-	getWeeklyConditions,
-	getWeeklyHighTempC,
-	getWeeklyHighTempF,
-	getWeeklyLowTempC,
-	getWeeklyLowTempF,
-	getWeeklyForecast,
-	getWeeklyTotalPrecipitation,
-	getWeeklyForecastDescription,
-} from '../functions/weeklyWeather';
-
-export interface StreetAddress {
-	city?: string;
-	state?: string;
-	country?: string;
-}
-
-export interface ZipCode {
-	zipCode?: string;
-}
-
-export interface GEOCODE {
-	lat?: number;
-	lon?: number;
-}
-
-export interface LocationInput extends StreetAddress, ZipCode, GEOCODE {}
+import { getTodaysWeather, fetchTodaysWeatherData } from '../functions/todaysWeather';
+import { fetchWeeklyWeatherData, getWeeklyForecast, getWeeklyForecastDescription } from '../functions/weather/weeklyWeather';
 
 const handler = async (request: VercelRequest, response: VercelResponse) => {
 	try {
@@ -70,7 +11,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		let functionName: string | null = null;
 
 		if (request.method === 'OPTIONS') {
-			return handleWeatherOptions(response);
+			return handleToolOptions(response);
 		}
 
 		if (request.method === 'GET') {

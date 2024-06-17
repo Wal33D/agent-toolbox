@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { VercelRequest } from '@vercel/node';
 import { getNextEnvKey } from 'envholster';
-import { resolveLocation, LocationOutput } from './resolveLocation';
+import { resolveLocation, LocationOutput } from '../resolveLocation';
 
 export interface StreetAddress {
 	city?: string;
