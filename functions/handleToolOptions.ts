@@ -332,4 +332,231 @@ export const tools = [
 			},
 		},
 	},
+	{
+		type: 'function',
+		function: {
+			name: 'sendSMS',
+			description: 'Send an SMS message to a phone number or WhatsApp.',
+			parameters: {
+				type: 'object',
+				properties: {
+					phoneNumber: {
+						type: 'string',
+						description: 'The phone number to send the SMS to, e.g., +1234567890',
+					},
+					message: {
+						type: 'string',
+						description: 'The message content to send.',
+					},
+					viaWhatsApp: {
+						type: 'boolean',
+						description: 'Whether to send the message via WhatsApp (optional).',
+						optional: true,
+					},
+				},
+				required: ['phoneNumber', 'message'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'sendVoiceMessage',
+			description: 'Send a voice message to a phone number or WhatsApp.',
+			parameters: {
+				type: 'object',
+				properties: {
+					phoneNumber: {
+						type: 'string',
+						description: 'The phone number to send the voice message to, e.g., +1234567890',
+					},
+					message: {
+						type: 'string',
+						description: 'The message content to send.',
+					},
+					viaWhatsApp: {
+						type: 'boolean',
+						description: 'Whether to send the message via WhatsApp (optional).',
+						optional: true,
+					},
+				},
+				required: ['phoneNumber', 'message'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'sendEmail',
+			description: 'Send an email to a specified address.',
+			parameters: {
+				type: 'object',
+				properties: {
+					to: {
+						type: 'string',
+						description: 'The email address to send the email to.',
+					},
+					subject: {
+						type: 'string',
+						description: 'The subject of the email.',
+					},
+					body: {
+						type: 'string',
+						description: 'The body content of the email.',
+					},
+				},
+				required: ['to', 'subject', 'body'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'addNote',
+			description: 'Add a note.',
+			parameters: {
+				type: 'object',
+				properties: {
+					title: {
+						type: 'string',
+						description: 'The title of the note.',
+					},
+					content: {
+						type: 'string',
+						description: 'The content of the note.',
+					},
+				},
+				required: ['title', 'content'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'searchNotes',
+			description: 'Search notes by keyword.',
+			parameters: {
+				type: 'object',
+				properties: {
+					keyword: {
+						type: 'string',
+						description: 'The keyword to search for in notes.',
+					},
+				},
+				required: ['keyword'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'updateNote',
+			description: 'Update an existing note.',
+			parameters: {
+				type: 'object',
+				properties: {
+					noteId: {
+						type: 'string',
+						description: 'The ID of the note to update.',
+					},
+					title: {
+						type: 'string',
+						description: 'The new title of the note (optional).',
+						optional: true,
+					},
+					content: {
+						type: 'string',
+						description: 'The new content of the note (optional).',
+						optional: true,
+					},
+				},
+				required: ['noteId'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'addCalendarEvent',
+			description: 'Add an event to the calendar.',
+			parameters: {
+				type: 'object',
+				properties: {
+					title: {
+						type: 'string',
+						description: 'The title of the event.',
+					},
+					date: {
+						type: 'string',
+						description: 'The date of the event in YYYY-MM-DD format.',
+					},
+					time: {
+						type: 'string',
+						description: 'The time of the event in HH:MM format (optional).',
+						optional: true,
+					},
+					description: {
+						type: 'string',
+						description: 'The description of the event (optional).',
+						optional: true,
+					},
+				},
+				required: ['title', 'date'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'searchCalendar',
+			description: 'Search calendar events by keyword.',
+			parameters: {
+				type: 'object',
+				properties: {
+					keyword: {
+						type: 'string',
+						description: 'The keyword to search for in calendar events.',
+					},
+				},
+				required: ['keyword'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'updateCalendarEvent',
+			description: 'Update an existing calendar event.',
+			parameters: {
+				type: 'object',
+				properties: {
+					eventId: {
+						type: 'string',
+						description: 'The ID of the event to update.',
+					},
+					title: {
+						type: 'string',
+						description: 'The new title of the event (optional).',
+						optional: true,
+					},
+					date: {
+						type: 'string',
+						description: 'The new date of the event in YYYY-MM-DD format (optional).',
+						optional: true,
+					},
+					time: {
+						type: 'string',
+						description: 'The new time of the event in HH:MM format (optional).',
+						optional: true,
+					},
+					description: {
+						type: 'string',
+						description: 'The new description of the event (optional).',
+						optional: true,
+					},
+				},
+				required: ['eventId'],
+			},
+		},
+	},
 ];
