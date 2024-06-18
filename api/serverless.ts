@@ -1,14 +1,12 @@
 import { handleGetRequest } from '../functions/handleGetRequest';
-import { handlePostRequest } from '../functions/handlePostRequest';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 type MethodHandlers = {
-	[key in 'GET' | 'POST']: (params: { request: VercelRequest; response: VercelResponse }) => Promise<void>;
+	[key in 'GET']: (params: { request: VercelRequest; response: VercelResponse }) => Promise<void>;
 };
 
 const methodHandlers: MethodHandlers = {
 	GET: handleGetRequest,
-	POST: handlePostRequest,
 };
 
 const handler = async (request: VercelRequest, response: VercelResponse) => {

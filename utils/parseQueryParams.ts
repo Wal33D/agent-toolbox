@@ -9,6 +9,5 @@ export const parseQueryParams = (query: any): any => {
 			parsedQuery[key] = value;
 		}
 	});
-
 	return parsedQuery;
 };

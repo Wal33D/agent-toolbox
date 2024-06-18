@@ -3,19 +3,19 @@ import { getLocationData } from '../functions/locationResolver/location';
 import { IPAddressLookUp } from '../functions/ip/ip';
 import { parseQueryParams } from '../utils/parseQueryParams';
 import { handleToolOptions } from '../functions/handleToolOptions';
+import { fetchExtendedWeather } from '../functions/weather/fetchExtendedWeather';
+import { fetchWeeklyWeatherData } from '../functions/weather/weeklyWeather';
+import { fetchTodaysWeatherData } from '../functions/weather/todaysWeather';
 import { takeScreenshotAndUpload } from '../functions/screenshot/getWebsiteScreenshot';
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { getTodaysWeather, fetchTodaysWeatherData } from '../functions/weather/todaysWeather';
-import { fetchWeeklyWeatherData, getWeeklyForecast, getWeeklyForecastDescription } from '../functions/weather/weeklyWeather';
 
 const handler = async (request: VercelRequest, response: VercelResponse) => {
+	if (request.method === 'OPTIONS') {
+		return await handleToolOptions(response);
+	}
 	try {
 		let locations: any[] = [];
 		let functionName: string | null = null;
-
-		if (request.method === 'OPTIONS') {
-			return handleToolOptions(response);
-		}
 
 		if (request.method === 'GET') {
 			const queryParams = parseQueryParams(request.query) as any;
@@ -28,48 +28,26 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		} else {
 			throw new Error('Invalid request method');
 		}
+		console.log(request.body);
 
 		const processRequest = async (locationInput: any) => {
-			let data;
-
-			if (functionName === 'IPAddressLookUp') {
-				return await IPAddressLookUp(locationInput.ip);
-			} else if (functionName === 'locationResolver') {
-				return await getLocationData(request);
-			} else if (functionName === 'getWebsiteScreenshot') {
-				return await takeScreenshotAndUpload(request);
-			} else if (functionName === 'searchTheInternet') {
-				return await searchGoogle(request);
-			} else if (functionName && (functionName.startsWith('getTodays') || functionName.startsWith('getCurrent'))) {
-				data = await fetchTodaysWeatherData(locationInput);
-				if (!data.currentWeather) {
-					throw new Error('Current weather data is not available.');
-				}
-			} else {
-				data = await fetchWeeklyWeatherData(request, locationInput);
-				if (!data.forecast) {
-					throw new Error('Weekly forecast data is not available.');
-				}
-			}
-
-			if (functionName && (functionName.startsWith('getTodays') || functionName.startsWith('getCurrent'))) {
-				switch (functionName) {
-					case 'getTodaysWeather':
-						return getTodaysWeather(data);
-					case 'getCurrentWeather':
-						return getTodaysWeather(data);
-					default:
-						throw new Error('Invalid function name.');
-				}
-			} else {
-				switch (functionName) {
-					case 'getWeeklyForecast':
-						return getWeeklyForecast(data);
-					case 'getWeeklyForecastDescription':
-						return getWeeklyForecastDescription(data);
-					default:
-						throw new Error('Invalid function name.');
-				}
+			switch (functionName) {
+				case 'IPAddressLookUp':
+					return await IPAddressLookUp(locationInput.ip);
+				case 'locationResolver':
+					return await getLocationData(request);
+				case 'getWebsiteScreenshot':
+					return await takeScreenshotAndUpload(request);
+				case 'searchTheInternet':
+					return await searchGoogle(request);
+				case 'getTodaysWeather':
+					return await fetchTodaysWeatherData(request);
+				case 'getWeeklyForecast':
+					return await fetchWeeklyWeatherData(request);
+				case 'getExtendedWeather':
+					return await fetchExtendedWeather(request);
+				default:
+					throw new Error('Invalid function name.');
 			}
 		};
 
@@ -77,8 +55,8 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 			const dataArray = await Promise.all(locations.map(processRequest));
 			response.status(200).json(dataArray);
 		} else {
-			const weatherData = await processRequest(locations[0]);
-			response.status(200).json(weatherData);
+			const responseData = await processRequest(locations[0]);
+			response.status(200).json(responseData);
 		}
 	} catch (error: any) {
 		response.status(400).json({ error: error.message });

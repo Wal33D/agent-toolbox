@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { VercelRequest } from '@vercel/node';
 import { getNextEnvKey } from 'envholster';
-import { parseQueryParams } from '../../utils/parseQueryParams';
 
 const fetchWeatherData = async ({ city, state, country, zipCode, lat, lon }: any) => {
 	const { key: weatherApiKey } = await getNextEnvKey({
@@ -77,34 +76,14 @@ const organizeWeatherData = (data: any) => {
 	};
 };
 
-const getVisualWeatherData = async (locationInput: any) => {
-	const { city, state, country, zipCode, lat, lon } = locationInput;
-
-	if (
-		(!city && !state && !zipCode && (lat === undefined || lon === undefined)) ||
-		((city || state || zipCode) && (lat !== undefined || lon !== undefined))
-	) {
-		throw new Error('Provide either city/state, zip code, or lat/lon, not multiple or neither.');
-	}
-
-	const weatherData = await fetchWeatherData({ city, state, country, zipCode, lat, lon });
-	const organizedWeatherData = organizeWeatherData(weatherData);
-
-	return organizedWeatherData;
-};
-
 export const getVisualWeather = async (request: VercelRequest) => {
 	try {
 		let requestBody: any;
 
-		if (request.method === 'GET') {
-			requestBody = parseQueryParams(request.query);
-		} else {
-			requestBody = request.body;
+		requestBody = request.body;
 
-			if (!Array.isArray(requestBody) && typeof requestBody !== 'object') {
-				throw new Error('Request body must be an object or an array of objects');
-			}
+		if (!Array.isArray(requestBody) && typeof requestBody !== 'object') {
+			throw new Error('Request body must be an object or an array of objects');
 		}
 
 		const processRequest = async (locationInput: any) => {
@@ -117,8 +96,8 @@ export const getVisualWeather = async (request: VercelRequest) => {
 				throw new Error('Provide either city/state, zip code, or lat/lon, not multiple or neither.');
 			}
 
-			const weatherData = await getVisualWeatherData({ city, state, country, zipCode, lat, lon });
-			return weatherData;
+			const weatherData = await fetchWeatherData({ city, state, country, zipCode, lat, lon });
+			return organizeWeatherData(weatherData);
 		};
 
 		if (Array.isArray(requestBody)) {

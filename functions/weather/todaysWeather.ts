@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { getNextEnvKey } from 'envholster';
 
-export const fetchTodaysWeatherData = async ({ city, state, country, zipCode, lat, lon }: any) => {
+export const fetchTodaysWeatherData = async request => {
 	const { key: weatherApiKey } = await getNextEnvKey({
 		baseEnvName: 'VISUAL_CROSSING_WEATHER_API_KEY_',
 	});
 
 	let location;
+	let { lat, lon, city, state, zipCode, country } = request.body;
 	if (lat !== undefined && lon !== undefined) {
 		location = `${lat},${lon}`;
 	} else if (city && state) {
@@ -51,6 +52,7 @@ export const fetchTodaysWeatherData = async ({ city, state, country, zipCode, la
 			conditions: data.currentConditions.conditions,
 			sunrise: convertTo12HourFormat(data.currentConditions.sunrise),
 			sunset: convertTo12HourFormat(data.currentConditions.sunset),
+			description: getTodaysWeatherDescription(data.currentConditions),
 		},
 	};
 
@@ -64,45 +66,25 @@ const convertTo12HourFormat = time24 => {
 	return `${hour12}:${minute} ${period}`;
 };
 
-export const getTodaysWeather = data => ({
-	...data.currentWeather,
-	description: getTodaysWeatherDescription(data),
-});
+export const getTodaysWeatherDescription = currentConditions => {
+	const windDirection = getWindDirection(currentConditions.winddir);
 
-export const getTodaysWeatherDescription = data => {
-	const {
-		temp,
-		feelslike,
-		humidity,
-		dew,
-		precip,
-		precipprob,
-		snow,
-		snowdepth,
-		windspeed,
-		winddir,
-		pressure,
-		visibility,
-		cloudcover,
-		solarradiation,
-		uvindex,
-		conditions,
-		sunrise,
-		sunset,
-	} = data.currentWeather;
-
-	const windDirection = getWindDirection(winddir);
-
-	return `Currently, the weather in ${data.location} is ${conditions.toLowerCase()}. The temperature is approximately ${temp}°C (${convertTemp(
-		temp,
+	return `Currently, the weather is ${currentConditions.conditions.toLowerCase()}. The temperature is approximately ${
+		currentConditions.temp
+	}°C (${convertTemp(currentConditions.temp, 'F')}°F), feels like ${currentConditions.feelslike}°C (${convertTemp(
+		currentConditions.feelslike,
 		'F'
-	)}°F), feels like ${feelslike}°C (${convertTemp(
-		feelslike,
-		'F'
-	)}°F). ${conditions.toLowerCase()} skies, with a wind speed of ${windspeed} km/h coming from ${windDirection} (${winddir}°). The precipitation (rain) is ${precip} mm (${precipprob}% probability), with ${snow} mm of snow and a snow depth of ${snowdepth} mm. Humidity is ${humidity}%, dew point is ${dew}°C (${convertTemp(
-		dew,
-		'F'
-	)}°F). The atmospheric pressure is ${pressure} hPa, visibility is ${visibility} km, cloud cover is ${cloudcover}%, solar radiation is ${solarradiation} W/m², and UV index is ${uvindex}. Sunrise at ${sunrise} and sunset at ${sunset}.`;
+	)}°F). ${currentConditions.conditions.toLowerCase()} skies, with a wind speed of ${
+		currentConditions.windspeed
+	} km/h coming from ${windDirection} (${currentConditions.winddir}°). The precipitation (rain) is ${currentConditions.precip} mm (${
+		currentConditions.precipprob
+	}% probability), with ${currentConditions.snow} mm of snow and a snow depth of ${currentConditions.snowdepth} mm. Humidity is ${
+		currentConditions.humidity
+	}%, dew point is ${currentConditions.dew}°C (${convertTemp(currentConditions.dew, 'F')}°F). The atmospheric pressure is ${
+		currentConditions.pressure
+	} hPa, visibility is ${currentConditions.visibility} km, cloud cover is ${currentConditions.cloudcover}%, solar radiation is ${
+		currentConditions.solarradiation
+	} W/m², and UV index is ${currentConditions.uvindex}. Sunrise at ${currentConditions.sunrise} and sunset at ${currentConditions.sunset}.`;
 };
 
 const getWindDirection = degree => {
@@ -116,23 +98,6 @@ const getWindDirection = degree => {
 	if (degree > 22.5) return 'North-East';
 	return 'North';
 };
-
-export const getTodaysHumidity = data => data.currentWeather.humidity;
-export const getTodaysPrecip = data => data.currentWeather.precip;
-export const getTodaysPrecipProb = data => data.currentWeather.precipprob;
-export const getTodaysSnow = data => data.currentWeather.snow;
-export const getTodaysSnowDepth = data => data.currentWeather.snowdepth;
-export const getTodaysWindspeed = data => data.currentWeather.windspeed;
-export const getTodaysWinddir = data => data.currentWeather.winddir;
-export const getTodaysPressure = data => data.currentWeather.pressure;
-export const getTodaysVisibility = data => data.currentWeather.visibility;
-export const getTodaysCloudcover = data => data.currentWeather.cloudcover;
-export const getTodaysSolarradiation = data => data.currentWeather.solarradiation;
-export const getTodaysUvindex = data => data.currentWeather.uvindex;
-export const getTodaysConditions = data => data.currentWeather.conditions;
-export const getTodaysIcon = data => data.currentWeather.icon;
-export const getTodaysSunrise = data => data.currentWeather.sunrise;
-export const getTodaysSunset = data => data.currentWeather.sunset;
 
 const convertTemp = (temp, unit) => {
 	if (unit === 'F') {

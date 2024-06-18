@@ -84,8 +84,8 @@ export const interfaceDescriptionWeather = {
 			'getTodaysWeather',
 			'getTodaysWeatherDescription',
 			'getCurrentTemp',
-			'getCurrentWeather',
-			'getCurrentWeatherDescription',
+			'getTodaysWeather',
+			'getTodaysWeatherDescription',
 		],
 		weeklyWeather: [
 			'getWeeklyAvgMaxTempC',

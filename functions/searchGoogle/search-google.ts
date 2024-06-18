@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getNextEnvKey } from 'envholster';
 import { parseQueryParams } from '../../utils/parseQueryParams';
-import { SerpSearchRequest } from '../../api/searchGoogleTypes';
+import { SerpSearchRequest } from './searchGoogleTypes';
 import { VercelRequest } from '@vercel/node';
 
 export const searchGoogle = async (request: VercelRequest) => {

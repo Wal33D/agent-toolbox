@@ -1,79 +1,77 @@
-import { getOpenWeather } from './openWeatherFunction';
 import { getVisualWeather } from './visualWeatherFunction';
 
-export const fetchWeeklyWeatherData = async request => {
+export const fetchExtendedWeather = async request => {
 	const { city, state, zipCode, lat, lon } = request.body;
 
 	if (!city && !state && !zipCode && (lat === undefined || lon === undefined)) {
-		throw new Error('Provide either {city, state, country(optional)}, {zipCode}, or {lat, lon}');
+		throw new Error('Please provide either {city, state, country (optional)}, {zipCode}, or {lat, lon}.');
 	}
 
 	let weatherData;
 	try {
-		weatherData = await getOpenWeather(request);
-	} catch (error) {
 		weatherData = await getVisualWeather(request);
+	} catch (error) {
+		throw new Error('Error fetching weather data');
 	}
 
 	if (!weatherData || !weatherData.data || !weatherData.data.forecast) {
-		throw new Error('Unable to fetch weather data');
+		throw new Error('Unable to retrieve weather forecast data');
 	}
 
-	weatherData.forecast = weatherData.data.forecast.slice(0, 6);
-	const description = getWeeklyForecastDescription(weatherData);
+	const forecast = weatherData.data.forecast;
+	const description = getTwoWeekForecastDescription(forecast);
 
 	return {
-		forecast: weatherData.forecast,
+		forecast: forecast,
 		description: description,
 	};
 };
 
-const getWeeklyAvgMaxTempC = forecast => {
+const getAvgMaxTempC = forecast => {
 	const total = forecast.reduce((sum, entry) => sum + entry.maxTempC, 0);
 	return total / forecast.length;
 };
 
-const getWeeklyAvgMinTempC = forecast => {
+const getAvgMinTempC = forecast => {
 	const total = forecast.reduce((sum, entry) => sum + entry.minTempC, 0);
 	return total / forecast.length;
 };
 
-const getWeeklyAvgTempC = forecast => {
+const getAvgTempC = forecast => {
 	const total = forecast.reduce((sum, entry) => sum + entry.avgTempC, 0);
 	return total / forecast.length;
 };
 
-const getWeeklyAvgMaxTempF = forecast => {
+const getAvgMaxTempF = forecast => {
 	const total = forecast.reduce((sum, entry) => sum + entry.maxTempF, 0);
 	return total / forecast.length;
 };
 
-const getWeeklyAvgMinTempF = forecast => {
+const getAvgMinTempF = forecast => {
 	const total = forecast.reduce((sum, entry) => sum + entry.minTempF, 0);
 	return total / forecast.length;
 };
 
-const getWeeklyAvgTempF = forecast => {
+const getAvgTempF = forecast => {
 	const total = forecast.reduce((sum, entry) => sum + entry.avgTempF, 0);
 	return total / forecast.length;
 };
 
-const getWeeklyAvgWindSpeed = forecast => {
+const getAvgWindSpeed = forecast => {
 	const total = forecast.reduce((sum, entry) => sum + entry.windSpeed, 0);
 	return total / forecast.length;
 };
 
-const getWeeklyTotalPrecipitation = forecast => {
+const getTotalPrecipitation = forecast => {
 	return forecast.reduce((sum, entry) => sum + entry.precipitation, 0);
 };
 
-const getWeeklyAvgHumidity = forecast => {
+const getAvgHumidity = forecast => {
 	const total = forecast.reduce((sum, entry) => sum + entry.humidity, 0);
 	return total / forecast.length;
 };
 
-const getWeeklyConditions = forecast => {
-	// Assuming conditions are strings like "Rain", "Clouds", etc.
+const getConditions = forecast => {
 	const conditions = forecast.map(entry => entry.conditions);
 	const frequency = conditions.reduce((freq, condition) => {
 		freq[condition] = (freq[condition] || 0) + 1;
@@ -83,20 +81,19 @@ const getWeeklyConditions = forecast => {
 	return mostFrequentCondition;
 };
 
-const getWeeklyForecastDescription = data => {
-	const forecast = data.forecast;
-	const avgMaxTempC = getWeeklyAvgMaxTempC(forecast);
-	const avgMinTempC = getWeeklyAvgMinTempC(forecast);
-	const avgTempC = getWeeklyAvgTempC(forecast);
-	const avgMaxTempF = getWeeklyAvgMaxTempF(forecast);
-	const avgMinTempF = getWeeklyAvgMinTempF(forecast);
-	const avgTempF = getWeeklyAvgTempF(forecast);
-	const avgWindSpeed = getWeeklyAvgWindSpeed(forecast);
-	const avgHumidity = getWeeklyAvgHumidity(forecast);
-	const totalPrecipitation = getWeeklyTotalPrecipitation(forecast);
-	const conditions = getWeeklyConditions(forecast);
+const getTwoWeekForecastDescription = forecast => {
+	const avgMaxTempC = getAvgMaxTempC(forecast);
+	const avgMinTempC = getAvgMinTempC(forecast);
+	const avgTempC = getAvgTempC(forecast);
+	const avgMaxTempF = getAvgMaxTempF(forecast);
+	const avgMinTempF = getAvgMinTempF(forecast);
+	const avgTempF = getAvgTempF(forecast);
+	const avgWindSpeed = getAvgWindSpeed(forecast);
+	const avgHumidity = getAvgHumidity(forecast);
+	const totalPrecipitation = getTotalPrecipitation(forecast);
+	const conditions = getConditions(forecast);
 
-	return `This week's weather will be mostly ${conditions.toLowerCase()}. The average maximum temperature will be ${avgMaxTempC.toFixed(
+	return `The weather for the next two weeks will be predominantly ${conditions.toLowerCase()}. The average maximum temperature will be ${avgMaxTempC.toFixed(
 		1
 	)}°C (${avgMaxTempF.toFixed(1)}°F) and the average minimum temperature will be ${avgMinTempC.toFixed(1)}°C (${avgMinTempF.toFixed(
 		1

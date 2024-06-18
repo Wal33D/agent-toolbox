@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { VercelRequest } from '@vercel/node';
 import { getNextEnvKey } from 'envholster';
+import { LocationOutput } from '../locationTypes';
 import { resolveLocation } from '../locationResolver/resolveLocation';
-import { LocationInput, LocationOutput } from '../locationTypes';
 
 const fetchWeatherData = async ({ lat, lon, zipCode }: { lat?: number; lon?: number; zipCode?: string }) => {
 	const { key: weatherApiKey } = await getNextEnvKey({
@@ -93,10 +92,8 @@ const organizeWeatherData = (data: any, timezoneOffset: number) => {
 	};
 };
 
-export const getOpenWeather = async (request: VercelRequest) => {
+export const getOpenWeather = async (zipCode?, lat?, lon?, city?, state?, country = 'US', timezone = -300) => {
 	try {
-		const { zipCode, lat, lon, city, state, country = 'US', timezone = -300 } = request.body as LocationInput;
-
 		let resolvedZipCode = zipCode;
 
 		if (city || state || country) {
