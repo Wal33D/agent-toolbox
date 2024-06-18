@@ -17,19 +17,12 @@
 		"envholster": "^1.0.0",
 		"g-i-s": "^2.1.7",
 		"gps2zip": "^2.2.0",
-		"install": "^0.13.0",
-		"ip-location": "^1.0.1",
-		"iplocation": "^7.2.0",
 		"libphonenumber-js": "^1.11.3",
-		"moment-timezone": "^0.5.45",
 		"mongodb": "^6.7.0",
 		"node-geocoder": "^4.3.0",
-		"node-open-geocoder": "^4.0.1",
 		"npm": "^10.8.1",
 		"puppeteer": "^22.11.0",
 		"puppeteer-extra": "^3.3.6",
-		"puppeteer-extra-plugin-stealth": "^2.11.2",
-		"top-user-agents": "^2.1.22",
-		"unique-random-array": "^4.0.0"
+		"puppeteer-extra-plugin-stealth": "^2.11.2"
 	}
 }
