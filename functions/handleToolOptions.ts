@@ -294,12 +294,11 @@ const tools = [
 			},
 		},
 	},
-
 	{
 		type: 'function',
 		function: {
 			name: 'cloudinaryUpload',
-			description: 'Upload an image to Cloudinary using the Cloudinary uploader endpoint.',
+			description: 'Upload images to Cloudinary, supports uploading via URL, base64 string, or stream.',
 			parameters: {
 				type: 'object',
 				properties: {
@@ -308,9 +307,14 @@ const tools = [
 						description: 'The URL of the image to upload (optional)',
 						optional: true,
 					},
-					fileBuffer: {
+					base64: {
 						type: 'string',
-						description: 'The base64 encoded file buffer (optional)',
+						description: 'The base64 string of the image to upload (optional)',
+						optional: true,
+					},
+					stream: {
+						type: 'object',
+						description: 'The stream of the image to upload (optional)',
 						optional: true,
 					},
 					fileName: {
@@ -323,14 +327,11 @@ const tools = [
 						description: 'The Cloudinary folder to upload to (optional)',
 						optional: true,
 					},
-					imageStream: {
-						type: 'string',
-						description: 'The stream of the image to upload (optional)',
-						optional: true,
-					},
 				},
 				required: [],
 			},
 		},
 	},
 ];
+
+export default tools;

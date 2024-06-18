@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { VercelRequest } from '@vercel/node';
 import { connectToMongo } from '../../utils/mongo';
 
 interface IpInfo {
@@ -81,10 +82,13 @@ const processIp = async (ip: string): Promise<IpInfo> => {
 	return ipInfo;
 };
 
-export const IPAddressLookUp = async (ip: string): Promise<IpInfo> => {
+export const IPAddressLookUp = async (request: VercelRequest): Promise<IpInfo> => {
+	const ip = (request.query.ip as string) || (request.body && request.body.ip);
+
 	if (!ip) {
 		throw new Error('IP address is required');
 	}
+
 	const ipInfo = await processIp(ip);
 	return ipInfo;
 };

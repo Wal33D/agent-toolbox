@@ -77,3 +77,15 @@ export interface SerpSearchRequest {
 	time_period?: string;
 	output?: string;
 }
+export interface ImageSearchOptions {
+	searchTerm: string;
+	queryStringAddition?: string;
+	filterOutDomains?: string[];
+	size?: string;
+}
+
+export interface ImageResult {
+	url: string;
+	width: number;
+	height: number;
+}

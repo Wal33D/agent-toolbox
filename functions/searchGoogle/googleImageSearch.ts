@@ -1,19 +1,8 @@
-import { VercelRequest } from '@vercel/node';
 import gis from 'g-i-s';
-import { parseQueryParams } from '../utils/parseQueryParams';
 
-interface ImageSearchOptions {
-	searchTerm: string;
-	queryStringAddition?: string;
-	filterOutDomains?: string[];
-	size?: string;
-}
-
-interface ImageResult {
-	url: string;
-	width: number;
-	height: number;
-}
+import { VercelRequest } from '@vercel/node';
+import { parseQueryParams } from '../../utils/parseQueryParams';
+import { ImageResult, ImageSearchOptions } from './searchGoogleTypes';
 
 const imageSearch = (options: ImageSearchOptions): Promise<ImageResult[]> => {
 	if (options.size) {
