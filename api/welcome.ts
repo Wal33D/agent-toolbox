@@ -36,12 +36,16 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                         border-radius: 10px;
                         box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
                         margin: 10px;
+                        width: 100%;
+                        max-width: 600px;
                     }
                     h1 {
                         color: #bb86fc;
+                        font-size: 1.5em;
                     }
                     p {
                         color: #b0bec5;
+                        font-size: 1em;
                     }
                     .online-indicator {
                         position: absolute;
@@ -64,7 +68,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                     }
                     .link {
                         margin-top: 20px;
-                        font-size: 1em;
+                        font-size: 0.9em;
                         color: #b0bec5;
                     }
                     .github-icon {
@@ -86,6 +90,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                         border: 1px solid #333;
                         background-color: #333;
                         color: #fff;
+                        font-size: 1em;
                     }
                     .tools-container {
                         border: 1px solid #333;
@@ -108,6 +113,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                         color: #fff;
                         display: block;
                         cursor: pointer;
+                        font-size: 1em;
                     }
                     .no-tools {
                         text-align: center;
@@ -131,7 +137,8 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                         margin: 5% auto;
                         padding: 20px;
                         border: 1px solid #888;
-                        width: 80%;
+                        width: 90%;
+                        max-width: 600px;
                         border-radius: 10px;
                         color: #e0e0e0;
                     }
