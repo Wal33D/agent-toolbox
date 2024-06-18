@@ -88,19 +88,64 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                         color: #fff;
                     }
                     .tools-container {
-					border:1px solid #333;
-					border-radius:5px;
+                        border: 1px solid #333;
+                        border-radius: 5px;
                         height: 300px;
                         overflow-y: auto;
                         margin-top: 10px;
+                        padding: 10px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: flex-start;
                     }
                     .tool-item {
-                        display: none;
+                        width: 100%;
                         margin: 10px 0;
                         padding: 10px;
                         border-radius: 5px;
                         background-color: #333;
                         color: #fff;
+                        display: block;
+                        cursor: pointer;
+                    }
+                    .no-tools {
+                        text-align: center;
+                        width: 100%;
+                    }
+                    .modal {
+                        display: none;
+                        position: fixed;
+                        z-index: 1;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        overflow: auto;
+                        background-color: rgb(0,0,0);
+                        background-color: rgba(0,0,0,0.4);
+                        padding-top: 60px;
+                    }
+                    .modal-content {
+                        background-color: #1e1e1e;
+                        margin: 5% auto;
+                        padding: 20px;
+                        border: 1px solid #888;
+                        width: 80%;
+                        border-radius: 10px;
+                        color: #e0e0e0;
+                    }
+                    .close {
+                        color: #aaa;
+                        float: right;
+                        font-size: 28px;
+                        font-weight: bold;
+                    }
+                    .close:hover,
+                    .close:focus {
+                        color: #fff;
+                        text-decoration: none;
+                        cursor: pointer;
                     }
                 </style>
             </head>
@@ -121,21 +166,82 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                                 <p class="link">
                                     <i class="fa fa-github github-icon"></i> Check out the code on GitHub:
                                     <br>
-                                    <a href="https://github.com/Wal33D/sms-ai.git" target="_blank">https://github.com/Wal33D/sms-ai.git</a>
+                                    <a href="https://github.com/Wal33D/toolbelt.git" target="_blank">https://github.com/Wal33D/toolbelt.git</a>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2 id="modalTitle"></h2>
+                        <p id="modalDescription"></p>
+                        <h4>Parameters:</h4>
+                        <ul id="modalParameters"></ul>
+                    </div>
+                </div>
+
                 <script>
                     const tools = ${JSON.stringify(tools)};
 
-                    document.getElementById('searchBar').addEventListener('input', function() {
-                        const searchValue = this.value.toLowerCase();
+                    const renderTools = (toolsToRender) => {
                         const toolsContainer = document.getElementById('toolsContainer');
                         toolsContainer.innerHTML = '';
 
+                        toolsToRender.forEach(tool => {
+                            const toolItem = document.createElement('div');
+                            toolItem.className = 'tool-item';
+                            toolItem.innerHTML = \`<span>🔧</span> <strong>\${tool.function.name}</strong><br>\${tool.function.description}\`;
+                            toolItem.onclick = () => openModal(tool);
+                            toolsContainer.appendChild(toolItem);
+                        });
+
+                        if (toolsToRender.length === 0) {
+                            toolsContainer.innerHTML = '<p class="no-tools">No tools found</p>';
+                        }
+                    };
+
+                    const openModal = (tool) => {
+                        document.getElementById('modalTitle').textContent = tool.function.name;
+                        document.getElementById('modalDescription').textContent = tool.function.description;
+
+                        const parameters = tool.function.parameters.properties;
+                        const modalParameters = document.getElementById('modalParameters');
+                        modalParameters.innerHTML = '';
+
+                        for (const param in parameters) {
+                            const paramItem = document.createElement('li');
+                            paramItem.textContent = \`\${param}: \${parameters[param].description}\`;
+                            modalParameters.appendChild(paramItem);
+                        }
+
+                        const modal = document.getElementById('myModal');
+                        modal.style.display = "block";
+                    };
+
+                    const closeModal = () => {
+                        const modal = document.getElementById('myModal');
+                        modal.style.display = "none";
+                    };
+
+                    document.querySelector('.close').onclick = closeModal;
+                    window.onclick = (event) => {
+                        const modal = document.getElementById('myModal');
+                        if (event.target === modal) {
+                            closeModal();
+                        }
+                    };
+
+                    // Display all tools initially
+                    renderTools(tools);
+
+                    document.getElementById('searchBar').addEventListener('input', function() {
+                        const searchValue = this.value.toLowerCase();
                         if (searchValue.length < 2) {
+                            renderTools(tools);
                             return;
                         }
 
@@ -143,17 +249,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                             return tool.function.name.toLowerCase().includes(searchValue) || tool.function.description.toLowerCase().includes(searchValue);
                         });
 
-                        filteredTools.forEach(tool => {
-                            const toolItem = document.createElement('div');
-                            toolItem.className = 'tool-item';
-                            toolItem.innerHTML = \`<span>🔧</span> <strong>\${tool.function.name}</strong><br>\${tool.function.description}\`;
-                            toolsContainer.appendChild(toolItem);
-                            toolItem.style.display = 'block';
-                        });
-
-                        if (filteredTools.length === 0 && searchValue.length > 0) {
-                            toolsContainer.innerHTML = '<p>No tools found</p>';
-                        }
+                        renderTools(filteredTools);
                     });
                 </script>
             </body>
