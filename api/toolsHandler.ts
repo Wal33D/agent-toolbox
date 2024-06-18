@@ -4,10 +4,14 @@ import { IPAddressLookUp } from '../functions/ip/ip';
 import { parseQueryParams } from '../utils/parseQueryParams';
 import { handleToolOptions } from '../functions/handleToolOptions';
 import { fetchExtendedWeather } from '../functions/weather/fetchExtendedWeather';
+import { getWebsiteScreenshot } from '../functions/screenshot/getWebsiteScreenshot';
+import { googleAddressResolver } from '../functions/locationResolver/googleAddressResolver';
 import { fetchWeeklyWeatherData } from '../functions/weather/weeklyWeather';
 import { fetchTodaysWeatherData } from '../functions/weather/todaysWeather';
-import { takeScreenshotAndUpload } from '../functions/screenshot/getWebsiteScreenshot';
+import { parsePhoneNumberHandler } from '../functions/phonenumber';
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import googleImageSearch from './search-image';
+import { cloudinaryUpload } from '../functions/cloudinaryUploader';
 
 const handler = async (request: VercelRequest, response: VercelResponse) => {
 	if (request.method === 'OPTIONS') {
@@ -28,16 +32,15 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		} else {
 			throw new Error('Invalid request method');
 		}
-		console.log(request.body);
 
-		const processRequest = async (locationInput: any) => {
+		const processRequest = async (input: any) => {
 			switch (functionName) {
 				case 'IPAddressLookUp':
-					return await IPAddressLookUp(locationInput.ip);
+					return await IPAddressLookUp(input.ip);
 				case 'locationResolver':
 					return await getLocationData(request);
 				case 'getWebsiteScreenshot':
-					return await takeScreenshotAndUpload(request);
+					return await getWebsiteScreenshot(request);
 				case 'searchTheInternet':
 					return await searchGoogle(request);
 				case 'getTodaysWeather':
@@ -46,6 +49,14 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 					return await fetchWeeklyWeatherData(request);
 				case 'getExtendedWeather':
 					return await fetchExtendedWeather(request);
+				case 'googleAddressResolver':
+					return await googleAddressResolver(request);
+				case 'parsePhoneNumber':
+					return await parsePhoneNumberHandler(request);
+				case 'googleImageSearch':
+					return await googleImageSearch(request);
+				case 'cloudinaryUpload':
+					return await cloudinaryUpload(request);
 				default:
 					throw new Error('Invalid function name.');
 			}

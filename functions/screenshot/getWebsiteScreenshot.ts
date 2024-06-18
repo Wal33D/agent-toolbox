@@ -8,6 +8,8 @@ puppeteer.use(StealthPlugin());
 
 interface ScreenshotRequest {
 	url: string;
+	height?: number;
+	width?: number;
 }
 
 const isValidUrl = (urlString: string): boolean => {
@@ -26,7 +28,7 @@ const randomizeDelay = async (min: number, max: number) => {
 	return delay(delayTime);
 };
 
-export const takeScreenshotAndUpload = async (request: VercelRequest) => {
+export const getWebsiteScreenshot = async (request: VercelRequest) => {
 	try {
 		let screenshotRequest: ScreenshotRequest;
 
@@ -39,7 +41,7 @@ export const takeScreenshotAndUpload = async (request: VercelRequest) => {
 			throw new Error('Invalid request method');
 		}
 
-		const { url } = screenshotRequest;
+		const { url, height, width } = screenshotRequest;
 
 		if (!url) {
 			return {
@@ -55,6 +57,13 @@ export const takeScreenshotAndUpload = async (request: VercelRequest) => {
 			};
 		}
 
+		if ((height && !width) || (!height && width)) {
+			return {
+				status: false,
+				message: 'Both height and width must be provided together',
+			};
+		}
+
 		let browser;
 		try {
 			browser = await puppeteer.launch({
@@ -64,6 +73,10 @@ export const takeScreenshotAndUpload = async (request: VercelRequest) => {
 
 			const page = await browser.newPage();
 
+			if (height && width) {
+				await page.setViewport({ width, height });
+			}
+
 			// Set a realistic user agent and viewport
 			await page.setUserAgent(
 				'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -72,7 +85,6 @@ export const takeScreenshotAndUpload = async (request: VercelRequest) => {
 			// Enable cookies and cache
 			const client = await page.target().createCDPSession();
 			await client.send('Network.enable');
-			await client.send('Network.setCacheDisabled', { cacheDisabled: false });
 
 			await page.goto(url, { waitUntil: 'networkidle2' });
 

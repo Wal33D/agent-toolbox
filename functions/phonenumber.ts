@@ -1,6 +1,6 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
-import { parsePhoneNumber, validatePhoneNumberLength } from 'libphonenumber-js';
+import { VercelRequest } from '@vercel/node';
 import { parseQueryParams } from '../utils/parseQueryParams';
+import { parsePhoneNumber, validatePhoneNumberLength } from 'libphonenumber-js';
 
 interface PhoneNumberRequest {
 	number: string;
@@ -18,48 +18,7 @@ interface PhoneNumberResponse {
 	validationError?: string;
 }
 
-const handler = async (request: VercelRequest, response: VercelResponse) => {
-	if (request.method === 'OPTIONS') {
-		const interfaceDescription = {
-			description: 'This endpoint parses, validates, and formats phone numbers using the libphonenumber-js package.',
-			requiredParams: {
-				number: 'Phone number string (required)',
-				country: 'Country code string (optional)',
-			},
-			demoBody: [
-				{
-					number: '8 (800) 555-35-35',
-					country: 'RU',
-				},
-				{
-					number: '+12133734253',
-				},
-			],
-			demoResponse: [
-				{
-					country: 'RU',
-					number: '+78005553535',
-					isValid: true,
-					isPossible: true,
-					internationalFormat: '+7 800 555 35 35',
-					nationalFormat: '8 (800) 555-35-35',
-					uri: 'tel:+78005553535',
-				},
-				{
-					country: 'US',
-					number: '+12133734253',
-					isValid: true,
-					isPossible: true,
-					internationalFormat: '+1 213 373 4253',
-					nationalFormat: '(213) 373-4253',
-					uri: 'tel:+12133734253',
-				},
-			],
-		};
-
-		return response.status(200).json(interfaceDescription);
-	}
-
+export const parsePhoneNumberHandler = async (request: VercelRequest): Promise<any> => {
 	try {
 		let requests: PhoneNumberRequest[];
 
@@ -68,15 +27,18 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		} else if (request.method === 'POST') {
 			requests = Array.isArray(request.body) ? request.body : [request.body];
 		} else {
-			throw new Error('Invalid request method');
+			return {
+				status: false,
+				message: 'Invalid request method',
+			};
 		}
 
 		if (requests.length > 50) {
-			return response.status(400).json({
+			return {
 				status: false,
 				message: 'Too many requests. Please provide 50 or fewer requests in a single call.',
 				data: [],
-			});
+			};
 		}
 
 		const results: PhoneNumberResponse[] = requests.map(req => {
@@ -106,17 +68,15 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 			}
 		});
 
-		return response.status(200).json({
+		return {
 			status: true,
 			message: 'Phone number information retrieved successfully.',
 			data: results,
-		});
+		};
 	} catch (error: any) {
-		return response.status(500).json({
+		return {
 			status: false,
 			message: `Error: ${error.message}`,
-		});
+		};
 	}
 };
-
-export default handler;

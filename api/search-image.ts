@@ -1,4 +1,4 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
+import { VercelRequest } from '@vercel/node';
 import gis from 'g-i-s';
 import { parseQueryParams } from '../utils/parseQueryParams';
 
@@ -39,45 +39,7 @@ const imageSearch = (options: ImageSearchOptions): Promise<ImageResult[]> => {
 	});
 };
 
-const handler = async (request: VercelRequest, response: VercelResponse) => {
-	if (request.method === 'OPTIONS') {
-		const interfaceDescription = {
-			description: 'This endpoint retrieves images based on a search term using the g-i-s package.',
-			requiredParams: {
-				searchTerm: 'string (required)',
-				queryStringAddition: 'string (optional)',
-				filterOutDomains: 'string[] (optional)',
-				size: 'string (optional, one of "small", "medium", "large", "icon")',
-			},
-			demoBody: [
-				{
-					searchTerm: 'cats',
-					size: 'large',
-				},
-				{
-					searchTerm: 'dogs',
-					queryStringAddition: '&tbs=ic:trans',
-					filterOutDomains: ['pinterest.com', 'deviantart.com'],
-					size: 'medium',
-				},
-			],
-			demoResponse: [
-				{
-					url: 'https://i.ytimg.com/vi/mW3S0u8bj58/maxresdefault.jpg',
-					width: 1280,
-					height: 720,
-				},
-				{
-					url: 'https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg',
-					width: 1600,
-					height: 1200,
-				},
-			],
-		};
-
-		return response.status(200).json(interfaceDescription);
-	}
-
+export const googleImageSearch = async (request: VercelRequest): Promise<any> => {
 	try {
 		let requestBody: ImageSearchOptions[];
 
@@ -86,15 +48,18 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		} else if (request.method === 'POST') {
 			requestBody = Array.isArray(request.body) ? request.body : [request.body];
 		} else {
-			throw new Error('Invalid request method');
+			return {
+				status: false,
+				message: 'Invalid request method',
+			};
 		}
 
 		if (requestBody.length > 50) {
-			return response.status(400).json({
+			return {
 				status: false,
 				message: 'Too many requests. Please provide 50 or fewer requests in a single call.',
 				data: [],
-			});
+			};
 		}
 
 		const results = await Promise.all(
@@ -108,17 +73,17 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 			})
 		);
 
-		return response.status(200).json({
+		return {
 			status: true,
 			message: 'Images retrieved successfully.',
 			data: results,
-		});
+		};
 	} catch (error: any) {
-		return response.status(500).json({
+		return {
 			status: false,
 			message: `Error: ${error.message}`,
-		});
+		};
 	}
 };
 
-export default handler;
+export default googleImageSearch;

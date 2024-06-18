@@ -192,4 +192,145 @@ const tools = [
 			},
 		},
 	},
+	{
+		type: 'function',
+		function: {
+			name: 'getWebsiteScreenshot',
+			description:
+				'Take a screenshot of a given URL with optional height and width for the browsers window size. Returns a url to the a screenshot for any website on the internet!',
+			parameters: {
+				type: 'object',
+				properties: {
+					url: {
+						type: 'string',
+						description: 'The fully qualified http(s) URL of the website to take a screenshot of.',
+					},
+					height: {
+						type: 'number',
+						description: 'The height of the window (optional, but required if width is provided).',
+						optional: true,
+					},
+					width: {
+						type: 'number',
+						description: 'The width of the window (optional, but required if height is provided).',
+						optional: true,
+					},
+				},
+				required: ['url'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'googleAddressResolver',
+			description: 'Format and correct an address using the Google Geocoding API.',
+			parameters: {
+				type: 'object',
+				properties: {
+					address: {
+						type: 'string',
+						description: 'The address to format and correct',
+					},
+				},
+				required: ['address'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'parsePhoneNumber',
+			description: 'Parse, validate, and format phone numbers using the libphonenumber-js package.',
+			parameters: {
+				type: 'object',
+				properties: {
+					number: {
+						type: 'string',
+						description: 'Phone number string (required)',
+					},
+					country: {
+						type: 'string',
+						description: 'Country code string (optional)',
+						optional: true,
+					},
+				},
+				required: ['number'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'googleImageSearch',
+			description: 'Retrieve images based on a search term using the g-i-s package.',
+			parameters: {
+				type: 'object',
+				properties: {
+					searchTerm: {
+						type: 'string',
+						description: 'The term to search for images.',
+					},
+					queryStringAddition: {
+						type: 'string',
+						description: 'Additional query string parameters (optional).',
+						optional: true,
+					},
+					filterOutDomains: {
+						type: 'array',
+						items: {
+							type: 'string',
+						},
+						description: 'Domains to filter out (optional).',
+						optional: true,
+					},
+					size: {
+						type: 'string',
+						description: 'The size of the images (optional, one of "small", "medium", "large", "icon").',
+						optional: true,
+					},
+				},
+				required: ['searchTerm'],
+			},
+		},
+	},
+
+	{
+		type: 'function',
+		function: {
+			name: 'cloudinaryUpload',
+			description: 'Upload an image to Cloudinary using the Cloudinary uploader endpoint.',
+			parameters: {
+				type: 'object',
+				properties: {
+					url: {
+						type: 'string',
+						description: 'The URL of the image to upload (optional)',
+						optional: true,
+					},
+					fileBuffer: {
+						type: 'string',
+						description: 'The base64 encoded file buffer (optional)',
+						optional: true,
+					},
+					fileName: {
+						type: 'string',
+						description: 'The desired file name (optional)',
+						optional: true,
+					},
+					cloudinaryAssetFolder: {
+						type: 'string',
+						description: 'The Cloudinary folder to upload to (optional)',
+						optional: true,
+					},
+					imageStream: {
+						type: 'string',
+						description: 'The stream of the image to upload (optional)',
+						optional: true,
+					},
+				},
+				required: [],
+			},
+		},
+	},
 ];
