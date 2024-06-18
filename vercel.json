@@ -1,6 +1,6 @@
 {
 	"functions": {
-		"api/serverless.ts": {
+		"api/welcome.ts": {
 			"memory": 1024,
 			"maxDuration": 60
 		},
@@ -10,7 +10,7 @@
 		}
 	},
 	"rewrites": [
-		{ "source": "/", "destination": "/api/serverless" },
+		{ "source": "/", "destination": "/api/welcome" },
 		{ "source": "/belt", "destination": "/api/toolsHandler" }
 	]
 }
