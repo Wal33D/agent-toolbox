@@ -1,15 +1,15 @@
-import { searchGoogle } from '../functions/searchGoogle/search-google';
-import { getLocationData } from '../functions/locationResolver/location';
+import { searchGoogle } from '../functions/searchGoogle/googleWebSearch';
+import { getLocationData } from '../functions/resolvers/location';
 import { IPAddressLookUp } from '../functions/ip/ip';
 import { handleToolOptions } from '../functions/handleToolOptions';
 import { googleImageSearch } from '../functions/searchGoogle/googleImageSearch';
-import { uploadToCloudinary } from '../functions/uploadToCloudinary';
+import { uploadToCloudinary } from '../functions/uploaders/uploadToCloudinary';
 import { fetchExtendedWeather } from '../functions/weather/fetchExtendedWeather';
 import { getWebsiteScreenshot } from '../functions/screenshot/getWebsiteScreenshot';
-import { googleAddressResolver } from '../functions/locationResolver/googleAddressResolver';
+import { googleAddressResolver } from '../functions/resolvers/googleAddressResolver';
 import { fetchWeeklyWeatherData } from '../functions/weather/weeklyWeather';
 import { fetchTodaysWeatherData } from '../functions/weather/todaysWeather';
-import { parsePhoneNumberHandler } from '../functions/phonenumber';
+import { parsePhoneNumberHandler } from '../functions/resolvers/phonenumber';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 
 const handler = async (request: VercelRequest, response: VercelResponse) => {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getNextEnvKey } from 'envholster';
-import { LocationOutput } from '../locationTypes';
-import { resolveLocation } from '../locationResolver/resolveLocation';
+import { LocationOutput } from '../resolvers/locationTypes';
+import { resolveLocation } from '../resolvers/resolveLocation';
 
 const fetchWeatherData = async ({ lat, lon, zipCode }: { lat?: number; lon?: number; zipCode?: string }) => {
 	const { key: weatherApiKey } = await getNextEnvKey({

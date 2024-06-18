@@ -1,5 +1,6 @@
 {
-	"repository": "https://github.com/Wal33D/serverless-vercel-function-enhanced.git",
+	"repository": "https://github.com/Wal33D/toolbelt.git",
+	"author": "Wal33D",
 	"license": "MIT",
 	"private": true,
 	"devDependencies": {

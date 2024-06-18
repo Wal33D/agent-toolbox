@@ -1,7 +1,7 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
-import { VercelRequest, VercelResponse } from '@vercel/node';
 import { parseQueryParams } from '../utils/parseQueryParams';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 
 interface ScrapeRequestBody {
 	url: string;

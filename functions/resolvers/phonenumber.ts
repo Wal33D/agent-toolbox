@@ -1,5 +1,5 @@
 import { VercelRequest } from '@vercel/node';
-import { parseQueryParams } from '../utils/parseQueryParams';
+import { parseQueryParams } from '../../utils/parseQueryParams';
 import { parsePhoneNumber, validatePhoneNumberLength } from 'libphonenumber-js';
 
 interface PhoneNumberRequest {

@@ -2,7 +2,7 @@ import axios from 'axios';
 import gps2zip from 'gps2zip';
 import { getNextEnvKey } from 'envholster';
 import { connectToMongo } from '../../utils/mongo';
-import { LocationInput, LocationOutput } from '../locationTypes';
+import { LocationInput, LocationOutput } from './locationTypes';
 
 const fetchCoordinates = async (url: string) => {
 	console.log(`Fetching data from URL: ${url}`);
