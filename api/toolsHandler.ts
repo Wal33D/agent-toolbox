@@ -35,7 +35,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 					return await getLocationData(request);
 				case 'getWebsiteScreenshot':
 					return await getWebsiteScreenshot(request);
-				case 'searchTheInternet':
+				case 'googleWebSearch':
 					return await searchGoogle(request);
 				case 'getTodaysWeather':
 					return await fetchTodaysWeatherData(request);

@@ -4,7 +4,7 @@ export const handleToolOptions = (response: VercelResponse) => {
 	return response.json({ tools });
 };
 
-const tools = [
+export const tools = [
 	{
 		type: 'function',
 		function: {
@@ -92,7 +92,7 @@ const tools = [
 	{
 		type: 'function',
 		function: {
-			name: 'searchTheInternet',
+			name: 'googleWebSearch',
 			description: 'Perform an internet search and return relevant results.',
 			parameters: {
 				type: 'object',
@@ -333,5 +333,3 @@ const tools = [
 		},
 	},
 ];
-
-export default tools;
