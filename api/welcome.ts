@@ -27,16 +27,24 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        height: 100vh;
+                        min-height: 100vh;
+                    }
+                    .container {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                        padding: 20px;
+                        box-sizing: border-box;
                     }
                     .custom-container {
+                        position: relative;
                         text-align: center;
                         background: #1e1e1e;
                         padding: 20px;
                         border-radius: 10px;
                         box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
                         margin: 10px;
-						margin-top:30px;
                         width: 100%;
                         max-width: 600px;
                     }
@@ -50,8 +58,8 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                     }
                     .online-indicator {
                         position: absolute;
-                        top: 20px;
-                        right: 35px;
+                        top: 10px;
+                        right: 10px;
                         width: 10px;
                         height: 10px;
                         background-color: #00e676;
@@ -96,25 +104,40 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                     .tools-container {
                         border: 1px solid #333;
                         border-radius: 5px;
-                        height: 300px;
+                        max-height: 300px;
                         overflow-y: auto;
                         margin-top: 10px;
                         padding: 10px;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: flex-start;
                     }
                     .tool-item {
+                        display: flex;
+                        align-items: center;
                         width: 100%;
                         margin: 10px 0;
                         padding: 10px;
                         border-radius: 5px;
                         background-color: #333;
                         color: #fff;
-                        display: block;
                         cursor: pointer;
                         font-size: 1em;
+                        box-sizing: border-box;
+                    }
+                    .tool-icon {
+                        flex-shrink: 0;
+                        margin-right: 10px;
+                        font-size: 1.5em;
+                    }
+                    .tool-name {
+                        flex: 1;
+                        font-weight: bold;
+                        text-align: left; /* Align text to the left */
+                    }
+                    .tool-description {
+                        flex: 2;
+                        text-align: left; /* Align text to the left */
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap; /* Prevent text from wrapping */
                     }
                     .no-tools {
                         text-align: center;
@@ -129,7 +152,6 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                         width: 100%;
                         height: 100%;
                         overflow: auto;
-                        background-color: rgb(0,0,0);
                         background-color: rgba(0,0,0,0.4);
                         padding-top: 60px;
                     }
@@ -143,49 +165,51 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                         border-radius: 10px;
                         color: #e0e0e0;
                     }
+                    .modal-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
                     .close {
                         color: #aaa;
-                        float: right;
                         font-size: 28px;
                         font-weight: bold;
+                        cursor: pointer;
                     }
                     .close:hover,
                     .close:focus {
                         color: #fff;
                         text-decoration: none;
-                        cursor: pointer;
                     }
                 </style>
             </head>
             <body>
                 <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-md-8 mx-auto">
-                            <div class="custom-container">
-                                <span class="online-indicator"></span>
-                                <h1>${pageTitle}</h1>
-                                <p>Welcome to the AI Toolbelt Serverless Collection of single-purpose functions for use with my personal AI.</p>
-                                <input type="text" id="searchBar" class="search-bar" placeholder="Search tools...">
-                                <div id="toolsContainer" class="tools-container"></div>
-                                <div class="footer">
-                                    <p>🔐 Requests require JWT token verification and are intended for personal use by Wal33D.</p>
-                                    <p>To use these tools, send a POST request to <code>tool.aquataze.com/belt</code> with the <code>functionName</code> set to the name of the tool you want to use.</p>
-                                </div>
-                                <p class="link">
-                                    <i class="fa fa-github github-icon"></i> Check out the code on GitHub:
-                                    <br>
-                                    <a href="https://github.com/Wal33D/toolbelt.git" target="_blank">https://github.com/Wal33D/toolbelt.git</a>
-                                </p>
-                            </div>
+                    <div class="custom-container">
+                        <span class="online-indicator"></span>
+                        <h1>${pageTitle}</h1>
+                        <p>Welcome to the AI Toolbelt Serverless Collection of single-purpose functions for use with my personal AI.</p>
+                        <input type="text" id="searchBar" class="search-bar" placeholder="Search tools...">
+                        <div id="toolsContainer" class="tools-container"></div>
+                        <div class="footer">
+                            <p>🔐 Requests require JWT token verification and are intended for personal use by Wal33D.</p>
+                            <p>To use these tools, send a POST request to <code>tool.aquataze.com/belt</code> with the <code>functionName</code> set to the name of the tool you want to use.</p>
                         </div>
+                        <p class="link">
+                            <i class="fa fa-github github-icon"></i> Check out the code on GitHub:
+                            <br>
+                            <a href="https://github.com/Wal33D/toolbelt.git" target="_blank">https://github.com/Wal33D/toolbelt.git</a>
+                        </p>
                     </div>
                 </div>
 
                 <!-- The Modal -->
                 <div id="myModal" class="modal">
                     <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <h2 id="modalTitle"></h2>
+                        <div class="modal-header">
+                            <h2 id="modalTitle"></h2>
+                            <span class="close">&times;</span>
+                        </div>
                         <p id="modalDescription"></p>
                         <h4>Parameters:</h4>
                         <ul id="modalParameters"></ul>
@@ -202,7 +226,11 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
                         toolsToRender.forEach(tool => {
                             const toolItem = document.createElement('div');
                             toolItem.className = 'tool-item';
-                            toolItem.innerHTML = \`<span>🔧</span> <strong>\${tool.function.name}</strong><br>\${tool.function.description}\`;
+                            toolItem.innerHTML = \`
+                                <span class="tool-icon">🔧</span>
+                                <span class="tool-name">\${tool.function.name}</span>
+                                <span class="tool-description">\${tool.function.description}</span>
+                            \`;
                             toolItem.onclick = () => openModal(tool);
                             toolsContainer.appendChild(toolItem);
                         });
