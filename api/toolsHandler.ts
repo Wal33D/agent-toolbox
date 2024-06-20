@@ -14,7 +14,7 @@ import { getIslamicPrayerTimings } from '../functions/islamicPrayerTimings';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { getCurrentDateTime } from './getCurrentDateTime';
 import { sendTextMessage } from '../functions/sendTextMessage'; // Add this line
-import { sendWhatsAppMessage } from '../functions/sendWhatsAppMessage';
+import { sendWhatsAppMessage } from '../functions/sendWhatsAppFBMessage';
 
 const handler = async (request: VercelRequest, response: VercelResponse) => {
 	if (request.method === 'OPTIONS') {
