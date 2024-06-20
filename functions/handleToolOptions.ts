@@ -297,6 +297,55 @@ export const tools = [
 	{
 		type: 'function',
 		function: {
+			name: 'getIslamicPrayerTimings',
+			description:
+				'Get the Islamic prayer timings for a specific location including Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha, and a description with the Gregorian and Hijri dates. Accepts (zipCode) or (city/state/country) or (lat/lon)',
+			parameters: {
+				type: 'object',
+				properties: {
+					date: {
+						type: 'string',
+						description: 'The date in MM-DD-YYYY format. Defaults to current date if not provided.',
+						optional: true,
+					},
+					city: {
+						type: 'string',
+						description: 'The city name, e.g., San Francisco',
+						optional: true,
+					},
+					state: {
+						type: 'string',
+						description: 'The state code, e.g., CA',
+						optional: true,
+					},
+					country: {
+						type: 'string',
+						description: 'The 2-letter country code, e.g., US',
+						optional: true,
+					},
+					zipCode: {
+						type: 'string',
+						description: 'The zip code to look up, e.g., 49024',
+						optional: true,
+					},
+					lat: {
+						type: 'number',
+						description: 'The latitude of the location, e.g., 42.1974',
+						optional: true,
+					},
+					lon: {
+						type: 'number',
+						description: 'The longitude of the location, e.g., -85.6194',
+						optional: true,
+					},
+				},
+				required: [],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
 			name: 'cloudinaryUpload',
 			description: 'Upload images to Cloudinary, supports uploading via URL, base64 string, or stream.',
 			parameters: {
@@ -335,227 +384,92 @@ export const tools = [
 	{
 		type: 'function',
 		function: {
-			name: 'sendSMS',
-			description: 'Send an SMS message to a phone number or WhatsApp.',
+			name: 'getCurrentDateTime',
+			description:
+				'Get the current date and time for a specific location. The response includes the current date and time in ISO format and a human-readable format for a specified (zipCode) or (city/state/country) or (lat/lon)',
 			parameters: {
 				type: 'object',
 				properties: {
-					phoneNumber: {
+					city: {
 						type: 'string',
-						description: 'The phone number to send the SMS to, e.g., +1234567890',
+						description: 'The city name, e.g., San Francisco',
+						optional: true,
 					},
-					message: {
+					state: {
 						type: 'string',
-						description: 'The message content to send.',
+						description: 'The state code, e.g., CA',
+						optional: true,
 					},
-					viaWhatsApp: {
-						type: 'boolean',
-						description: 'Whether to send the message via WhatsApp (optional).',
+					zipCode: {
+						type: 'string',
+						description: 'The zip code to look up, e.g., 49024',
+						optional: true,
+					},
+					country: {
+						type: 'string',
+						description: 'The 2-letter country code, e.g., US',
+						optional: true,
+					},
+					lat: {
+						type: 'number',
+						description: 'The latitude of the location, e.g., 42.1974',
+						optional: true,
+					},
+					lon: {
+						type: 'number',
+						description: 'The longitude of the location, e.g., -85.6194',
 						optional: true,
 					},
 				},
-				required: ['phoneNumber', 'message'],
+				required: [],
 			},
 		},
 	},
 	{
 		type: 'function',
 		function: {
-			name: 'sendVoiceMessage',
-			description: 'Send a voice message to a phone number or WhatsApp.',
-			parameters: {
-				type: 'object',
-				properties: {
-					phoneNumber: {
-						type: 'string',
-						description: 'The phone number to send the voice message to, e.g., +1234567890',
-					},
-					message: {
-						type: 'string',
-						description: 'The message content to send.',
-					},
-					viaWhatsApp: {
-						type: 'boolean',
-						description: 'Whether to send the message via WhatsApp (optional).',
-						optional: true,
-					},
-				},
-				required: ['phoneNumber', 'message'],
-			},
-		},
-	},
-	{
-		type: 'function',
-		function: {
-			name: 'sendEmail',
-			description: 'Send an email to a specified address.',
+			name: 'sendTextMessage',
+			description: 'Send a text message using Twilio. Requires parameters: to, body.',
 			parameters: {
 				type: 'object',
 				properties: {
 					to: {
 						type: 'string',
-						description: 'The email address to send the email to.',
+						description: 'The recipient phone number.',
 					},
-					subject: {
+					from: {
 						type: 'string',
-						description: 'The subject of the email.',
+						description: 'The sender phone number (Twilio number).',
 					},
 					body: {
 						type: 'string',
-						description: 'The body content of the email.',
+						description: 'The message content.',
 					},
 				},
-				required: ['to', 'subject', 'body'],
+				required: ['to', 'body'],
 			},
 		},
 	},
 	{
 		type: 'function',
 		function: {
-			name: 'addNote',
-			description: 'Add a note.',
+			name: 'sendWhatsAppMessage',
+			description:
+				'Send a WhatsApp message using Twilio. Requires parameters: to, body. If no (to) is provided, the message will be sent to the current user',
 			parameters: {
 				type: 'object',
 				properties: {
-					title: {
+					to: {
 						type: 'string',
-						description: 'The title of the note.',
+						description: 'The recipient phone number in E.164 format, e.g., +12695010475',
+						optional: true,
 					},
-					content: {
+					body: {
 						type: 'string',
-						description: 'The content of the note.',
+						description: 'The message content.',
 					},
 				},
-				required: ['title', 'content'],
-			},
-		},
-	},
-	{
-		type: 'function',
-		function: {
-			name: 'searchNotes',
-			description: 'Search notes by keyword.',
-			parameters: {
-				type: 'object',
-				properties: {
-					keyword: {
-						type: 'string',
-						description: 'The keyword to search for in notes.',
-					},
-				},
-				required: ['keyword'],
-			},
-		},
-	},
-	{
-		type: 'function',
-		function: {
-			name: 'updateNote',
-			description: 'Update an existing note.',
-			parameters: {
-				type: 'object',
-				properties: {
-					noteId: {
-						type: 'string',
-						description: 'The ID of the note to update.',
-					},
-					title: {
-						type: 'string',
-						description: 'The new title of the note (optional).',
-						optional: true,
-					},
-					content: {
-						type: 'string',
-						description: 'The new content of the note (optional).',
-						optional: true,
-					},
-				},
-				required: ['noteId'],
-			},
-		},
-	},
-	{
-		type: 'function',
-		function: {
-			name: 'addCalendarEvent',
-			description: 'Add an event to the calendar.',
-			parameters: {
-				type: 'object',
-				properties: {
-					title: {
-						type: 'string',
-						description: 'The title of the event.',
-					},
-					date: {
-						type: 'string',
-						description: 'The date of the event in YYYY-MM-DD format.',
-					},
-					time: {
-						type: 'string',
-						description: 'The time of the event in HH:MM format (optional).',
-						optional: true,
-					},
-					description: {
-						type: 'string',
-						description: 'The description of the event (optional).',
-						optional: true,
-					},
-				},
-				required: ['title', 'date'],
-			},
-		},
-	},
-	{
-		type: 'function',
-		function: {
-			name: 'searchCalendar',
-			description: 'Search calendar events by keyword.',
-			parameters: {
-				type: 'object',
-				properties: {
-					keyword: {
-						type: 'string',
-						description: 'The keyword to search for in calendar events.',
-					},
-				},
-				required: ['keyword'],
-			},
-		},
-	},
-	{
-		type: 'function',
-		function: {
-			name: 'updateCalendarEvent',
-			description: 'Update an existing calendar event.',
-			parameters: {
-				type: 'object',
-				properties: {
-					eventId: {
-						type: 'string',
-						description: 'The ID of the event to update.',
-					},
-					title: {
-						type: 'string',
-						description: 'The new title of the event (optional).',
-						optional: true,
-					},
-					date: {
-						type: 'string',
-						description: 'The new date of the event in YYYY-MM-DD format (optional).',
-						optional: true,
-					},
-					time: {
-						type: 'string',
-						description: 'The new time of the event in HH:MM format (optional).',
-						optional: true,
-					},
-					description: {
-						type: 'string',
-						description: 'The new description of the event (optional).',
-						optional: true,
-					},
-				},
-				required: ['eventId'],
+				required: ['body'],
 			},
 		},
 	},

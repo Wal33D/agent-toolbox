@@ -1,15 +1,12 @@
 import { VercelRequest } from '@vercel/node';
 import { resolveLocation } from './resolveLocation';
-import { parseQueryParams } from '../../utils/parseQueryParams';
 import { LocationInput, LocationOutput } from './locationTypes';
 
 export const getLocationData = async (request: VercelRequest): Promise<any> => {
 	try {
 		let locations: LocationInput[] = Array.isArray(request.body) ? request.body : [request.body];
 
-		if (request.method === 'GET') {
-			locations = [parseQueryParams(request.query)];
-		} else if (request.method === 'POST') {
+		if (request.method === 'POST') {
 			locations = Array.isArray(request.body) ? request.body : [request.body];
 		}
 

@@ -10,7 +10,11 @@ import { googleAddressResolver } from '../functions/resolvers/googleAddressResol
 import { fetchWeeklyWeatherData } from '../functions/weather/weeklyWeather';
 import { fetchTodaysWeatherData } from '../functions/weather/todaysWeather';
 import { parsePhoneNumberHandler } from '../functions/resolvers/phonenumber';
+import { getIslamicPrayerTimings } from '../functions/islamicPrayerTimings';
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { getCurrentDateTime } from './getCurrentDateTime';
+import { sendTextMessage } from '../functions/sendTextMessage'; // Add this line
+import { sendWhatsAppMessage } from '../functions/sendWhatsAppMessage';
 
 const handler = async (request: VercelRequest, response: VercelResponse) => {
 	if (request.method === 'OPTIONS') {
@@ -51,6 +55,14 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 					return await googleImageSearch(request);
 				case 'cloudinaryUpload':
 					return await uploadToCloudinary(request);
+				case 'getIslamicPrayerTimings':
+					return await getIslamicPrayerTimings(request);
+				case 'getCurrentDateTime':
+					return await getCurrentDateTime(request);
+				case 'sendTextMessage': // Add this case
+					return await sendTextMessage(request);
+				case 'sendWhatsAppMessage':
+					return await sendWhatsAppMessage(request);
 				default:
 					throw new Error('Invalid function name.');
 			}
