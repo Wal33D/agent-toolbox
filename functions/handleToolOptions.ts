@@ -297,9 +297,9 @@ export const tools = [
 	{
 		type: 'function',
 		function: {
-			name: 'getIslamicPrayerTimings',
+			name: 'getIslamicPrayerTimingsDay',
 			description:
-				'Get the Islamic prayer timings for a specific location including Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha, and a description with the Gregorian and Hijri dates. Accepts (zipCode) or (city/state/country) or (lat/lon)',
+				'Get the Islamic prayer timings for a specific location including Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha, and a description with the Gregorian and Hijri dates for the current date. Accepts (zipCode) or (city/state/country) or (lat/lon)',
 			parameters: {
 				type: 'object',
 				properties: {
@@ -471,6 +471,194 @@ export const tools = [
 					},
 				},
 				required: ['body'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'createGoogleDocsFile',
+			description: 'Create a Google Docs file with the given title and content.',
+			parameters: {
+				type: 'object',
+				properties: {
+					title: {
+						type: 'string',
+						description: 'The title of the Google Docs file to create.',
+					},
+					content: {
+						type: 'string',
+						description: 'The content to insert into the Google Docs file.',
+					},
+				},
+				required: ['title', 'content'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'createGoogleSheetsFile',
+			description: 'Create a Google Sheets file with the given title and content.',
+			parameters: {
+				type: 'object',
+				properties: {
+					title: {
+						type: 'string',
+						description: 'The title of the Google Sheets file to create.',
+					},
+					content: {
+						type: 'array',
+						items: {
+							type: 'array',
+							items: {
+								type: 'string',
+							},
+						},
+						description: 'The content to insert into the Google Sheets file as a 2D array of strings.',
+					},
+				},
+				required: ['title', 'content'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'updateGoogleDocsFile',
+			description: 'Find a Google Docs file by title and update its content.',
+			parameters: {
+				type: 'object',
+				properties: {
+					title: {
+						type: 'string',
+						description: 'The title of the Google Docs file to find and update.',
+					},
+					content: {
+						type: 'string',
+						description: 'The new content to insert into the Google Docs file.',
+					},
+				},
+				required: ['title', 'content'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'updateGoogleSheetsFile',
+			description: 'Find a Google Sheets file by title and update its content.',
+			parameters: {
+				type: 'object',
+				properties: {
+					title: {
+						type: 'string',
+						description: 'The title of the Google Sheets file to find and update.',
+					},
+					content: {
+						type: 'array',
+						items: {
+							type: 'array',
+							items: {
+								type: 'string',
+							},
+						},
+						description: 'The new content to insert into the Google Sheets file as a 2D array of strings.',
+					},
+				},
+				required: ['title', 'content'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'getIslamicPrayerTimingsWeek',
+			description:
+				'Get the Islamic prayer timings for a specific location for the next 7 days, including Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha, and a description with the Gregorian and Hijri dates. Accepts (zipCode) or (city/state/country) or (lat/lon)',
+			parameters: {
+				type: 'object',
+				properties: {
+					city: {
+						type: 'string',
+						description: 'The city name, e.g., San Francisco',
+						optional: true,
+					},
+					state: {
+						type: 'string',
+						description: 'The state code, e.g., CA',
+						optional: true,
+					},
+					country: {
+						type: 'string',
+						description: 'The 2-letter country code, e.g., US',
+						optional: true,
+					},
+					zipCode: {
+						type: 'string',
+						description: 'The zip code to look up, e.g., 49024',
+						optional: true,
+					},
+					lat: {
+						type: 'number',
+						description: 'The latitude of the location, e.g., 42.1974',
+						optional: true,
+					},
+					lon: {
+						type: 'number',
+						description: 'The longitude of the location, e.g., -85.6194',
+						optional: true,
+					},
+				},
+				required: [],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'setGoogleFilePermissions',
+			description: 'Set edit permissions for a Google Drive file to specified emails.',
+			parameters: {
+				type: 'object',
+				properties: {
+					fileId: {
+						type: 'string',
+						description: 'The ID of the Google Drive file to set permissions for.',
+					},
+					emails: {
+						type: 'array',
+						items: {
+							type: 'string',
+						},
+						description: 'An array of email addresses to grant edit permissions to.',
+					},
+				},
+				required: ['fileId', 'emails'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'setFileEditPermissions',
+			description: 'Set edit permissions for a Google Drive file to specified emails.',
+			parameters: {
+				type: 'object',
+				properties: {
+					fileId: {
+						type: 'string',
+						description: 'The ID of the Google Drive file to set permissions for.',
+					},
+					emails: {
+						type: 'array',
+						items: {
+							type: 'string',
+						},
+						description: 'An array of email addresses to grant edit permissions to.',
+					},
+				},
+				required: ['fileId', 'emails'],
 			},
 		},
 	},

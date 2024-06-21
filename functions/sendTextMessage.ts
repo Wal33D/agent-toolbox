@@ -6,11 +6,29 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = twilio(accountSid, authToken);
 const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 
-export const sendTextMessage = async (request: VercelRequest) => {
+interface SendTextMessageResponse {
+	status: string;
+	message: string;
+	sent: boolean | string;
+	to: string;
+	messaging_product: string;
+}
+
+export const sendTextMessage = async (request: VercelRequest): Promise<SendTextMessageResponse> => {
 	const { to, body } = request.body;
 
+	let response: SendTextMessageResponse = {
+		status: 'error',
+		message: 'An unknown error occurred',
+		sent: false,
+		to: '',
+		messaging_product: 'twilio_sms',
+	};
+
 	if (!to || !body) {
-		throw new Error('Missing required parameters: to, body');
+		response.message = 'Error: Missing required parameters: to, body. Please provide both the recipient number and the message content.';
+		response.to = to || '';
+		return response;
 	}
 
 	try {
@@ -19,15 +37,24 @@ export const sendTextMessage = async (request: VercelRequest) => {
 			from: twilioPhoneNumber,
 			to,
 		});
-		return {
+
+		response = {
 			status: 'success',
-			message: 'Message sent successfully',
-			data: message,
+			message: `Message sent successfully to ${to}. Message SID: ${message.sid}, Status: ${message.status}.`,
+			sent: message.status,
+			to,
+			messaging_product: 'twilio_sms',
 		};
-	} catch (error) {
-		return {
+	} catch (error: any) {
+		response = {
 			status: 'error',
-			message: error.message,
+			message: `Error sending message: ${error.message}. Please check the Twilio credentials and the recipient number.`,
+			sent: false,
+			to,
+			messaging_product: 'twilio_sms',
 		};
+	} finally {
+		console.log('Return value:', response);
+		return response;
 	}
 };

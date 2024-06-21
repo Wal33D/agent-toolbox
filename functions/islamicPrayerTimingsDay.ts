@@ -13,7 +13,7 @@ const convertTo12Hour = (time: string): string => {
 	return `${hourNum}:${minute} ${ampm}`;
 };
 
-export const getIslamicPrayerTimings = async (request: VercelRequest): Promise<PrayerTimings> => {
+export const getIslamicPrayerTimingsDay = async (request: VercelRequest): Promise<PrayerTimings> => {
 	let { city, state, date, country, zipCode, lat, lon } = request.body;
 
 	if (!city) {

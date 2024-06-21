@@ -17,6 +17,7 @@
 		"envholster": "^1.0.0",
 		"g-i-s": "^2.1.7",
 		"geo-tz": "^8.0.2",
+		"googleapis": "^140.0.0",
 		"gps2zip": "^2.2.0",
 		"libphonenumber-js": "^1.11.3",
 		"mongodb": "^6.7.0",
