@@ -455,13 +455,14 @@ export const tools = [
 		function: {
 			name: 'sendWhatsAppMessage',
 			description:
-				'Send a WhatsApp message using Twilio. Requires parameters: to, body. If no (to) is provided, the message will be sent to the current user',
+				'Send or respond to the user using a WhatsApp message Requires parameters: to, body. If no (to) is provided, the message will be sent to the current user if there communication type is set to whatsapp',
 			parameters: {
 				type: 'object',
 				properties: {
 					to: {
 						type: 'string',
-						description: 'The recipient phone number in E.164 format, e.g., +12695010475',
+						description:
+							'The recipient phone number in E.164 format, e.g., +12695010475 if not provided then the primary/current user will be messaged',
 						optional: true,
 					},
 					body: {

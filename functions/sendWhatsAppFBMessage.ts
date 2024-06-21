@@ -2,17 +2,27 @@ import axios from 'axios';
 import { VercelRequest } from '@vercel/node';
 
 const GRAPH_API_URL = 'https://graph.facebook.com/v19.0';
-const fallbackToNumber = '+12695010475'; // Fallback number
-const { GRAPH_API_TOKEN } = process.env;
+const { GRAPH_API_TOKEN, PRIMARY_USER_WHATSAPP_NUMBER } = process.env;
 
-export const sendWhatsAppMessage = async (request: VercelRequest) => {
+interface WhatsAppMessageResponse {
+	status: boolean;
+	response: any;
+	message: string;
+}
+
+export const sendWhatsAppMessage = async (request: VercelRequest): Promise<WhatsAppMessageResponse> => {
 	let { to, body } = request.body;
 
 	// Use fallback number if 'to' is not provided
-	to = to || fallbackToNumber;
+	to = to || (PRIMARY_USER_WHATSAPP_NUMBER as string);
 	if (!body) {
-		throw new Error('Missing required parameter: body');
+		return {
+			status: false,
+			response: null,
+			message: 'Missing required parameter: body',
+		};
 	}
+
 	try {
 		const response = await axios.post(
 			`${GRAPH_API_URL}/364023890121748/messages`,
@@ -32,8 +42,17 @@ export const sendWhatsAppMessage = async (request: VercelRequest) => {
 			}
 		);
 		console.log('Message sent successfully:', response.data);
+		return {
+			status: true,
+			response: response.data,
+			message: 'Message sent successfully',
+		};
 	} catch (error: any) {
 		console.error('Error sending message:', error.response ? error.response.data : error.message);
-		throw new Error(`Error sending message: ${error.response ? error.response.data : error.message}`);
+		return {
+			status: false,
+			response: error.response ? error.response.data : null,
+			message: `Error sending message: ${error.response ? error.response.data : error.message}`,
+		};
 	}
 };
