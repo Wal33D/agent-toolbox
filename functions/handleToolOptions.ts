@@ -425,55 +425,7 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
-			name: 'sendTextMessage',
-			description: 'Send a text message using Twilio. Requires parameters: to, body.',
-			parameters: {
-				type: 'object',
-				properties: {
-					to: {
-						type: 'string',
-						description: 'The recipient phone number.',
-					},
-					from: {
-						type: 'string',
-						description: 'The sender phone number (Twilio number).',
-					},
-					body: {
-						type: 'string',
-						description: 'The message content.',
-					},
-				},
-				required: ['to', 'body'],
-			},
-		},
-	},
-	{
-		type: 'function',
-		function: {
-			name: 'sendWhatsAppMessage',
-			description:
-				'Send or respond to the user using a WhatsApp message Requires parameters: to, body. If no (to) is provided, the message will be sent to the current user if there communication type is set to whatsapp',
-			parameters: {
-				type: 'object',
-				properties: {
-					to: {
-						type: 'string',
-						description:
-							'The recipient phone number in E.164 format, e.g., +12695010475 if not provided then the primary/current user will be messaged',
-						optional: true,
-					},
-					body: {
-						type: 'string',
-						description: 'The message content.',
-					},
-				},
-				required: ['body'],
-			},
-		},
-	},
+
 	{
 		type: 'function',
 		function: {
@@ -659,6 +611,99 @@ export const tools = [
 					},
 				},
 				required: ['fileId', 'emails'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'sendTextMessage',
+			description: 'Send a text message using Twilio. Requires parameters: to, body.',
+			parameters: {
+				type: 'object',
+				properties: {
+					to: {
+						type: 'string',
+						description: 'The recipient phone number in E.164 format, e.g., +12695010475',
+					},
+					body: {
+						type: 'string',
+						description: 'The message content.',
+					},
+				},
+				required: ['to', 'body'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'sendWhatsAppMessage',
+			description: 'Send a message using WhatsApp. Requires parameters: to, body.',
+			parameters: {
+				type: 'object',
+				properties: {
+					to: {
+						type: 'string',
+						description: 'The recipient whatsapp number in E.164 format, e.g., +12695010475',
+					},
+					body: {
+						type: 'string',
+						description: 'The message content.',
+					},
+				},
+				required: ['to', 'body'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'sendEmail',
+			description: 'Send an email using Gmail. Requires recipient email, email content, and optionally sender email and subject.',
+			parameters: {
+				type: 'object',
+				properties: {
+					to: {
+						type: 'string',
+						description: 'The recipient email address in a valid email format, e.g., example@example.com.',
+					},
+					body: {
+						type: 'string',
+						description: 'The email content, which can be either plain text or full HTML with inline styles.',
+					},
+					from: {
+						type: 'string',
+						description: 'The sender email address. If not provided, the default ai assistants name will be used.',
+					},
+					subject: {
+						type: 'string',
+						description: 'The subject of the email. If not provided, it will be set to "No Subject".',
+					},
+				},
+				required: ['to', 'body'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'sendWhatsAppVoiceMessage',
+			description:
+				'Convert text to speech, upload to Cloudinary, and send as a WhatsApp voice message. Requires parameters: to, body. Robots can speak!',
+			parameters: {
+				type: 'object',
+				properties: {
+					to: {
+						type: 'string',
+						description: 'The recipient WhatsApp number in E.164 format, e.g., +12695010475',
+					},
+					body: {
+						type: 'string',
+						description: 'The message you wanted converted and sent to your user as a WhatsApp voice message.',
+					},
+				},
+				required: ['to', 'body'],
 			},
 		},
 	},
