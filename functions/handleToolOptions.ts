@@ -690,7 +690,7 @@ export const tools = [
 		function: {
 			name: 'sendWhatsAppVoiceMessage',
 			description:
-				'Convert text to speech, upload to Cloudinary, and send as a WhatsApp voice message. Requires parameters: to, body. Robots can speak!',
+				'Convert text to speech, and send as a WhatsApp voice message to a user by there WhatsApp number. Requires parameters: to, body. ',
 			parameters: {
 				type: 'object',
 				properties: {
