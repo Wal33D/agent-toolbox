@@ -1,7 +1,7 @@
 import { SpeechConfig } from 'microsoft-cognitiveservices-speech-sdk';
 
-const AZURE_SPEECH_KEY = process.env.AZURE_SPEECH_KEY;
-const AZURE_SPEECH_REGION = process.env.AZURE_SPEECH_REGION;
+export const AZURE_SPEECH_KEY = process.env.AZURE_SPEECH_KEY;
+export const AZURE_SPEECH_REGION = process.env.AZURE_SPEECH_REGION;
 
 if (!AZURE_SPEECH_KEY) {
 	throw new Error('AZURE_SPEECH_KEY is not defined in environment variables.');

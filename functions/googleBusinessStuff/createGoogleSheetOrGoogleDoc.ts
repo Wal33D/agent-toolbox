@@ -1,5 +1,5 @@
 import { google } from 'googleapis';
-import { VercelRequest, VercelResponse } from '@vercel/node';
+import { VercelRequest } from '@vercel/node';
 
 const serviceAccount = JSON.parse(process.env.GDRIVE_SERVICE_ACCOUNT_JSON as string);
 const SCOPES = ['https://www.googleapis.com/auth/drive'];

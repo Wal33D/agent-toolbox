@@ -1,35 +1,60 @@
+// Communication functions
 import { sendEmail } from '../functions/communication/sendEmail';
-import { searchGoogle } from '../functions/searchGoogle/googleWebSearch';
-import { getLocationData } from '../functions/resolvers/location';
 import { sendTextMessage } from '../functions/communication/sendTextMessage';
-import { IPAddressLookUp } from '../functions/ip/ip';
-import { handleToolOptions } from '../functions/handleToolOptions';
-import { googleImageSearch } from '../functions/searchGoogle/googleImageSearch';
-import { getCurrentDateTime } from './getCurrentDateTime';
-import { uploadToCloudinary } from '../functions/weather/uploaders/uploadToCloudinary';
+import { textToAudioFile } from '../functions/communication/textToAudio';
+import { audioFileToText } from '../functions/communication/audioToTextFile';
 import { sendWhatsAppMessage } from '../functions/communication/sendWhatsAppMessage';
-import { fetchExtendedWeather } from '../functions/weather/fetchExtendedWeather';
-import { getWebsiteScreenshot } from '../functions/screenshot/getWebsiteScreenshot';
+import { sendWhatsAppVoiceMessage } from '../functions/communication/sendWhatsAppVoiceMessage';
+import { listenToWhatsAppVoiceAudio } from '../functions/communication/listenToWhatsAppVoiceAudio';
+import { viewAndDescribeWhatsAppImage } from '../functions/communication/viewAndDescribeWhatsAppImage';
+
+// Google search functions
+import { searchGoogle } from '../functions/searchGoogle/googleWebSearch';
+import { googleImageSearch } from '../functions/searchGoogle/googleImageSearch';
+
+// Location resolvers
+import { IPAddressLookUp } from '../functions/ip/ip';
+import { getLocationData } from '../functions/resolvers/location';
 import { googleAddressResolver } from '../functions/resolvers/googleAddressResolver';
+import { parsePhoneNumberHandler } from '../functions/resolvers/phonenumber';
+
+// Tool handling
+import { handleToolOptions } from '../functions/handleToolOptions';
+
+// Weather functions
+import { uploadToCloudinary } from '../functions/weather/uploaders/uploadToCloudinary';
+import { fetchExtendedWeather } from '../functions/weather/fetchExtendedWeather';
 import { fetchWeeklyWeatherData } from '../functions/weather/weeklyWeather';
 import { fetchTodaysWeatherData } from '../functions/weather/todaysWeather';
-import { parsePhoneNumberHandler } from '../functions/resolvers/phonenumber';
+
+// Screenshot functions
+import { getWebsiteScreenshot } from '../functions/screenshot/getWebsiteScreenshot';
+
+// Islamic prayer timings
 import { getIslamicPrayerTimingsDay } from '../functions/islamicPrayerTimingsDay';
 import { getIslamicPrayerTimingsWeek } from '../functions/IslamicPrayerTimingsWeek';
-import { VercelRequest, VercelResponse } from '@vercel/node';
-import { textToAudioFile } from '../functions/communication/textToAudio';
+
+// Google business functions
 import {
 	createGoogleDocsFile,
-	createGoogleSheetsFile,
 	updateGoogleDocsFile,
 	updateGoogleSheetsFile,
+	createGoogleSheetsFile,
 	setGoogleFilePermissions,
 } from '../functions/googleBusinessStuff/createGoogleSheetOrGoogleDoc';
-import { audioFileToText } from '../functions/communication/audioToTextFile';
-import { textToAudioFileOpenai } from '../functions/communication/textToSpeechOpenAi';
-import { sendWhatsAppVoiceMessage } from '../functions/communication/sendWhatsAppVoiceMessage';
 
-const handler = async (request: VercelRequest, response: VercelResponse) => {
+// Utility functions
+import { getCurrentDateTime } from './getCurrentDateTime';
+import { markWhatsAppMessageRead } from '../functions/communication/markWhatsAppMessageRead';
+import { sendWhatsAppLocation } from '../functions/communication/sendWhatsAppLocation';
+import { requestWhatsAppLocation } from '../functions/communication/requestWhatsAppLocation';
+
+interface AIRequest {
+	functionName: string;
+	[key: string]: any;
+}
+
+const handler = async (request: any, response: any) => {
 	if (request.method === 'OPTIONS') {
 		return await handleToolOptions(response);
 	}
@@ -37,13 +62,13 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		let functionName: string | null = null;
 
 		if (request.method === 'POST') {
-			const body = request.body;
+			const body: AIRequest = request.body;
 			functionName = body.functionName ? body.functionName.toLowerCase() : null;
 		} else {
 			throw new Error('Invalid request method');
 		}
 
-		const processRequest = async (request: VercelRequest) => {
+		const processRequest = async (request: any) => {
 			console.log({ functionName, request: request.body });
 			switch (functionName) {
 				case 'ipaddresslookup':
@@ -94,10 +119,18 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 					return await sendEmail(request);
 				case 'texttoaudio':
 					return await textToAudioFile(request);
-				case 'texttoaudioopenai':
-					return await textToAudioFileOpenai(request);
 				case 'audiototextfile':
 					return await audioFileToText(request);
+				case 'viewanddescribewhatsappimage':
+					return await viewAndDescribeWhatsAppImage(request);
+				case 'listentowhatsappvoiceaudio':
+					return await listenToWhatsAppVoiceAudio(request);
+				case 'markwhatsappmessageread':
+					return await markWhatsAppMessageRead(request);
+				case 'sendwhatsapplocation':
+					return await sendWhatsAppLocation(request);
+				case 'requestwhatsapplocation':
+					return await requestWhatsAppLocation(request);
 
 				default:
 					throw new Error('Invalid function name.');

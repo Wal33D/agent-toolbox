@@ -690,7 +690,7 @@ export const tools = [
 		function: {
 			name: 'sendWhatsAppVoiceMessage',
 			description:
-				'Convert text to speech, and send as a WhatsApp voice message to a user by there WhatsApp number. Requires parameters: to, body. ',
+				'Convert text to speech, and send as a WhatsApp voice message to a user by there WhatsApp number. Enables AI Assistant to (speak) through WhatsApp! Requires parameters: to, body. ',
 			parameters: {
 				type: 'object',
 				properties: {
@@ -704,6 +704,106 @@ export const tools = [
 					},
 				},
 				required: ['to', 'body'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'viewAndDescribeWhatsAppImage',
+			description:
+				'Analyze and describe a WhatsApp image given its media ID and optional quality parameter. Enables AI Assistant to (see) an image through WhatsApp!',
+			parameters: {
+				type: 'object',
+				properties: {
+					mediaId: {
+						type: 'string',
+						description: 'The ID of the WhatsApp media to be analyzed.',
+					},
+					quality: {
+						type: 'string',
+						enum: ['low', 'high'],
+						description: 'The desired quality of the image analysis. Defaults to "low".',
+					},
+				},
+				required: ['mediaId'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'listenToWhatsAppVoiceAudio',
+			description:
+				'Retrieve a WhatsApp voice message using the media ID, upload it to Cloudinary, transcribe the audio using OpenAI, and return the transcription. Enables AI Assistant to (hear) through WhatsApp!',
+			parameters: {
+				type: 'object',
+				properties: {
+					mediaId: {
+						type: 'string',
+						description: 'The ID of the WhatsApp media containing the voice message.',
+					},
+				},
+				required: ['mediaId'],
+			},
+		},
+	},
+
+	{
+		type: 'function',
+		function: {
+			name: 'sendWhatsAppLocation',
+			description: 'Send a location message using WhatsApp. Requires parameters: to, latitude, longitude, and optionally name and address.',
+			parameters: {
+				type: 'object',
+				properties: {
+					to: {
+						type: 'string',
+						description: 'The recipient WhatsApp number in E.164 format, e.g., +12695010475',
+					},
+					latitude: {
+						type: 'string',
+						description: 'The latitude of the location in decimal degrees.',
+					},
+					longitude: {
+						type: 'string',
+						description: 'The longitude of the location in decimal degrees.',
+					},
+					name: {
+						type: 'string',
+						description: 'The name of the location.',
+						optional: true,
+					},
+					address: {
+						type: 'string',
+						description: 'The address of the location.',
+						optional: true,
+					},
+				},
+				required: ['to', 'latitude', 'longitude'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
+			name: 'requestWhatsAppLocation',
+			description:
+				'Request the current real location of a user through WhatsApp by sending a location request to there device. If the user is lost, this is a great tool to use, easily get there location to assist! Requires parameters: to, text.',
+			parameters: {
+				type: 'object',
+				properties: {
+					to: {
+						type: 'string',
+						description: 'The recipient WhatsApp number in E.164 format, e.g., +12695010475',
+					},
+					text: {
+						type: 'string',
+						description:
+							'This is the message that will be sent to the user along with requesting their location. e.g., Click here to share your location with me.',
+					},
+				},
+				required: ['to', 'text'],
 			},
 		},
 	},

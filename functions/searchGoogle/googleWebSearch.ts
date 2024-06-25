@@ -34,7 +34,7 @@ export const searchGoogle = async (request: VercelRequest) => {
 					hl: req.hostLanguage || 'en',
 					gl: req.geolocation || 'us',
 					device: req.device || 'desktop',
-					num: req.numberOfResults ? req.numberOfResults.toString() : '2',
+					num: req.numberOfResults ? req.numberOfResults.toString() : '4',
 					max_page: req.max_page || '1',
 					include_html: req.include_html || 'false',
 					output: req.output || 'json',
