@@ -1,25 +1,41 @@
-const assert = require('assert');
 const { encodeEmailContent, EncodingType } = require('../dist/utils/encodeEmailContent.js');
 
-// Subject encoding
-const subjectResult = encodeEmailContent({ content: 'Hello', type: EncodingType.Subject });
-const expectedSubject = `=?utf-8?B?${Buffer.from('Hello', 'utf-8').toString('base64')}?=`;
-assert.strictEqual(subjectResult.isEncoded, true);
-assert.strictEqual(subjectResult.encodedContent, expectedSubject);
+describe('encodeEmailContent', () => {
+  test('subject encoding', () => {
+    const subjectResult = encodeEmailContent({
+      content: 'Hello',
+      type: EncodingType.Subject,
+    });
+    const expectedSubject = `=?utf-8?B?${Buffer.from('Hello', 'utf-8').toString('base64')}?=`;
+    expect(subjectResult.isEncoded).toBe(true);
+    expect(subjectResult.encodedContent).toBe(expectedSubject);
+  });
 
-// MIME message encoding
-const mimeResult = encodeEmailContent({ content: 'Hello', type: EncodingType.MimeMessage });
-const expectedMime = Buffer.from('Hello', 'utf-8').toString('base64').replace(/\+/g, '-').replace(/\//g, '_');
-assert.strictEqual(mimeResult.encodedContent, expectedMime);
+  test('MIME message encoding', () => {
+    const mimeResult = encodeEmailContent({
+      content: 'Hello',
+      type: EncodingType.MimeMessage,
+    });
+    const expectedMime = Buffer.from('Hello', 'utf-8')
+      .toString('base64')
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_');
+    expect(mimeResult.encodedContent).toBe(expectedMime);
+  });
 
-// Attachment encoding of plain text
-const attachmentResult = encodeEmailContent({ content: 'file content', type: EncodingType.Attachment });
-const expectedAttachment = Buffer.from('file content', 'utf-8').toString('base64');
-assert.strictEqual(attachmentResult.encodedContent, expectedAttachment);
+  test('attachment encoding of plain text', () => {
+    const attachmentResult = encodeEmailContent({
+      content: 'file content',
+      type: EncodingType.Attachment,
+    });
+    const expectedAttachment = Buffer.from('file content', 'utf-8').toString('base64');
+    expect(attachmentResult.encodedContent).toBe(expectedAttachment);
 
-// Attachment content already encoded
-const alreadyResult = encodeEmailContent({ content: expectedAttachment, type: EncodingType.Attachment });
-assert.strictEqual(alreadyResult.encodedContent, expectedAttachment);
-assert.strictEqual(alreadyResult.message, 'Attachment content was already Base64 encoded.');
-
-console.log('encodeEmailContent tests passed');
+    const alreadyResult = encodeEmailContent({
+      content: expectedAttachment,
+      type: EncodingType.Attachment,
+    });
+    expect(alreadyResult.encodedContent).toBe(expectedAttachment);
+    expect(alreadyResult.message).toBe('Attachment content was already Base64 encoded.');
+  });
+});
