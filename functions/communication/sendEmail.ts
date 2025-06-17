@@ -1,4 +1,3 @@
-import { detectHtml } from '../../utils/detectHtml';
 import { GmailMailer } from 'gmail-node-mailer';
 import { encodeEmailContent, EncodingType } from '../../utils/encodeEmailContent';
 import { SendEmailMessageRequestParams, SendMessageResponse } from './types';
@@ -60,15 +59,12 @@ export const sendEmail = async (request: SendEmailMessageRequestParams): Promise
 		}
 		const encodedSubject = encodedSubjectResponse.encodedContent;
 
-		const { isHtml } = detectHtml({ content: body });
-
                 const result = await gmailClient.sendEmail({
-			recipientEmail: to,
-			senderName,
-			subject: encodedSubject,
-			message: body,
-			html: isHtml,
-		});
+                        recipientEmail: to,
+                        senderName,
+                        subject: encodedSubject,
+                        message: body,
+                });
 
 		if (result.sent) {
 			success = true;
