@@ -3,6 +3,10 @@
 	"author": "Wal33D",
 	"license": "MIT",
 	"private": true,
+	"scripts": {
+		"build": "tsc",
+		"test": "echo \"No tests\""
+	},
 	"devDependencies": {
 		"@types/node": "^17.0.45",
 		"@vercel/node": "^2.15.10",
