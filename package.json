@@ -3,6 +3,9 @@
   "author": "Wal33D",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsc",
     "test": "echo \"No tests\""
