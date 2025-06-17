@@ -17,8 +17,7 @@ interface viewAndDescribeWhatsAppImageParams {
 export const viewAndDescribeWhatsAppImage = async (request: viewAndDescribeWhatsAppImageParams): Promise<any> => {
 	const { mediaId, quality = 'low' } = request.body;
 
-        try {
-
+	try {
 		const { data: mediaData } = await axios.get(`${process.env.WHATSAPP_GRAPH_API_URL}/${mediaId}`, {
 			headers: {
 				Authorization: `Bearer ${process.env.WHATSAPP_GRAPH_API_TOKEN}`,

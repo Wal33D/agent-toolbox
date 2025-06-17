@@ -17,8 +17,8 @@ const imageSearch = (options: ImageSearchOptions): Promise<ImageResult[]> => {
 		}
 	}
 
-        return new Promise((resolve, reject) => {
-                gis(options, (error: any, results: any) => {
+	return new Promise((resolve, reject) => {
+		gis(options, (error: any, results: any) => {
 			if (error) {
 				reject(error);
 			} else {
@@ -34,25 +34,25 @@ export const googleImageSearch = async (request: VercelRequest): Promise<ImageSe
 
 		if (request.method === 'GET') {
 			requestBody = [parseQueryParams(request.query) as ImageSearchOptions];
-                } else if (request.method === 'POST') {
-                        requestBody = Array.isArray(request.body) ? request.body : [request.body];
-                } else {
-                        return {
-                                status: false,
-                                message: 'Invalid request method',
-                                data: [],
-                        };
-                }
+		} else if (request.method === 'POST') {
+			requestBody = Array.isArray(request.body) ? request.body : [request.body];
+		} else {
+			return {
+				status: false,
+				message: 'Invalid request method',
+				data: [],
+			};
+		}
 
-                if (requestBody.length > 50) {
-                        return {
-                                status: false,
-                                message: 'Too many requests. Please provide 50 or fewer requests in a single call.',
-                                data: [],
-                        };
-                }
+		if (requestBody.length > 50) {
+			return {
+				status: false,
+				message: 'Too many requests. Please provide 50 or fewer requests in a single call.',
+				data: [],
+			};
+		}
 
-                const results: ImageResult[][] = await Promise.all(
+		const results: ImageResult[][] = await Promise.all(
 			requestBody.map(async options => {
 				if (!options.searchTerm) {
 					throw new Error('Search term is required');
@@ -68,13 +68,13 @@ export const googleImageSearch = async (request: VercelRequest): Promise<ImageSe
 			message: 'Images retrieved successfully.',
 			data: results,
 		};
-        } catch (error: any) {
-                return {
-                        status: false,
-                        message: `Error: ${error.message}`,
-                        data: [],
-                };
-        }
+	} catch (error: any) {
+		return {
+			status: false,
+			message: `Error: ${error.message}`,
+			data: [],
+		};
+	}
 };
 
 export default googleImageSearch;

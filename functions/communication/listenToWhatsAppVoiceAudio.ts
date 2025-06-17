@@ -18,8 +18,7 @@ interface ListenToWhatsAppVoiceAudioParams {
 export const listenToWhatsAppVoiceAudio = async (request: ListenToWhatsAppVoiceAudioParams): Promise<any> => {
 	const { mediaId } = request.body;
 
-        try {
-
+	try {
 		const { data: mediaData } = await axios.get(`${process.env.WHATSAPP_GRAPH_API_URL}/${mediaId}`, {
 			headers: {
 				Authorization: `Bearer ${process.env.WHATSAPP_GRAPH_API_TOKEN}`,

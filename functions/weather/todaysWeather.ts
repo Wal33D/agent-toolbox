@@ -2,21 +2,18 @@ import axios from 'axios';
 import { VercelRequest } from '@vercel/node';
 import { WeatherRequest, TodaysWeatherResponse } from './weatherTypes';
 
-export const fetchTodaysWeatherData = async (
-        request: VercelRequest
-): Promise<TodaysWeatherResponse> => {
-       const weatherApiKey = process.env.VISUAL_CROSSING_WEATHER_API_KEY;
+export const fetchTodaysWeatherData = async (request: VercelRequest): Promise<TodaysWeatherResponse> => {
+	const weatherApiKey = process.env.VISUAL_CROSSING_WEATHER_API_KEY;
 
-        let location;
-        const { lat, lon, city, state, zipCode, country } =
-                request.body as WeatherRequest;
-        if (lat !== undefined && lon !== undefined) {
-                location = `${lat},${lon}`;
-        } else if (city && state) {
-                const countryCode = country || 'US';
-                location = `${city},${state},${countryCode}`;
-        } else if (zipCode) {
-                location = zipCode;
+	let location;
+	const { lat, lon, city, state, zipCode, country } = request.body as WeatherRequest;
+	if (lat !== undefined && lon !== undefined) {
+		location = `${lat},${lon}`;
+	} else if (city && state) {
+		const countryCode = country || 'US';
+		location = `${city},${state},${countryCode}`;
+	} else if (zipCode) {
+		location = zipCode;
 	} else {
 		throw new Error('Either city/state, zip code, or lat/lon must be provided');
 	}

@@ -2,17 +2,14 @@ import { getVisualWeather } from './visualWeatherFunction';
 import { VercelRequest } from '@vercel/node';
 import { WeatherRequest, ExtendedWeatherResponse, ForecastDay } from './weatherTypes';
 
-export const fetchExtendedWeather = async (
-        request: VercelRequest
-): Promise<ExtendedWeatherResponse> => {
-        const { city, state, zipCode, lat, lon } =
-                request.body as WeatherRequest;
+export const fetchExtendedWeather = async (request: VercelRequest): Promise<ExtendedWeatherResponse> => {
+	const { city, state, zipCode, lat, lon } = request.body as WeatherRequest;
 
 	if (!city && !state && !zipCode && (lat === undefined || lon === undefined)) {
 		throw new Error('Please provide either {city, state, country (optional)}, {zipCode}, or {lat, lon}.');
 	}
 
-        let weatherData: any;
+	let weatherData: any;
 	try {
 		weatherData = await getVisualWeather(request);
 	} catch (error: any) {
@@ -78,10 +75,13 @@ const getAvgHumidity = (forecast: ForecastDay[]) => {
 
 const getConditions = (forecast: ForecastDay[]) => {
 	const conditions = forecast.map(entry => entry.conditions);
-        const frequency = conditions.reduce<Record<string, number>>((freq, condition) => {
-                freq[condition] = (freq[condition] || 0) + 1;
-                return freq;
-        }, {} as Record<string, number>);
+	const frequency = conditions.reduce<Record<string, number>>(
+		(freq, condition) => {
+			freq[condition] = (freq[condition] || 0) + 1;
+			return freq;
+		},
+		{} as Record<string, number>
+	);
 	const mostFrequentCondition = Object.keys(frequency).reduce((a, b) => (frequency[a] > frequency[b] ? a : b));
 	return mostFrequentCondition;
 };
