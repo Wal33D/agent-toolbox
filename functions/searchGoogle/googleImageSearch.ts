@@ -17,15 +17,15 @@ const imageSearch = (options: ImageSearchOptions): Promise<ImageResult[]> => {
 		}
 	}
 
-	return new Promise((resolve, reject) => {
-		gis(options, (error: any, results: any) => {
-			if (error) {
-				reject(error);
-			} else {
-				resolve(results);
-			}
-		});
-	});
+        return new Promise<ImageResult[]>((resolve, reject) => {
+                gis(options, (error: Error | null, results: ImageResult[]) => {
+                        if (error) {
+                                reject(error);
+                        } else {
+                                resolve(results);
+                        }
+                });
+        });
 };
 
 export const googleImageSearch = async (request: VercelRequest): Promise<ImageSearchResponse> => {
@@ -68,13 +68,13 @@ export const googleImageSearch = async (request: VercelRequest): Promise<ImageSe
 			message: 'Images retrieved successfully.',
 			data: results,
 		};
-	} catch (error: any) {
-		return {
-			status: false,
-			message: `Error: ${error.message}`,
-			data: [],
-		};
-	}
+        } catch (error: unknown) {
+                return {
+                        status: false,
+                        message: `Error: ${(error as Error).message}`,
+                        data: [],
+                };
+        }
 };
 
 export default googleImageSearch;

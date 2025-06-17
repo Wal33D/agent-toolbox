@@ -69,14 +69,14 @@ export function encodeEmailContent({ content = '', type }: IEncodeEmailContentPa
 			default:
 				throw new Error('Invalid encoding type specified.');
 		}
-	} catch (error: any) {
-		console.error(`Error encoding ${type}:`, error.message);
-		return {
-			isEncoded: false,
-			encodedContent: content, // Return original content on error
-			message: `Error during encoding: ${error.message}`,
-		};
-	}
+        } catch (error: unknown) {
+                console.error(`Error encoding ${type}:`, (error as Error).message);
+                return {
+                        isEncoded: false,
+                        encodedContent: content, // Return original content on error
+                        message: `Error during encoding: ${(error as Error).message}`,
+                };
+        }
 
 	return {
 		isEncoded: true,

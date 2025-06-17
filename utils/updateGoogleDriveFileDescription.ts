@@ -52,10 +52,10 @@ export const updateGoogleDriveFileDescription = async ({
 			fileId,
 			description,
 		};
-	} catch (error: any) {
-		return {
-			success: false,
-			error: `Error updating file description: ${error.message}`,
-		};
-	}
+        } catch (error: unknown) {
+                return {
+                        success: false,
+                        error: `Error updating file description: ${(error as Error).message}`,
+                };
+        }
 };
