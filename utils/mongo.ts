@@ -2,6 +2,12 @@ import { MongoClient, Db, Collection } from 'mongodb';
 
 const { DB_USERNAME: dbUsername = '', DB_PASSWORD: dbPassword = '', DB_NAME: dbName = '', DB_CLUSTER: dbClusterName = '' } = process.env;
 
+if (!dbUsername || !dbPassword || !dbName || !dbClusterName) {
+        throw new Error(
+                'MongoDB credentials are missing. Please set DB_USERNAME, DB_PASSWORD, DB_NAME, and DB_CLUSTER.'
+        );
+}
+
 const uri = `mongodb+srv://${encodeURIComponent(dbUsername)}:${encodeURIComponent(dbPassword)}@${dbClusterName}/?retryWrites=true&w=majority`;
 
 let client: MongoClient | null = null;

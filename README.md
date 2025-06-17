@@ -52,6 +52,10 @@ Create a `.env` file using `.env.example` as a reference. Required variables inc
 - `GOOGLE_API_KEY` – Key for Google APIs
 - `SCALE_SERP_API_KEY` – API key for Scale SERP web search
 
+These variables must be configured for the related features to work. Modules like
+`utils/getToken.ts` and `utils/mongo.ts` now throw errors when values such as
+`TRUSTED_API_KEY` or the MongoDB credentials are missing.
+
 ## Building and Deploying to Vercel
 
 1. Install dependencies with `npm install`.

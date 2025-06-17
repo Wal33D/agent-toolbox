@@ -5,6 +5,10 @@ import { parseQueryParams } from '../../utils/parseQueryParams';
 
 const openaiApiKey = process.env.OPENAI_API_KEY;
 
+if (!openaiApiKey) {
+        throw new Error('OPENAI_API_KEY is not defined in environment variables.');
+}
+
 interface ScrapeRequestBody {
 	url: string;
 }

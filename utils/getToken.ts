@@ -6,6 +6,10 @@ import { connectToMongo } from './mongo';
 
 const tokenUrl = 'https://jwt.aquataze.com/';
 const apiKey = process.env.TRUSTED_API_KEY || '';
+
+if (!apiKey) {
+        throw new Error('TRUSTED_API_KEY is not defined in environment variables.');
+}
 const tokenFilePath = path.resolve(__dirname, 'token.json');
 
 const uploaderUrl = 'https://gdrive.aquataze.com/';
