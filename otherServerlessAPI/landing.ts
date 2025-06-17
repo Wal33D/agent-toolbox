@@ -115,7 +115,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 						status: true,
 						data: htmlContent,
 					};
-				} catch (error) {
+                                } catch (error: any) {
 					return {
 						status: false,
 						message: `Failed to retrieve content for URL "${url}": ${error.message}`,

@@ -17,8 +17,8 @@ const imageSearch = (options: ImageSearchOptions): Promise<ImageResult[]> => {
 		}
 	}
 
-	return new Promise((resolve, reject) => {
-		gis(options, (error, results) => {
+        return new Promise((resolve, reject) => {
+                gis(options, (error: any, results: any) => {
 			if (error) {
 				reject(error);
 			} else {

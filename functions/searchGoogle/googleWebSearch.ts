@@ -62,7 +62,7 @@ export const searchGoogle = async (request: VercelRequest): Promise<WebSearchRes
 						searchUrl: engine_url,
 						metaDataUrl: json_url,
 					};
-				} catch (error) {
+				} catch (error: any) {
 					throw new Error(`Failed to retrieve results for query "${req.searchTerm}": ${error.message}`);
 				}
 			})

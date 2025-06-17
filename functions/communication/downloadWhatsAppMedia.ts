@@ -98,7 +98,7 @@ export const downloadWhatsAppMedia = async (request: DownloadWhatsAppMediaParams
 
 						fs.unlinkSync(filePath);
 						resolve(null);
-					} catch (error) {
+					} catch (error: any) {
 						reject(error);
 					}
 				});

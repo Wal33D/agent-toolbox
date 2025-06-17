@@ -58,7 +58,7 @@ export const parsePhoneNumberHandler = async (request: VercelRequest): Promise<a
 					uri: phoneNumber?.getURI(),
 					validationError: validationError || undefined,
 				};
-			} catch (error) {
+			} catch (error: any) {
 				return {
 					number,
 					isValid: false,
