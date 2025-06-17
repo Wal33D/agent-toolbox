@@ -54,7 +54,7 @@ window.onclick = (event) => {
 
 const fetchTools = async () => {
     try {
-        const res = await fetch('/api/toolsHandler', { method: 'OPTIONS' });
+        const res = await fetch('/belt', { method: 'OPTIONS' });
 
         const data = await res.json();
         tools = data.tools || [];
