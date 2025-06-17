@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { verifyJWT } = require('../dist/utils/verifyJWT.js');
+const { verifyJWT } = require('../utils/verifyJWT.ts');
 
 describe('verifyJWT', () => {
   beforeAll(() => {

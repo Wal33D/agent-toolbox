@@ -1,4 +1,4 @@
-const { parseQueryParams } = require('../dist/utils/parseQueryParams.js');
+const { parseQueryParams } = require('../utils/parseQueryParams.ts');
 
 describe('parseQueryParams', () => {
   test('parses query values into the correct types', () => {
