@@ -29,12 +29,12 @@ export const sendEmail = async (request: SendEmailMessageRequestParams): Promise
 	let error: string | undefined;
 	let msgId: string | undefined;
 
-	if (!global.gmailClient) {
-		const mailer = new GmailMailer();
-		try {
-			await mailer.initializeClient({});
-			global.gmailClient = mailer;
-		} catch (err: any) {
+        if (!global.gmailClient) {
+                const mailer = new GmailMailer();
+                try {
+                        await mailer.initializeClient({});
+                        global.gmailClient = mailer;
+                } catch (err: any) {
 			error = `Error initializing mailer client: ${err.message}`;
 			const duration = `${Date.now() - startTimestamp} ms`;
 			return {
@@ -49,9 +49,11 @@ export const sendEmail = async (request: SendEmailMessageRequestParams): Promise
 				error,
 			};
 		}
-	}
+        }
 
-	try {
+        const gmailClient = global.gmailClient as GmailMailer;
+
+        try {
 		const encodedSubjectResponse = encodeEmailContent({ content: subject ?? '', type: EncodingType.Subject });
 		if (!encodedSubjectResponse.isEncoded) {
 			throw new Error(`Error encoding subject: ${encodedSubjectResponse.message}`);
@@ -60,7 +62,7 @@ export const sendEmail = async (request: SendEmailMessageRequestParams): Promise
 
 		const { isHtml } = detectHtml({ content: body });
 
-		const result = await global.gmailClient.sendEmail({
+                const result = await gmailClient.sendEmail({
 			recipientEmail: to,
 			senderName,
 			subject: encodedSubject,
