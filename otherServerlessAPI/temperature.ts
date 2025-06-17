@@ -32,9 +32,12 @@ const convertTemperature = ({ from, to, value }: { from: string; to: string; val
 };
 
 const handler = async (request: VercelRequest, response: VercelResponse) => {
-	if (request.method !== 'OPTIONS' && !verifyRequestToken(request)) {
-		return response.status(401).json({ status: false, message: 'Unauthorized' });
-	}
+        if (request.method !== 'OPTIONS') {
+                const verification = verifyRequestToken(request);
+                if (!verification.valid) {
+                        return response.status(401).json({ status: false, message: verification.error });
+                }
+        }
 	try {
 		let requests: any[] = [];
 
