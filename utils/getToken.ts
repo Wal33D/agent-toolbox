@@ -51,7 +51,7 @@ const fetchToken = async (): Promise<TokenStore> => {
 			issuedAt: tokenData.issuedAt,
 			expiresAt: tokenData.expiresAt,
 		};
-	} catch (error) {
+	} catch (error: any) {
 		console.error('Error fetching token:', error);
 		throw new Error('Unable to fetch token');
 	}
@@ -121,7 +121,7 @@ export const getToken = async (storage: 'DATABASE' | 'DISK' | 'MEMORY' = 'DATABA
 	return tokenStore.token!;
 };
 
-export const uploadGDriveHelper = async ({ form }): Promise<any> => {
+export const uploadGDriveHelper = async ({ form }: { form: any }): Promise<any> => {
 	try {
 		const token = await getToken();
 		const response = await axios.post(uploaderUrl, form, {
@@ -132,7 +132,7 @@ export const uploadGDriveHelper = async ({ form }): Promise<any> => {
 		});
 		console.log(response);
 		return response;
-	} catch (error) {
+	} catch (error: any) {
 		throw error;
 	}
 };

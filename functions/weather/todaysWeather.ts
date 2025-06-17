@@ -61,14 +61,14 @@ export const fetchTodaysWeatherData = async (
 	return result;
 };
 
-const convertTo12HourFormat = time24 => {
+const convertTo12HourFormat = (time24: string) => {
 	const [hour, minute] = time24.split(':');
 	const period = +hour < 12 ? 'AM' : 'PM';
 	const hour12 = +hour % 12 || 12;
 	return `${hour12}:${minute} ${period}`;
 };
 
-export const getTodaysWeatherDescription = currentConditions => {
+export const getTodaysWeatherDescription = (currentConditions: any) => {
 	const windDirection = getWindDirection(currentConditions.winddir);
 
 	return `Currently, the weather is ${currentConditions.conditions.toLowerCase()}. The temperature is approximately ${
@@ -89,7 +89,7 @@ export const getTodaysWeatherDescription = currentConditions => {
 	} W/m², and UV index is ${currentConditions.uvindex}. Sunrise at ${currentConditions.sunrise} and sunset at ${currentConditions.sunset}.`;
 };
 
-const getWindDirection = degree => {
+const getWindDirection = (degree: number) => {
 	if (degree > 337.5) return 'North';
 	if (degree > 292.5) return 'North-West';
 	if (degree > 247.5) return 'West';
@@ -101,14 +101,14 @@ const getWindDirection = degree => {
 	return 'North';
 };
 
-const convertTemp = (temp, unit) => {
+const convertTemp = (temp: number, unit: string) => {
 	if (unit === 'F') {
 		return Math.round((temp * 9) / 5 + 32);
 	}
 	return Math.round(temp); // Default is Celsius
 };
 
-const getUnitInitial = unit => {
+const getUnitInitial = (unit: string | undefined) => {
 	if (typeof unit === 'string') {
 		const upperUnit = unit.toUpperCase();
 		if (upperUnit === 'CELSIUS') return 'C';
@@ -118,19 +118,19 @@ const getUnitInitial = unit => {
 	return 'F';
 };
 
-export const getTodaysTemp = (data, unit = 'F') => {
+export const getTodaysTemp = (data: any, unit = 'F') => {
 	const tempC = data.currentWeather.temp;
 	const temp = convertTemp(tempC, getUnitInitial(unit));
 	return temp;
 };
 
-export const getTodaysFeelslike = (data, unit = 'F') => {
+export const getTodaysFeelslike = (data: any, unit = 'F') => {
 	const feelslikeC = data.currentWeather.feelslike;
 	const feelslike = convertTemp(feelslikeC, getUnitInitial(unit));
 	return feelslike;
 };
 
-export const getTodaysDew = (data, unit = 'F') => {
+export const getTodaysDew = (data: any, unit = 'F') => {
 	const dewC = data.currentWeather.dew;
 	const dew = convertTemp(dewC, getUnitInitial(unit));
 	return dew;

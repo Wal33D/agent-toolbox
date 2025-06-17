@@ -9,7 +9,7 @@ const fetchCoordinates = async (url: string) => {
 	try {
 		const response = await axios.get(url);
 		return response.data;
-	} catch (error) {
+	} catch (error: any) {
 		console.error(`Failed to fetch data: ${(error as Error).message}`);
 		throw new Error(`Failed to fetch data: ${(error as Error).message}`);
 	}

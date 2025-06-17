@@ -1,9 +1,9 @@
 export const getStateAbbreviation = (state: string) => {
-	const stateAbbreviation = Object.keys(statesHash).find(key => statesHash[key] === state) || state;
-	return stateAbbreviation.toUpperCase();
+        const stateAbbreviation = Object.keys(statesHash).find(key => statesHash[key] === state) || state;
+        return stateAbbreviation.toUpperCase();
 };
 
-const statesHash = {
+const statesHash: Record<string, string> = {
 	AL: 'Alabama',
 	AK: 'Alaska',
 	AS: 'American Samoa',
