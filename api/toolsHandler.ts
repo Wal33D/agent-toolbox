@@ -2,13 +2,17 @@
 import { handleToolOptions } from '../functions/handleToolOptions';
 import { verifyRequestToken } from '../utils/verifyJWT';
 import { toolsMap } from './toolsMap';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 interface AIRequest {
 	functionName: string;
 	[key: string]: any;
 }
 
-const handler = async (request: any, response: any) => {
+const handler = async (
+        request: VercelRequest,
+        response: VercelResponse,
+) => {
 	if (request.method === 'OPTIONS') {
 		return await handleToolOptions(response);
 	}
