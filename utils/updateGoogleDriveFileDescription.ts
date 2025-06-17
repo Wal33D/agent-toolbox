@@ -1,6 +1,18 @@
 import { google, drive_v3 } from 'googleapis';
 
-const serviceAccount = JSON.parse(process.env.GDRIVE_SERVICE_ACCOUNT_JSON as string);
+function getServiceAccount() {
+	const json = process.env.GDRIVE_SERVICE_ACCOUNT_JSON;
+	if (!json) {
+		throw new Error('Google service account configuration is required');
+	}
+	try {
+		return JSON.parse(json);
+	} catch {
+		throw new Error('Invalid JSON in GDRIVE_SERVICE_ACCOUNT_JSON');
+	}
+}
+
+const serviceAccount = getServiceAccount();
 const SCOPES = ['https://www.googleapis.com/auth/drive'];
 
 const auth = new google.auth.JWT({
