@@ -1,25 +1,14 @@
 import axios from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
-import { MongoClient, Db, Collection } from 'mongodb';
+import { Collection } from 'mongodb';
+import { connectToMongo } from './mongo';
 
 const tokenUrl = 'https://jwt.aquataze.com/';
 const apiKey1 = process.env.TRUSTED_API_KEY_1 || '';
 const apiKey2 = process.env.TRUSTED_API_KEY_2 || '';
 const tokenFilePath = path.resolve(__dirname, 'token.json');
 
-// MongoDB configuration with fallbacks
-const {
-	DB_USERNAME: dbUsername = '',
-	DB_PASSWORD: dbPassword = '',
-	DB_NAME: dbName = 'defaultDbName',
-	DB_CLUSTER: dbClusterName = 'defaultClusterName',
-} = process.env;
-
-const mongoUri = `mongodb+srv://${encodeURIComponent(dbUsername)}:${encodeURIComponent(dbPassword)}@${dbClusterName}/?retryWrites=true&w=majority`;
-
-let client: MongoClient | null = null;
-let db: Db | null = null;
 
 const uploaderUrl = 'https://gdrive.aquataze.com/';
 
@@ -33,33 +22,10 @@ interface TokenResponse {
 }
 
 interface TokenStore {
-	token?: string;
-	issuedAt?: number;
-	expiresAt?: number;
+        token?: string;
+        issuedAt?: number;
+        expiresAt?: number;
 }
-
-// Utility functions for MongoDB connection
-const connectWithRetry = async (uri: string, attempts = 5): Promise<MongoClient> => {
-	for (let attempt = 1; attempt <= attempts; attempt++) {
-		try {
-			const client = new MongoClient(uri);
-			await client.connect();
-			return client;
-		} catch (error) {
-			if (attempt < attempts) await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
-			else throw error;
-		}
-	}
-	throw new Error('Connection attempts exceeded.');
-};
-
-const connectToMongo = async (): Promise<Db> => {
-	if (!client) {
-		client = await connectWithRetry(mongoUri);
-		db = client.db(dbName);
-	}
-	return db as Db;
-};
 
 const getTokenCollection = async (): Promise<Collection> => {
 	const db = await connectToMongo();
