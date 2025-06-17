@@ -121,4 +121,36 @@ export const toolsMap: Record<string, ToolHandler> = {
     const { requestWhatsAppLocation } = await import('../functions/communication/requestWhatsAppLocation');
     return requestWhatsAppLocation(req);
   },
+  convertarea: async (req) => {
+    const { convertArea } = await import('../functions/unitConversion/convertArea');
+    return convertArea(req);
+  },
+  convertlength: async (req) => {
+    const { convertLength } = await import('../functions/unitConversion/convertLength');
+    return convertLength(req);
+  },
+  convertweight: async (req) => {
+    const { convertWeight } = await import('../functions/unitConversion/convertWeight');
+    return convertWeight(req);
+  },
+  convertvolume: async (req) => {
+    const { convertVolume } = await import('../functions/unitConversion/convertVolume');
+    return convertVolume(req);
+  },
+  convertspeed: async (req) => {
+    const { convertSpeed } = await import('../functions/unitConversion/convertSpeed');
+    return convertSpeed(req);
+  },
+  converttemperature: async (req) => {
+    const { convertTemperature } = await import('../functions/unitConversion/convertTemperature');
+    return convertTemperature(req);
+  },
+  fetchtextcontentofwebsite: async (req) => {
+    const { fetchTextContentOfWebsite } = await import('../functions/webTools/fetchTextContentOfWebsite');
+    return fetchTextContentOfWebsite(req);
+  },
+  generatelandingpage: async (req) => {
+    const { generateLandingPage } = await import('../functions/webTools/generateLandingPage');
+    return generateLandingPage(req);
+  },
 };
