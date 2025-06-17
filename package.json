@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "node --max-old-space-size=4096 ./node_modules/typescript/bin/tsc && mkdir -p public",
-    "test": "npm run build && node tests/verifyJWT.test.js",
+    "test": "npm run build && node tests/verifyJWT.test.js && node tests/getStateAbbreviation.test.js && node tests/encodeEmailContent.test.js && node tests/parseQueryParams.test.js",
     "lint": "ESLINT_USE_FLAT_CONFIG=true eslint \"**/*.ts\"",
     "format": "prettier --write \"**/*.ts\""
   },
