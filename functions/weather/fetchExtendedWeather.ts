@@ -1,7 +1,12 @@
 import { getVisualWeather } from './visualWeatherFunction';
+import { VercelRequest } from '@vercel/node';
+import { WeatherRequest, ExtendedWeatherResponse } from './weatherTypes';
 
-export const fetchExtendedWeather = async request => {
-	const { city, state, zipCode, lat, lon } = request.body;
+export const fetchExtendedWeather = async (
+        request: VercelRequest
+): Promise<ExtendedWeatherResponse> => {
+        const { city, state, zipCode, lat, lon } =
+                request.body as WeatherRequest;
 
 	if (!city && !state && !zipCode && (lat === undefined || lon === undefined)) {
 		throw new Error('Please provide either {city, state, country (optional)}, {zipCode}, or {lat, lon}.');

@@ -1,13 +1,18 @@
 import axios from 'axios';
 import { getNextEnvKey } from 'envholster';
+import { VercelRequest } from '@vercel/node';
+import { WeatherRequest, TodaysWeatherResponse } from './weatherTypes';
 
-export const fetchTodaysWeatherData = async request => {
+export const fetchTodaysWeatherData = async (
+        request: VercelRequest
+): Promise<TodaysWeatherResponse> => {
 	const { key: weatherApiKey } = await getNextEnvKey({
 		baseEnvName: 'VISUAL_CROSSING_WEATHER_API_KEY_',
 	});
 
-	let location;
-	let { lat, lon, city, state, zipCode, country } = request.body;
+        let location;
+        const { lat, lon, city, state, zipCode, country } =
+                request.body as WeatherRequest;
 	if (lat !== undefined && lon !== undefined) {
 		location = `${lat},${lon}`;
 	} else if (city && state) {

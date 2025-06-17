@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { getNextEnvKey } from 'envholster';
 import { parseQueryParams } from '../../utils/parseQueryParams';
-import { SerpSearchRequest } from './searchGoogleTypes';
+import { SerpSearchRequest, WebSearchResponse, WebSearchResult } from './searchGoogleTypes';
 import { VercelRequest } from '@vercel/node';
 
-export const searchGoogle = async (request: VercelRequest) => {
+export const searchGoogle = async (request: VercelRequest): Promise<WebSearchResponse> => {
 	try {
 		const { key: apiKey } = await getNextEnvKey({ baseEnvName: 'SCALE_SERP_API_KEY_' });
 
@@ -25,8 +25,8 @@ export const searchGoogle = async (request: VercelRequest) => {
 			};
 		}
 
-		const results = await Promise.all(
-			requests.map(async req => {
+                const results: WebSearchResult[] = await Promise.all(
+                        requests.map(async req => {
 				const params: any = {
 					api_key: apiKey,
 					q: req.searchTerm,

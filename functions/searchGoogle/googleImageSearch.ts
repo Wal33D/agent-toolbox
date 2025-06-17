@@ -2,7 +2,7 @@ import gis from 'g-i-s';
 
 import { VercelRequest } from '@vercel/node';
 import { parseQueryParams } from '../../utils/parseQueryParams';
-import { ImageResult, ImageSearchOptions } from './searchGoogleTypes';
+import { ImageResult, ImageSearchOptions, ImageSearchResponse } from './searchGoogleTypes';
 
 const imageSearch = (options: ImageSearchOptions): Promise<ImageResult[]> => {
 	if (options.size) {
@@ -28,7 +28,7 @@ const imageSearch = (options: ImageSearchOptions): Promise<ImageResult[]> => {
 	});
 };
 
-export const googleImageSearch = async (request: VercelRequest): Promise<any> => {
+export const googleImageSearch = async (request: VercelRequest): Promise<ImageSearchResponse> => {
 	try {
 		let requestBody: ImageSearchOptions[];
 
@@ -51,7 +51,7 @@ export const googleImageSearch = async (request: VercelRequest): Promise<any> =>
 			};
 		}
 
-		const results = await Promise.all(
+                const results: ImageResult[][] = await Promise.all(
 			requestBody.map(async options => {
 				if (!options.searchTerm) {
 					throw new Error('Search term is required');
