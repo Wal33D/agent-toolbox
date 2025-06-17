@@ -263,7 +263,7 @@ export const tools = [
 		type: 'function',
 		function: {
 			name: 'googleImageSearch',
-			description: 'Retrieve images based on a search term using the g-i-s package.',
+			description: 'Retrieve images based on a search term using the Scale SERP API.',
 			parameters: {
 				type: 'object',
 				properties: {

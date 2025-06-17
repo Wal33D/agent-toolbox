@@ -1,36 +1,36 @@
-import gis from 'g-i-s';
-
+import axios from 'axios';
 import { VercelRequest } from '@vercel/node';
 import { parseQueryParams } from '../../utils/parseQueryParams';
 import { ImageResult, ImageSearchOptions, ImageSearchResponse } from './searchGoogleTypes';
 
-const imageSearch = (options: ImageSearchOptions): Promise<ImageResult[]> => {
-	if (options.size) {
-		const sizeMap: { [key: string]: string } = {
-			small: 'isz:i,s',
-			medium: 'isz:m',
-			large: 'isz:l',
-			icon: 'isz:i',
-		};
-		if (sizeMap[options.size]) {
-			options.queryStringAddition = `${options.queryStringAddition || ''}&${sizeMap[options.size]}`;
-		}
-	}
+const fetchImages = async (options: ImageSearchOptions, apiKey: string): Promise<ImageResult[]> => {
+        const params: Record<string, string> = {
+                api_key: apiKey,
+                q: options.searchTerm,
+                search_type: 'images',
+        };
 
-        return new Promise<ImageResult[]>((resolve, reject) => {
-                gis(options, (error: Error | null, results: ImageResult[]) => {
-                        if (error) {
-                                reject(error);
-                        } else {
-                                resolve(results);
-                        }
-                });
-        });
+        if (options.size) {
+                params.image_size = options.size;
+        }
+
+        const response = await axios.get('https://api.scaleserp.com/search', { params });
+
+        return (response.data.image_results || []).map((result: any) => ({
+                url: result.image || result.link,
+                width: result.width || 0,
+                height: result.height || 0,
+        }));
 };
 
 export const googleImageSearch = async (request: VercelRequest): Promise<ImageSearchResponse> => {
-	try {
-		let requestBody: ImageSearchOptions[];
+        try {
+                const apiKey = process.env.SCALE_SERP_API_KEY;
+                if (!apiKey) {
+                        throw new Error('SCALE_SERP_API_KEY environment variable is not set');
+                }
+
+                let requestBody: ImageSearchOptions[];
 
 		if (request.method === 'GET') {
 			requestBody = [parseQueryParams(request.query) as ImageSearchOptions];
@@ -58,10 +58,10 @@ export const googleImageSearch = async (request: VercelRequest): Promise<ImageSe
 					throw new Error('Search term is required');
 				}
 
-				const images = await imageSearch(options);
-				return images;
-			})
-		);
+                                const images = await fetchImages(options, apiKey);
+                                return images;
+                        })
+                );
 
 		return {
 			status: true,
