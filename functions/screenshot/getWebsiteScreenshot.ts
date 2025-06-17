@@ -30,14 +30,18 @@ const randomizeDelay = async (min: number, max: number) => {
 
 export const getWebsiteScreenshot = async (request: VercelRequest) => {
 	try {
-		let screenshotRequest: ScreenshotRequest;
+                let screenshotRequest: Partial<ScreenshotRequest>;
 
-		if (request.method === 'GET') {
-			//@ts-ignore
-			screenshotRequest = request.query as ScreenshotRequest;
-		} else if (request.method === 'POST') {
-			screenshotRequest = request.body as ScreenshotRequest;
-		} else {
+                if (request.method === 'GET') {
+                        const query = request.query as Partial<ScreenshotRequest>;
+                        screenshotRequest = {
+                                url: typeof query.url === 'string' ? query.url : undefined,
+                                height: query.height !== undefined ? Number(query.height) : undefined,
+                                width: query.width !== undefined ? Number(query.width) : undefined,
+                        };
+                } else if (request.method === 'POST') {
+                        screenshotRequest = request.body as Partial<ScreenshotRequest>;
+                } else {
 			throw new Error('Invalid request method');
 		}
 
