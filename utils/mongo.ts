@@ -31,8 +31,8 @@ export const connectToMongo = async (): Promise<Db> => {
 };
 
 export const getFileIndexCollection = async (): Promise<Collection> => {
-        const db = await connectToMongo();
-        return db.collection('fileIndex');
+	const db = await connectToMongo();
+	return db.collection('fileIndex');
 };
 
 /**
@@ -41,9 +41,9 @@ export const getFileIndexCollection = async (): Promise<Collection> => {
  * to free up resources.
  */
 export const closeMongoConnection = async (): Promise<void> => {
-        if (client) {
-                await client.close();
-                client = null;
-                db = null;
-        }
+	if (client) {
+		await client.close();
+		client = null;
+		db = null;
+	}
 };

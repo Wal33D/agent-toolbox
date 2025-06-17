@@ -28,12 +28,12 @@ export const sendEmail = async (request: SendEmailMessageRequestParams): Promise
 	let error: string | undefined;
 	let msgId: string | undefined;
 
-        if (!global.gmailClient) {
-                const mailer = new GmailMailer();
-                try {
-                        await mailer.initializeClient({});
-                        global.gmailClient = mailer;
-                } catch (err: any) {
+	if (!global.gmailClient) {
+		const mailer = new GmailMailer();
+		try {
+			await mailer.initializeClient({});
+			global.gmailClient = mailer;
+		} catch (err: any) {
 			error = `Error initializing mailer client: ${err.message}`;
 			const duration = `${Date.now() - startTimestamp} ms`;
 			return {
@@ -48,23 +48,23 @@ export const sendEmail = async (request: SendEmailMessageRequestParams): Promise
 				error,
 			};
 		}
-        }
+	}
 
-        const gmailClient = global.gmailClient as GmailMailer;
+	const gmailClient = global.gmailClient as GmailMailer;
 
-        try {
+	try {
 		const encodedSubjectResponse = encodeEmailContent({ content: subject ?? '', type: EncodingType.Subject });
 		if (!encodedSubjectResponse.isEncoded) {
 			throw new Error(`Error encoding subject: ${encodedSubjectResponse.message}`);
 		}
 		const encodedSubject = encodedSubjectResponse.encodedContent;
 
-                const result = await gmailClient.sendEmail({
-                        recipientEmail: to,
-                        senderName,
-                        subject: encodedSubject,
-                        message: body,
-                });
+		const result = await gmailClient.sendEmail({
+			recipientEmail: to,
+			senderName,
+			subject: encodedSubject,
+			message: body,
+		});
 
 		if (result.sent) {
 			success = true;

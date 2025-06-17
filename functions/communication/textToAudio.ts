@@ -6,11 +6,11 @@ import { promises as fsPromises, createReadStream } from 'fs';
 import { AudioConfig, SpeechSynthesizer, ResultReason, SpeechSynthesisOutputFormat } from 'microsoft-cognitiveservices-speech-sdk';
 
 const initializeSynthesizer = (filePath: string): SpeechSynthesizer => {
-        if (!global.speechSynthesizer) {
-                const audioConfig = AudioConfig.fromAudioFileOutput(filePath);
-                global.speechSynthesizer = new SpeechSynthesizer(speechConfig, audioConfig);
-        }
-        return global.speechSynthesizer as SpeechSynthesizer;
+	if (!global.speechSynthesizer) {
+		const audioConfig = AudioConfig.fromAudioFileOutput(filePath);
+		global.speechSynthesizer = new SpeechSynthesizer(speechConfig, audioConfig);
+	}
+	return global.speechSynthesizer as SpeechSynthesizer;
 };
 
 export const textToAudioFile = async ({ body }: { body: any }): Promise<any> => {

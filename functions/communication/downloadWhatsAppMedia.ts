@@ -51,7 +51,7 @@ export const downloadWhatsAppMedia = async (request: DownloadWhatsAppMediaParams
 
 	let cloudinaryResult: any;
 	let alreadyExists = false;
-	let source = 'whatsapp';
+	const source = 'whatsapp';
 
 	try {
 		// Check if the media already exists in Cloudinary
