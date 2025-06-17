@@ -8,7 +8,6 @@ const tokenUrl = 'https://jwt.aquataze.com/';
 const apiKey = process.env.TRUSTED_API_KEY || '';
 const tokenFilePath = path.resolve(__dirname, 'token.json');
 
-
 const uploaderUrl = 'https://gdrive.aquataze.com/';
 
 // Memory cache
@@ -21,9 +20,9 @@ interface TokenResponse {
 }
 
 interface TokenStore {
-        token?: string;
-        issuedAt?: number;
-        expiresAt?: number;
+	token?: string;
+	issuedAt?: number;
+	expiresAt?: number;
 }
 
 const getTokenCollection = async (): Promise<Collection> => {
@@ -33,17 +32,17 @@ const getTokenCollection = async (): Promise<Collection> => {
 
 const fetchToken = async (): Promise<TokenStore> => {
 	try {
-                const response = await axios.post<TokenResponse>(
-                        tokenUrl,
-                        {
-                                apiKey: apiKey,
-                        },
-                        {
-                                headers: {
-                                        'Content-Type': 'application/json',
-                                },
-                        }
-                );
+		const response = await axios.post<TokenResponse>(
+			tokenUrl,
+			{
+				apiKey: apiKey,
+			},
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 
 		const tokenData = response.data;
 		return {

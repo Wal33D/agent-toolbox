@@ -85,26 +85,26 @@ export interface ImageSearchOptions {
 }
 
 export interface ImageResult {
-        url: string;
-        width: number;
-        height: number;
+	url: string;
+	width: number;
+	height: number;
 }
 
 export interface WebSearchResult {
-        searchQuery: string;
-        organic_results: Omit<OrganicResult, 'prerender' | 'page' | 'position' | 'position_overall' | 'block_position'>[];
-        searchUrl: string;
-        metaDataUrl: string;
+	searchQuery: string;
+	organic_results: Omit<OrganicResult, 'prerender' | 'page' | 'position' | 'position_overall' | 'block_position'>[];
+	searchUrl: string;
+	metaDataUrl: string;
 }
 
 export interface WebSearchResponse {
-        status: boolean;
-        message: string;
-        data: WebSearchResult | WebSearchResult[];
+	status: boolean;
+	message: string;
+	data: WebSearchResult | WebSearchResult[];
 }
 
 export interface ImageSearchResponse {
-        status: boolean;
-        message: string;
-        data: ImageResult[][];
+	status: boolean;
+	message: string;
+	data: ImageResult[][];
 }

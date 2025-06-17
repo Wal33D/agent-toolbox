@@ -36,8 +36,8 @@ const uploadSingleToCloudinary = async (uploadRequest: UploadRequest): Promise<U
 		options.public_id = fileName;
 	}
 
-        try {
-                let result: any;
+	try {
+		let result: any;
 		if (base64) {
 			result = await cloudinary.uploader.upload(`data:image/jpeg;base64,${base64}`, options);
 		} else if (url) {
