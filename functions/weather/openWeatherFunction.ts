@@ -1,12 +1,9 @@
 import axios from 'axios';
-import { getNextEnvKey } from 'envholster';
 import { LocationOutput } from '../resolvers/locationTypes';
 import { resolveLocation } from '../resolvers/resolveLocation';
 
 const fetchWeatherData = async ({ lat, lon, zipCode }: { lat?: number; lon?: number; zipCode?: string }) => {
-	const { key: weatherApiKey } = await getNextEnvKey({
-		baseEnvName: 'OPEN_WEATHER_API_KEY_',
-	});
+        const weatherApiKey = process.env.OPEN_WEATHER_API_KEY;
 
 	let forecastApiUrl: string;
 
