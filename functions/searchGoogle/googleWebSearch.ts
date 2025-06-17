@@ -18,12 +18,13 @@ export const searchGoogle = async (request: VercelRequest): Promise<WebSearchRes
 			throw new Error('Invalid request method');
 		}
 
-		if (requests.length > 50) {
-			return {
-				status: false,
-				message: 'Too many requests. Please provide 50 or fewer requests in a single call.',
-			};
-		}
+                if (requests.length > 50) {
+                        return {
+                                status: false,
+                                message: 'Too many requests. Please provide 50 or fewer requests in a single call.',
+                                data: [],
+                        };
+                }
 
                 const results: WebSearchResult[] = await Promise.all(
                         requests.map(async req => {
@@ -78,10 +79,11 @@ export const searchGoogle = async (request: VercelRequest): Promise<WebSearchRes
 			message: 'SERP search results retrieved successfully.',
 			data: results,
 		};
-	} catch (error: any) {
-		return {
-			status: false,
-			message: `Error: ${error.message}`,
-		};
-	}
+        } catch (error: any) {
+                return {
+                        status: false,
+                        message: `Error: ${error.message}`,
+                        data: [],
+                };
+        }
 };
