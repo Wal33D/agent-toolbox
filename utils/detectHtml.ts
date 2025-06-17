@@ -15,12 +15,12 @@ export function detectHtml({ content }: { content: string }): { isHtml: boolean;
 		const htmlTagRegex = /<\/?[a-z]+(\s+[a-z-]+(?:="[^"]*")?)*\s*\/?>/i;
 		isHtml = htmlTagRegex.test(content);
 		message = isHtml ? 'HTML content detected.' : 'No HTML content detected.';
-	} catch (error: any) {
-		console.error('Error checking for HTML content:', error.message);
-		return {
-			isHtml: false, // Ensures the return value indicates no HTML was detected in case of error.
-			message: `Error checking for HTML content: ${error.message}`,
-		};
-	}
+        } catch (error: unknown) {
+                console.error('Error checking for HTML content:', (error as Error).message);
+                return {
+                        isHtml: false, // Ensures the return value indicates no HTML was detected in case of error.
+                        message: `Error checking for HTML content: ${(error as Error).message}`,
+                };
+        }
 	return { isHtml, message };
 }

@@ -1,7 +1,25 @@
 import { VercelRequest } from '@vercel/node';
 import { parseQueryParams } from '../../utils/parseQueryParams';
 
-const convertVolumeValue = ({ from, to, value }: { from: string; to: string; value: number }) => {
+type VolumeUnit = 'liters' | 'gallons' | 'milliliters' | 'fluidOunces';
+
+interface VolumeConversionRequest {
+        from: VolumeUnit;
+        to: VolumeUnit;
+        value: number | string;
+}
+
+interface VolumeConversionResult {
+        status: boolean;
+        message?: string;
+        from: VolumeUnit;
+        to: VolumeUnit;
+        originalValue: number | string;
+        convertedValue?: number | null;
+        stringValue?: string | null;
+}
+
+const convertVolumeValue = ({ from, to, value }: { from: VolumeUnit; to: VolumeUnit; value: number }): { status: boolean; convertedValue: number | null; stringValue: string | null } => {
 	let convertedValue: number | null = null;
 	let stringValue: string | null = null;
 
@@ -24,13 +42,13 @@ const convertVolumeValue = ({ from, to, value }: { from: string; to: string; val
 };
 
 export const convertVolume = async (request: VercelRequest) => {
-	try {
-		let requests: any[] = [];
-		if (request.method === 'GET') {
-			requests = [parseQueryParams(request.query)];
-		} else if (request.method === 'POST') {
-			requests = Array.isArray(request.body) ? request.body : [request.body];
-		}
+        try {
+                let requests: VolumeConversionRequest[] = [];
+                if (request.method === 'GET') {
+                        requests = [parseQueryParams<VolumeConversionRequest>(request.query)];
+                } else if (request.method === 'POST') {
+                        requests = Array.isArray(request.body) ? request.body : [request.body];
+                }
 
 		if (requests.length > 50) {
 			return {
@@ -40,14 +58,14 @@ export const convertVolume = async (request: VercelRequest) => {
 			};
 		}
 
-		const results: any[] = [];
+                const results: VolumeConversionResult[] = [];
 		for (const req of requests) {
 			const { from, to, value } = req;
 			if (
 				['liters', 'gallons', 'milliliters', 'fluidOunces'].includes(from) &&
 				['liters', 'gallons', 'milliliters', 'fluidOunces'].includes(to)
 			) {
-				const numericValue = parseFloat(value);
+                                const numericValue = parseFloat(String(value));
 				if (isNaN(numericValue)) {
 					results.push({
 						status: false,
@@ -95,11 +113,11 @@ export const convertVolume = async (request: VercelRequest) => {
 			message: 'Conversions processed successfully.',
 			conversions: results,
 		};
-	} catch (error: any) {
-		return {
-			status: false,
-			message: `Error: ${error.message}`,
-			conversions: [],
-		};
-	}
+        } catch (error: unknown) {
+                return {
+                        status: false,
+                        message: `Error: ${(error as Error).message}`,
+                        conversions: [],
+                };
+        }
 };

@@ -1,5 +1,5 @@
-export const parseQueryParams = (query: any): any => {
-	const parsedQuery: any = {};
+export function parseQueryParams<T = Record<string, any>>(query: Record<string, string | string[] | undefined>): T {
+        const parsedQuery: Record<string, any> = {};
 
 	Object.keys(query).forEach(key => {
 		const value = query[key];
@@ -9,5 +9,5 @@ export const parseQueryParams = (query: any): any => {
 			parsedQuery[key] = value;
 		}
 	});
-	return parsedQuery;
-};
+        return parsedQuery as T;
+}
