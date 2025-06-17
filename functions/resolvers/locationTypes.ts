@@ -1,12 +1,3 @@
-export interface LocationInput {
-	zipCode?: string;
-	lat?: number;
-	lon?: number;
-	city?: string;
-	state?: string;
-	country?: string;
-}
-
 export interface LocationOutput {
 	zipCode: string;
 	lat: number;
