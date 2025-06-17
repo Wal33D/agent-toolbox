@@ -1,9 +1,13 @@
-const assert = require('assert');
 const { getStateAbbreviation } = require('../dist/utils/getStateAbbreviation.js');
 
-assert.strictEqual(getStateAbbreviation('California'), 'CA');
-assert.strictEqual(getStateAbbreviation('ca'), 'CA');
-assert.strictEqual(getStateAbbreviation('Texas'), 'TX');
-assert.strictEqual(getStateAbbreviation('unknown'), 'UNKNOWN');
+describe('getStateAbbreviation', () => {
+  test('returns abbreviation for known state names', () => {
+    expect(getStateAbbreviation('California')).toBe('CA');
+    expect(getStateAbbreviation('ca')).toBe('CA');
+    expect(getStateAbbreviation('Texas')).toBe('TX');
+  });
 
-console.log('getStateAbbreviation tests passed');
+  test('returns UNKNOWN for unknown states', () => {
+    expect(getStateAbbreviation('unknown')).toBe('UNKNOWN');
+  });
+});

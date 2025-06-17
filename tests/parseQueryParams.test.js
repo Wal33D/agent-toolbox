@@ -1,11 +1,18 @@
-const assert = require('assert');
 const { parseQueryParams } = require('../dist/utils/parseQueryParams.js');
 
-const result = parseQueryParams({ page: '10', search: 'abc', active: true, score: '5.5', other: 'text' });
-assert.strictEqual(result.page, 10);
-assert.strictEqual(result.search, 'abc');
-assert.strictEqual(result.active, true);
-assert.strictEqual(result.score, 5.5);
-assert.strictEqual(result.other, 'text');
-
-console.log('parseQueryParams tests passed');
+describe('parseQueryParams', () => {
+  test('parses query values into the correct types', () => {
+    const result = parseQueryParams({
+      page: '10',
+      search: 'abc',
+      active: true,
+      score: '5.5',
+      other: 'text',
+    });
+    expect(result.page).toBe(10);
+    expect(result.search).toBe('abc');
+    expect(result.active).toBe(true);
+    expect(result.score).toBe(5.5);
+    expect(result.other).toBe('text');
+  });
+});
