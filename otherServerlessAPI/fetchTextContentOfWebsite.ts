@@ -29,9 +29,10 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 
 		return response.status(200).json(interfaceDescription);
 	}
-	if (!verifyRequestToken(request)) {
-		return response.status(401).json({ status: false, message: 'Unauthorized' });
-	}
+        const verification = verifyRequestToken(request);
+        if (!verification.valid) {
+                return response.status(401).json({ status: false, message: verification.error });
+        }
 
 	try {
 		let requests: ScrapeRequestBody[];

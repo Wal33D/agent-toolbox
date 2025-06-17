@@ -9,12 +9,13 @@ interface AIRequest {
 }
 
 const handler = async (request: any, response: any) => {
-	if (request.method === 'OPTIONS') {
-		return await handleToolOptions(response);
-	}
-	if (!verifyRequestToken(request)) {
-		return response.status(401).json({ error: 'Unauthorized' });
-	}
+        if (request.method === 'OPTIONS') {
+                return await handleToolOptions(response);
+        }
+        const verification = verifyRequestToken(request);
+        if (!verification.valid) {
+                return response.status(401).json({ error: verification.error });
+        }
 	try {
 		let functionName: string | null = null;
 
