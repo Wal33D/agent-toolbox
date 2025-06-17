@@ -53,8 +53,8 @@ The project relies on several environment variables. Below is a list of all of t
 - `GMAIL_MAILER_ASSISTANT_NAME` – display name used when sending email via Gmail.
 - `GOOGLE_API_KEY` – API key used for geocoding and Google search utilities.
 - `OPEN_WEATHER_API_KEY` – OpenWeatherMap API key used for location and weather lookups.
+- `VISUAL_CROSSING_WEATHER_API_KEY` – Visual Crossing Weather API key.
 - `JWT_SECRET`
-
 
 ## 🛠 Major Functions
 
