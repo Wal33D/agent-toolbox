@@ -1,8 +1,13 @@
 import { getOpenWeather } from './openWeatherFunction';
 import { getVisualWeather } from './visualWeatherFunction';
+import { VercelRequest } from '@vercel/node';
+import { WeatherRequest, WeeklyWeatherResponse } from './weatherTypes';
 
-export const fetchWeeklyWeatherData = async request => {
-	const { city, state, zipCode, lat, lon } = request.body;
+export const fetchWeeklyWeatherData = async (
+        request: VercelRequest
+): Promise<WeeklyWeatherResponse> => {
+        const { city, state, zipCode, lat, lon } =
+                request.body as WeatherRequest;
 
 	if (!city && !state && !zipCode && (lat === undefined || lon === undefined)) {
 		throw new Error('Provide either {city, state, country(optional)}, {zipCode}, or {lat, lon}');
