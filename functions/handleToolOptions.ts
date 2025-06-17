@@ -784,27 +784,150 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
-			name: 'requestWhatsAppLocation',
-			description:
-				'Request the current real location of a user through WhatsApp by sending a location request to there device. If the user is lost, this is a great tool to use, easily get there location to assist! Requires parameters: to, text.',
-			parameters: {
-				type: 'object',
-				properties: {
-					to: {
-						type: 'string',
-						description: 'The recipient WhatsApp number in E.164 format, e.g., +12695010475',
-					},
-					text: {
-						type: 'string',
-						description:
-							'This is the message that will be sent to the user along with requesting their location. e.g., Click here to share your location with me.',
-					},
-				},
-				required: ['to', 'text'],
-			},
-		},
-	},
+        {
+                type: 'function',
+                function: {
+                        name: 'requestWhatsAppLocation',
+                        description:
+                                'Request the current real location of a user through WhatsApp by sending a location request to there device. If the user is lost, this is a great tool to use, easily get there location to assist! Requires parameters: to, text.',
+                        parameters: {
+                                type: 'object',
+                                properties: {
+                                        to: {
+                                                type: 'string',
+                                                description: 'The recipient WhatsApp number in E.164 format, e.g., +12695010475',
+                                        },
+                                        text: {
+                                                type: 'string',
+                                                description: 'This is the message that will be sent to the user along with requesting their location. e.g., Click here to share your location with me.',
+                                        },
+                                },
+                                required: ['to', 'text'],
+                        },
+                },
+        },
+        {
+                type: 'function',
+                function: {
+                        name: 'convertArea',
+                        description: 'Convert area units between square meters, square feet, acres and hectares.',
+                        parameters: {
+                                type: 'object',
+                                properties: {
+                                        from: { type: 'string', description: 'Source unit' },
+                                        to: { type: 'string', description: 'Target unit' },
+                                        value: { type: 'number', description: 'Numeric value to convert' },
+                                },
+                                required: ['from', 'to', 'value'],
+                        },
+                },
+        },
+        {
+                type: 'function',
+                function: {
+                        name: 'convertLength',
+                        description: 'Convert length units between meters, feet, inches and centimeters.',
+                        parameters: {
+                                type: 'object',
+                                properties: {
+                                        from: { type: 'string', description: 'Source unit' },
+                                        to: { type: 'string', description: 'Target unit' },
+                                        value: { type: 'number', description: 'Numeric value to convert' },
+                                },
+                                required: ['from', 'to', 'value'],
+                        },
+                },
+        },
+        {
+                type: 'function',
+                function: {
+                        name: 'convertWeight',
+                        description: 'Convert weight units between kilograms, pounds, grams and ounces.',
+                        parameters: {
+                                type: 'object',
+                                properties: {
+                                        from: { type: 'string', description: 'Source unit' },
+                                        to: { type: 'string', description: 'Target unit' },
+                                        value: { type: 'number', description: 'Numeric value to convert' },
+                                },
+                                required: ['from', 'to', 'value'],
+                        },
+                },
+        },
+        {
+                type: 'function',
+                function: {
+                        name: 'convertVolume',
+                        description: 'Convert volume units between liters, gallons, milliliters and fluid ounces.',
+                        parameters: {
+                                type: 'object',
+                                properties: {
+                                        from: { type: 'string', description: 'Source unit' },
+                                        to: { type: 'string', description: 'Target unit' },
+                                        value: { type: 'number', description: 'Numeric value to convert' },
+                                },
+                                required: ['from', 'to', 'value'],
+                        },
+                },
+        },
+        {
+                type: 'function',
+                function: {
+                        name: 'convertSpeed',
+                        description: 'Convert speed units including kilometers per hour, miles per hour and more.',
+                        parameters: {
+                                type: 'object',
+                                properties: {
+                                        from: { type: 'string', description: 'Source unit' },
+                                        to: { type: 'string', description: 'Target unit' },
+                                        value: { type: 'number', description: 'Numeric value to convert' },
+                                },
+                                required: ['from', 'to', 'value'],
+                        },
+                },
+        },
+        {
+                type: 'function',
+                function: {
+                        name: 'convertTemperature',
+                        description: 'Convert temperature units between Celsius, Fahrenheit and Kelvin.',
+                        parameters: {
+                                type: 'object',
+                                properties: {
+                                        from: { type: 'string', description: 'Source unit' },
+                                        to: { type: 'string', description: 'Target unit' },
+                                        value: { type: 'number', description: 'Numeric value to convert' },
+                                },
+                                required: ['from', 'to', 'value'],
+                        },
+                },
+        },
+        {
+                type: 'function',
+                function: {
+                        name: 'fetchTextContentOfWebsite',
+                        description: 'Scrape a webpage and return its text content.',
+                        parameters: {
+                                type: 'object',
+                                properties: {
+                                        url: { type: 'string', description: 'The URL of the webpage' },
+                                },
+                                required: ['url'],
+                        },
+                },
+        },
+        {
+                type: 'function',
+                function: {
+                        name: 'generateLandingPage',
+                        description: 'Generate an HTML landing page from scraped website content using OpenAI.',
+                        parameters: {
+                                type: 'object',
+                                properties: {
+                                        url: { type: 'string', description: 'The URL of the webpage' },
+                                },
+                                required: ['url'],
+                        },
+                },
+        },
 ];
