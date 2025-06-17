@@ -70,7 +70,7 @@ export const textToAudioFile = async ({ body }: { body: any }): Promise<any> => 
 			timestamp: new Date(),
 			duration: `${Date.now() - startTime} ms`,
 		};
-	} catch (error) {
+	} catch (error: any) {
 		response.error = error.message;
 	} finally {
 		try {

@@ -69,7 +69,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 						status: true,
 						data: textContent,
 					};
-				} catch (error) {
+                                } catch (error: any) {
 					return {
 						status: false,
 						message: `Failed to retrieve content for URL "${url}": ${error.message}`,
@@ -83,7 +83,7 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 			message: 'Webpage text content retrieved successfully.',
 			data: results,
 		});
-	} catch (error: any) {
+    } catch (error: any) {
 		return response.status(500).json({
 			status: false,
 			message: `Error: ${error.message}`,

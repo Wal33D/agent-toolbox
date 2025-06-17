@@ -89,7 +89,15 @@ const organizeWeatherData = (data: any, timezoneOffset: number) => {
 	};
 };
 
-export const getOpenWeather = async (zipCode?, lat?, lon?, city?, state?, country = 'US', timezone = -300) => {
+export const getOpenWeather = async (
+        zipCode?: string,
+        lat?: number,
+        lon?: number,
+        city?: string,
+        state?: string,
+        country: string = 'US',
+        timezone: number = -300
+) => {
 	try {
 		let resolvedZipCode = zipCode;
 

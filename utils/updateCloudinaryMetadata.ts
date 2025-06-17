@@ -15,7 +15,7 @@ export const updateCloudinaryMetadata = async (publicId: string, description: st
 			},
 		});
 		console.log('Metadata updated successfully:', response);
-	} catch (error) {
+	} catch (error: any) {
 		console.error('Failed to update Cloudinary metadata:', error);
 	}
 };

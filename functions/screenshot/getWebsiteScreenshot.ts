@@ -130,7 +130,7 @@ export const getWebsiteScreenshot = async (request: VercelRequest) => {
 					iconLink,
 				},
 			};
-		} catch (error) {
+		} catch (error: any) {
 			if (browser) await browser.close();
 			return {
 				status: false,

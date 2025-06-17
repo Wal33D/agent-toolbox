@@ -87,7 +87,7 @@ export const viewAndDescribeWhatsAppImage = async (request: viewAndDescribeWhats
 			fileSize: uploadResult.bytes,
 			analysis: analysis,
 		};
-	} catch (error) {
+	} catch (error: any) {
 		return {
 			success: false,
 			error: error.message,

@@ -1,6 +1,6 @@
 import { getVisualWeather } from './visualWeatherFunction';
 import { VercelRequest } from '@vercel/node';
-import { WeatherRequest, ExtendedWeatherResponse } from './weatherTypes';
+import { WeatherRequest, ExtendedWeatherResponse, ForecastDay } from './weatherTypes';
 
 export const fetchExtendedWeather = async (
         request: VercelRequest
@@ -12,10 +12,10 @@ export const fetchExtendedWeather = async (
 		throw new Error('Please provide either {city, state, country (optional)}, {zipCode}, or {lat, lon}.');
 	}
 
-	let weatherData;
+        let weatherData: any;
 	try {
 		weatherData = await getVisualWeather(request);
-	} catch (error) {
+	} catch (error: any) {
 		throw new Error('Error fetching weather data');
 	}
 
@@ -32,61 +32,61 @@ export const fetchExtendedWeather = async (
 	};
 };
 
-const getAvgMaxTempC = forecast => {
+const getAvgMaxTempC = (forecast: ForecastDay[]) => {
 	const total = forecast.reduce((sum, entry) => sum + entry.maxTempC, 0);
 	return total / forecast.length;
 };
 
-const getAvgMinTempC = forecast => {
+const getAvgMinTempC = (forecast: ForecastDay[]) => {
 	const total = forecast.reduce((sum, entry) => sum + entry.minTempC, 0);
 	return total / forecast.length;
 };
 
-const getAvgTempC = forecast => {
+const getAvgTempC = (forecast: ForecastDay[]) => {
 	const total = forecast.reduce((sum, entry) => sum + entry.avgTempC, 0);
 	return total / forecast.length;
 };
 
-const getAvgMaxTempF = forecast => {
+const getAvgMaxTempF = (forecast: ForecastDay[]) => {
 	const total = forecast.reduce((sum, entry) => sum + entry.maxTempF, 0);
 	return total / forecast.length;
 };
 
-const getAvgMinTempF = forecast => {
+const getAvgMinTempF = (forecast: ForecastDay[]) => {
 	const total = forecast.reduce((sum, entry) => sum + entry.minTempF, 0);
 	return total / forecast.length;
 };
 
-const getAvgTempF = forecast => {
+const getAvgTempF = (forecast: ForecastDay[]) => {
 	const total = forecast.reduce((sum, entry) => sum + entry.avgTempF, 0);
 	return total / forecast.length;
 };
 
-const getAvgWindSpeed = forecast => {
+const getAvgWindSpeed = (forecast: ForecastDay[]) => {
 	const total = forecast.reduce((sum, entry) => sum + entry.windSpeed, 0);
 	return total / forecast.length;
 };
 
-const getTotalPrecipitation = forecast => {
+const getTotalPrecipitation = (forecast: ForecastDay[]) => {
 	return forecast.reduce((sum, entry) => sum + entry.precipitation, 0);
 };
 
-const getAvgHumidity = forecast => {
+const getAvgHumidity = (forecast: ForecastDay[]) => {
 	const total = forecast.reduce((sum, entry) => sum + entry.humidity, 0);
 	return total / forecast.length;
 };
 
-const getConditions = forecast => {
+const getConditions = (forecast: ForecastDay[]) => {
 	const conditions = forecast.map(entry => entry.conditions);
-	const frequency = conditions.reduce((freq, condition) => {
-		freq[condition] = (freq[condition] || 0) + 1;
-		return freq;
-	}, {});
+        const frequency = conditions.reduce<Record<string, number>>((freq, condition) => {
+                freq[condition] = (freq[condition] || 0) + 1;
+                return freq;
+        }, {} as Record<string, number>);
 	const mostFrequentCondition = Object.keys(frequency).reduce((a, b) => (frequency[a] > frequency[b] ? a : b));
 	return mostFrequentCondition;
 };
 
-const getTwoWeekForecastDescription = forecast => {
+const getTwoWeekForecastDescription = (forecast: ForecastDay[]) => {
 	const avgMaxTempC = getAvgMaxTempC(forecast);
 	const avgMinTempC = getAvgMinTempC(forecast);
 	const avgTempC = getAvgTempC(forecast);
