@@ -3,21 +3,18 @@ import { getVisualWeather } from './visualWeatherFunction';
 import { VercelRequest } from '@vercel/node';
 import { WeatherRequest, WeeklyWeatherResponse, ForecastDay } from './weatherTypes';
 
-export const fetchWeeklyWeatherData = async (
-        request: VercelRequest
-): Promise<WeeklyWeatherResponse> => {
-        const { city, state, zipCode, lat, lon } =
-                request.body as WeatherRequest;
+export const fetchWeeklyWeatherData = async (request: VercelRequest): Promise<WeeklyWeatherResponse> => {
+	const { city, state, zipCode, lat, lon } = request.body as WeatherRequest;
 
 	if (!city && !state && !zipCode && (lat === undefined || lon === undefined)) {
 		throw new Error('Provide either {city, state, country(optional)}, {zipCode}, or {lat, lon}');
 	}
 
-        let weatherData: any;
-        try {
-                weatherData = await getOpenWeather(zipCode, lat, lon, city, state);
-        } catch (error: any) {
-                weatherData = await getVisualWeather(request);
+	let weatherData: any;
+	try {
+		weatherData = await getOpenWeather(zipCode, lat, lon, city, state);
+	} catch (error: any) {
+		weatherData = await getVisualWeather(request);
 	}
 
 	if (!weatherData || !weatherData.data || !weatherData.data.forecast) {
@@ -80,10 +77,13 @@ const getWeeklyAvgHumidity = (forecast: ForecastDay[]) => {
 const getWeeklyConditions = (forecast: ForecastDay[]) => {
 	// Assuming conditions are strings like "Rain", "Clouds", etc.
 	const conditions = forecast.map(entry => entry.conditions);
-        const frequency = conditions.reduce<Record<string, number>>((freq, condition) => {
-                freq[condition] = (freq[condition] || 0) + 1;
-                return freq;
-        }, {} as Record<string, number>);
+	const frequency = conditions.reduce<Record<string, number>>(
+		(freq, condition) => {
+			freq[condition] = (freq[condition] || 0) + 1;
+			return freq;
+		},
+		{} as Record<string, number>
+	);
 	const mostFrequentCondition = Object.keys(frequency).reduce((a, b) => (frequency[a] > frequency[b] ? a : b));
 	return mostFrequentCondition;
 };

@@ -105,12 +105,12 @@ export const getWebsiteScreenshot = async (request: VercelRequest) => {
 			await browser.close();
 
 			// Create FormData and append the screenshot buffer
-                        const form = new FormData();
-                        form.append('file', screenshotBuffer, {
-                                contentType: 'image/png',
-                        });
-                        const safeName = sanitizeFilename(url);
-                        form.append('fileName', `screenshot-${safeName}.png`);
+			const form = new FormData();
+			form.append('file', screenshotBuffer, {
+				contentType: 'image/png',
+			});
+			const safeName = sanitizeFilename(url);
+			form.append('fileName', `screenshot-${safeName}.png`);
 			form.append('setPublic', 'true');
 			form.append('reUpload', 'true');
 

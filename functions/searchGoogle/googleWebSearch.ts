@@ -4,11 +4,11 @@ import { SerpSearchRequest, WebSearchResponse, WebSearchResult } from './searchG
 import { VercelRequest } from '@vercel/node';
 
 export const searchGoogle = async (request: VercelRequest): Promise<WebSearchResponse> => {
-       try {
-               const apiKey = process.env.SCALE_SERP_API_KEY;
-               if (!apiKey) {
-                       throw new Error('SCALE_SERP_API_KEY environment variable is not set');
-               }
+	try {
+		const apiKey = process.env.SCALE_SERP_API_KEY;
+		if (!apiKey) {
+			throw new Error('SCALE_SERP_API_KEY environment variable is not set');
+		}
 
 		let requests: SerpSearchRequest[];
 
@@ -20,16 +20,16 @@ export const searchGoogle = async (request: VercelRequest): Promise<WebSearchRes
 			throw new Error('Invalid request method');
 		}
 
-                if (requests.length > 50) {
-                        return {
-                                status: false,
-                                message: 'Too many requests. Please provide 50 or fewer requests in a single call.',
-                                data: [],
-                        };
-                }
+		if (requests.length > 50) {
+			return {
+				status: false,
+				message: 'Too many requests. Please provide 50 or fewer requests in a single call.',
+				data: [],
+			};
+		}
 
-                const results: WebSearchResult[] = await Promise.all(
-                        requests.map(async req => {
+		const results: WebSearchResult[] = await Promise.all(
+			requests.map(async req => {
 				const params: any = {
 					api_key: apiKey,
 					q: req.searchTerm,
@@ -81,11 +81,11 @@ export const searchGoogle = async (request: VercelRequest): Promise<WebSearchRes
 			message: 'SERP search results retrieved successfully.',
 			data: results,
 		};
-        } catch (error: any) {
-                return {
-                        status: false,
-                        message: `Error: ${error.message}`,
-                        data: [],
-                };
-        }
+	} catch (error: any) {
+		return {
+			status: false,
+			message: `Error: ${error.message}`,
+			data: [],
+		};
+	}
 };

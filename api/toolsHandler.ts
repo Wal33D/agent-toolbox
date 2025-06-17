@@ -1,7 +1,7 @@
 // Communication functions
 import { handleToolOptions } from '../functions/handleToolOptions';
 import { verifyRequestToken } from '../utils/verifyJWT';
-import { toolsMap } from "./toolsMap";
+import { toolsMap } from './toolsMap';
 
 interface AIRequest {
 	functionName: string;
@@ -9,13 +9,13 @@ interface AIRequest {
 }
 
 const handler = async (request: any, response: any) => {
-        if (request.method === 'OPTIONS') {
-                return await handleToolOptions(response);
-        }
-        const verification = verifyRequestToken(request);
-        if (!verification.valid) {
-                return response.status(401).json({ error: verification.error });
-        }
+	if (request.method === 'OPTIONS') {
+		return await handleToolOptions(response);
+	}
+	const verification = verifyRequestToken(request);
+	if (!verification.valid) {
+		return response.status(401).json({ error: verification.error });
+	}
 	try {
 		let functionName: string | null = null;
 
@@ -26,15 +26,14 @@ const handler = async (request: any, response: any) => {
 			throw new Error('Invalid request method');
 		}
 
-                const processRequest = async (req: any) => {
-                        console.log({ functionName, request: req.body });
-                        const handler = toolsMap[functionName as string];
-                        if (!handler) {
-                                throw new Error("Invalid function name.");
-                        }
-                        return await handler(req);
-                };
-
+		const processRequest = async (req: any) => {
+			console.log({ functionName, request: req.body });
+			const handler = toolsMap[functionName as string];
+			if (!handler) {
+				throw new Error('Invalid function name.');
+			}
+			return await handler(req);
+		};
 
 		const responseData = await processRequest(request);
 		response.status(200).json(responseData);

@@ -16,7 +16,7 @@ const fetchCoordinates = async (url: string) => {
 };
 
 const getCoordinatesByAddress = async ({ city, state, country }: { city: string; state?: string; country: string }): Promise<any> => {
-        const apiKey = process.env.OPEN_WEATHER_API_KEY;
+	const apiKey = process.env.OPEN_WEATHER_API_KEY;
 
 	const encodedCity = encodeURIComponent(city);
 	const encodedState = state ? encodeURIComponent(state) : '';
@@ -36,7 +36,7 @@ const getCoordinatesByAddress = async ({ city, state, country }: { city: string;
 };
 
 const getCoordinatesByZipCode = async (zipCode: string): Promise<any> => {
-        const apiKey = process.env.OPEN_WEATHER_API_KEY;
+	const apiKey = process.env.OPEN_WEATHER_API_KEY;
 
 	const apiUrl = `https://api.openweathermap.org/geo/1.0/zip?zip=${zipCode}&appid=${apiKey}`;
 	const data = await fetchCoordinates(apiUrl);
@@ -50,7 +50,7 @@ const getCoordinatesByZipCode = async (zipCode: string): Promise<any> => {
 };
 
 const getAddressByCoordinates = async (lat: number, lon: number): Promise<any> => {
-        const apiKey = process.env.OPEN_WEATHER_API_KEY;
+	const apiKey = process.env.OPEN_WEATHER_API_KEY;
 
 	const apiUrl = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${apiKey}`;
 

@@ -3,7 +3,7 @@ import { LocationOutput } from '../resolvers/locationTypes';
 import { resolveLocation } from '../resolvers/resolveLocation';
 
 const fetchWeatherData = async ({ lat, lon, zipCode }: { lat?: number; lon?: number; zipCode?: string }) => {
-        const weatherApiKey = process.env.OPEN_WEATHER_API_KEY;
+	const weatherApiKey = process.env.OPEN_WEATHER_API_KEY;
 
 	let forecastApiUrl: string;
 
@@ -90,13 +90,13 @@ const organizeWeatherData = (data: any, timezoneOffset: number) => {
 };
 
 export const getOpenWeather = async (
-        zipCode?: string,
-        lat?: number,
-        lon?: number,
-        city?: string,
-        state?: string,
-        country: string = 'US',
-        timezone: number = -300
+	zipCode?: string,
+	lat?: number,
+	lon?: number,
+	city?: string,
+	state?: string,
+	country: string = 'US',
+	timezone: number = -300
 ) => {
 	try {
 		let resolvedZipCode = zipCode;
