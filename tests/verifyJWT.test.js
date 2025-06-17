@@ -1,30 +1,36 @@
-const assert = require('assert');
 const jwt = require('jsonwebtoken');
 const { verifyJWT } = require('../dist/utils/verifyJWT.js');
 
-process.env.JWT_SECRET = 'testsecret';
+describe('verifyJWT', () => {
+  beforeAll(() => {
+    process.env.JWT_SECRET = 'testsecret';
+  });
 
-const validToken = jwt.sign({ foo: 'bar' }, process.env.JWT_SECRET, {
-  algorithm: 'HS256',
-  expiresIn: '1h',
+  test('valid token', () => {
+    const token = jwt.sign({ foo: 'bar' }, process.env.JWT_SECRET, {
+      algorithm: 'HS256',
+      expiresIn: '1h',
+    });
+    expect(verifyJWT('Bearer ' + token)).toEqual(
+      expect.objectContaining({ valid: true })
+    );
+  });
+
+  test('expired token', () => {
+    const token = jwt.sign({ foo: 'bar' }, process.env.JWT_SECRET, {
+      algorithm: 'HS256',
+      expiresIn: -10,
+    });
+    expect(verifyJWT('Bearer ' + token)).toEqual({
+      valid: false,
+      error: 'expired',
+    });
+  });
+
+  test('malformed token', () => {
+    expect(verifyJWT('Bearer malformed')).toEqual({
+      valid: false,
+      error: 'malformed',
+    });
+  });
 });
-
-const expiredToken = jwt.sign({ foo: 'bar' }, process.env.JWT_SECRET, {
-  algorithm: 'HS256',
-  expiresIn: -10, // already expired
-});
-
-// Valid token
-assert.deepStrictEqual(verifyJWT('Bearer ' + validToken).valid, true);
-
-// Expired token
-const expiredResult = verifyJWT('Bearer ' + expiredToken);
-assert.strictEqual(expiredResult.valid, false);
-assert.strictEqual(expiredResult.error, 'expired');
-
-// Malformed token
-const malformedResult = verifyJWT('Bearer malformed');
-assert.strictEqual(malformedResult.valid, false);
-assert.strictEqual(malformedResult.error, 'malformed');
-
-console.log('All tests passed');
