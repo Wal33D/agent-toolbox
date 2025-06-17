@@ -52,6 +52,13 @@ window.onclick = (event) => {
     }
 };
 
+// Close modal when Escape key is pressed
+window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        closeModal();
+    }
+});
+
 const fetchTools = async () => {
     try {
         const res = await fetch('/belt', { method: 'OPTIONS' });
