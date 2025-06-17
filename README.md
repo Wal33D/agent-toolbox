@@ -8,6 +8,15 @@ To use these tools, send a POST request to `tool.aquataze.com/belt` with the `fu
 
 For a complete list of available tools and their descriptions, visit the [homepage](https://tool.aquataze.com/).
 
+## 🔐 JWT Authentication
+
+All API calls require an `Authorization` header containing a valid JWT. Tokens can be generated using the helper `getToken()` which relies on the `TRUSTED_API_KEY_1` and `TRUSTED_API_KEY_2` environment variables.
+
+```bash
+Authorization: Bearer <your-jwt-token>
+```
+
+
 ## 🔧 Local Setup
 
 1. Install dependencies:
@@ -23,6 +32,11 @@ For a complete list of available tools and their descriptions, visit the [homepa
    ```bash
    npx vercel dev
    ```
+5. Run the test suite:
+   ```bash
+   npm test
+   ```
+
 
 ## 🌱 Environment Variables
 
@@ -40,6 +54,128 @@ The project relies on several environment variables. Below is a list of the most
 - `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`, `DB_CLUSTER`
 - `TRUSTED_API_KEY_1`, `TRUSTED_API_KEY_2`
 
+
+## 🛠 Major Functions
+
+### IPAddressLookUp
+Example request:
+```json
+{
+  "functionName": "IPAddressLookUp",
+  "ip": "8.8.8.8"
+}
+```
+Expected response (truncated):
+```json
+{
+  "ip": "8.8.8.8",
+  "city": "Mountain View",
+  "country": "United States",
+  "description": "IP 8.8.8.8 is located in ..."
+}
+```
+
+### googleWebSearch
+Example request:
+```json
+{
+  "functionName": "googleWebSearch",
+  "searchTerm": "vercel"
+}
+```
+Expected response:
+```json
+{
+  "status": true,
+  "data": {
+    "searchQuery": "vercel",
+    "organic_results": [ ... ]
+  }
+}
+```
+
+### getTodaysWeather
+Example request:
+```json
+{
+  "functionName": "getTodaysWeather",
+  "city": "Austin",
+  "state": "TX"
+}
+```
+Expected response (truncated):
+```json
+{
+  "location": "Austin, TX, US",
+  "currentWeather": {
+    "datetime": "...",
+    "temp": 25
+  }
+}
+```
+
+### getWebsiteScreenshot
+Example request:
+```json
+{
+  "functionName": "getWebsiteScreenshot",
+  "url": "https://example.com"
+}
+```
+Expected response:
+```json
+{
+  "status": true,
+  "url": "https://example.com",
+  "screenshotUrl": {
+    "downloadUrl": "...",
+    "webViewLink": "...",
+    "mimeType": "image/png"
+  }
+}
+```
+
+### sendTextMessage
+Example request:
+```json
+{
+  "functionName": "sendTextMessage",
+  "to": "+1234567890",
+  "body": "Hello!"
+}
+```
+Expected response:
+```json
+{
+  "success": true,
+  "platform": "twilio",
+  "type": "text",
+  "to": "+1234567890",
+  "from": "<your Twilio number>",
+  "msgId": "...",
+  "duration": "250 ms",
+  "timestamp": "..."
+}
+```
+
+### createGoogleDocsFile
+Example request:
+```json
+{
+  "functionName": "createGoogleDocsFile",
+  "title": "MyDoc",
+  "content": "Hello world"
+}
+```
+Expected response:
+```json
+{
+  "status": true,
+  "fileId": "1Abc...",
+  "fileLink": "https://docs.google.com/document/d/1Abc.../edit",
+  "message": "Google Docs file created and updated with content successfully."
+}
+```
 ## 📄 License
 
 This project is licensed under the MIT License.
