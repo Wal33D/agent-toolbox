@@ -13,13 +13,13 @@ export const fetchTodaysWeatherData = async (
         let location;
         const { lat, lon, city, state, zipCode, country } =
                 request.body as WeatherRequest;
-	if (lat !== undefined && lon !== undefined) {
-		location = `${lat},${lon}`;
-	} else if (city && state) {
-		country = country || 'US';
-		location = `${city},${state},${country}`;
-	} else if (zipCode) {
-		location = zipCode;
+        if (lat !== undefined && lon !== undefined) {
+                location = `${lat},${lon}`;
+        } else if (city && state) {
+                const countryCode = country || 'US';
+                location = `${city},${state},${countryCode}`;
+        } else if (zipCode) {
+                location = zipCode;
 	} else {
 		throw new Error('Either city/state, zip code, or lat/lon must be provided');
 	}
