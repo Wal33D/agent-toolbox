@@ -1,12 +1,14 @@
 import axios from 'axios';
-import { getNextEnvKey } from 'envholster';
 import { parseQueryParams } from '../../utils/parseQueryParams';
 import { SerpSearchRequest, WebSearchResponse, WebSearchResult } from './searchGoogleTypes';
 import { VercelRequest } from '@vercel/node';
 
 export const searchGoogle = async (request: VercelRequest): Promise<WebSearchResponse> => {
-	try {
-		const { key: apiKey } = await getNextEnvKey({ baseEnvName: 'SCALE_SERP_API_KEY_' });
+       try {
+               const apiKey = process.env.SCALE_SERP_API_KEY;
+               if (!apiKey) {
+                       throw new Error('SCALE_SERP_API_KEY environment variable is not set');
+               }
 
 		let requests: SerpSearchRequest[];
 
