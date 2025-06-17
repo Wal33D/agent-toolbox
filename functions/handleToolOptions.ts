@@ -5,9 +5,10 @@ export const handleToolOptions = (response: VercelResponse) => {
 };
 
 export const tools = [
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Weather',
+                type: 'function',
+                function: {
 			name: 'getWeeklyForecast',
 			description:
 				'Get the weekly weather forecast for a specific location including date, day of the week, maximum temperature, minimum temperature, average temperature, wind speed, wind direction, precipitation, humidity, conditions, and a detailed description.',
@@ -27,9 +28,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Utilities',
+                type: 'function',
+                function: {
 			name: 'IPAddressLookUp',
 			description:
 				'Look up detailed information for a given IP address including location, network details, and organization information. The response includes fields like ip, asn, city, continent_code, country, country_area, country_calling_code, country_capital, country_code, country_code_iso3, country_name, country_population, country_tld, currency, currency_name, description, detailedDescription, in_eu, languages, latitude, longitude, network, org, postal, region, region_code, utc_offset, version.',
@@ -45,9 +47,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Utilities',
+                type: 'function',
+                function: {
 			name: 'locationResolver',
 			description:
 				'Resolve location details for a given; (zipCode) or (city/state) or (lat/lon) otherwise known as geocoding. The response includes fields like zipCode, address, city, country, lat, lon, state.',
@@ -89,9 +92,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Search',
+                type: 'function',
+                function: {
 			name: 'googleWebSearch',
 			description: 'Perform an internet search and return relevant results.',
 			parameters: {
@@ -131,9 +135,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Weather',
+                type: 'function',
+                function: {
 			name: 'getExtendedWeather',
 			description:
 				'Get the extended weather forecast for the next two weeks for a specific location including maximum temperature, minimum temperature, average temperature, wind speed, precipitation, humidity, and conditions.',
@@ -170,9 +175,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Weather',
+                type: 'function',
+                function: {
 			name: 'getTodaysWeather',
 			description:
 				'Get the current weather for a specific location including datetime, temperature, feelslike, humidity, dew point, precipitation, precipitation probability(rain chance), snow, snow depth, wind speed, wind direction, pressure, visibility, cloud cover, solar radiation, UV index, conditions, icon, sunrise, sunset, and a detailed description.',
@@ -192,9 +198,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Utilities',
+                type: 'function',
+                function: {
 			name: 'getWebsiteScreenshot',
 			description:
 				'Take a screenshot of a given URL with optional height and width for the browsers window size. Returns a url to the a screenshot for any website on the internet!',
@@ -220,9 +227,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Utilities',
+                type: 'function',
+                function: {
 			name: 'googleAddressResolver',
 			description: 'Format and correct an address using the Google Geocoding API.',
 			parameters: {
@@ -237,9 +245,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Utilities',
+                type: 'function',
+                function: {
 			name: 'parsePhoneNumber',
 			description: 'Parse, validate, and format phone numbers using the libphonenumber-js package.',
 			parameters: {
@@ -259,9 +268,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Search',
+                type: 'function',
+                function: {
 			name: 'googleImageSearch',
 			description: 'Retrieve images based on a search term using the g-i-s package.',
 			parameters: {
@@ -294,9 +304,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Islamic',
+                type: 'function',
+                function: {
 			name: 'getIslamicPrayerTimingsDay',
 			description:
 				'Get the Islamic prayer timings for a specific location including Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha, and a description with the Gregorian and Hijri dates for the current date. Accepts (zipCode) or (city/state/country) or (lat/lon)',
@@ -343,9 +354,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Utilities',
+                type: 'function',
+                function: {
 			name: 'cloudinaryUpload',
 			description: 'Upload images to Cloudinary, supports uploading via URL, base64 string, or stream.',
 			parameters: {
@@ -381,9 +393,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Utilities',
+                type: 'function',
+                function: {
 			name: 'getCurrentDateTime',
 			description:
 				'Get the current date and time for a specific location. The response includes the current date and time in ISO format and a human-readable format for a specified (zipCode) or (city/state/country) or (lat/lon)',
@@ -426,9 +439,10 @@ export const tools = [
 		},
 	},
 
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Productivity',
+                type: 'function',
+                function: {
 			name: 'createGoogleDocsFile',
 			description: 'Create a Google Docs file with the given title and content.',
 			parameters: {
@@ -447,9 +461,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Productivity',
+                type: 'function',
+                function: {
 			name: 'createGoogleSheetsFile',
 			description: 'Create a Google Sheets file with the given title and content.',
 			parameters: {
@@ -474,9 +489,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Productivity',
+                type: 'function',
+                function: {
 			name: 'updateGoogleDocsFile',
 			description: 'Find a Google Docs file by title and update its content.',
 			parameters: {
@@ -495,9 +511,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Productivity',
+                type: 'function',
+                function: {
 			name: 'updateGoogleSheetsFile',
 			description: 'Find a Google Sheets file by title and update its content.',
 			parameters: {
@@ -522,9 +539,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Islamic',
+                type: 'function',
+                function: {
 			name: 'getIslamicPrayerTimingsWeek',
 			description:
 				'Get the Islamic prayer timings for a specific location for the next 7 days, including Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha, and a description with the Gregorian and Hijri dates. Accepts (zipCode) or (city/state/country) or (lat/lon)',
@@ -566,9 +584,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Productivity',
+                type: 'function',
+                function: {
 			name: 'setGoogleFilePermissions',
 			description: 'Set edit permissions for a Google Drive file to specified emails.',
 			parameters: {
@@ -590,9 +609,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Productivity',
+                type: 'function',
+                function: {
 			name: 'setFileEditPermissions',
 			description: 'Set edit permissions for a Google Drive file to specified emails.',
 			parameters: {
@@ -614,9 +634,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Communication',
+                type: 'function',
+                function: {
 			name: 'sendTextMessage',
 			description: 'Send a text message using Twilio. Requires parameters: to, body.',
 			parameters: {
@@ -635,9 +656,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Communication',
+                type: 'function',
+                function: {
 			name: 'sendWhatsAppMessage',
 			description: 'Send a message using WhatsApp. Requires parameters: to, body.',
 			parameters: {
@@ -656,9 +678,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Communication',
+                type: 'function',
+                function: {
 			name: 'sendEmail',
 			description: 'Send an email using Gmail. Requires recipient email, email content, and optionally sender email and subject.',
 			parameters: {
@@ -685,9 +708,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Communication',
+                type: 'function',
+                function: {
 			name: 'sendWhatsAppVoiceMessage',
 			description:
 				'Convert text to speech, and send as a WhatsApp voice message to a user by there WhatsApp number. Enables AI Assistant to (speak) through WhatsApp! Requires parameters: to, body. ',
@@ -707,9 +731,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Communication',
+                type: 'function',
+                function: {
 			name: 'viewAndDescribeWhatsAppImage',
 			description:
 				'Analyze and describe a WhatsApp image given its media ID and optional quality parameter. Enables AI Assistant to (see) an image through WhatsApp!',
@@ -730,9 +755,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Communication',
+                type: 'function',
+                function: {
 			name: 'listenToWhatsAppVoiceAudio',
 			description:
 				'Retrieve a WhatsApp voice message using the media ID, upload it to Cloudinary, transcribe the audio using OpenAI, and return the transcription. Enables AI Assistant to (hear) through WhatsApp!',
@@ -749,9 +775,10 @@ export const tools = [
 		},
 	},
 
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Communication',
+                type: 'function',
+                function: {
 			name: 'sendWhatsAppLocation',
 			description: 'Send a location message using WhatsApp. Requires parameters: to, latitude, longitude, and optionally name and address.',
 			parameters: {
@@ -784,9 +811,10 @@ export const tools = [
 			},
 		},
 	},
-	{
-		type: 'function',
-		function: {
+        {
+                category: 'Communication',
+                type: 'function',
+                function: {
 			name: 'requestWhatsAppLocation',
 			description:
 				'Request the current real location of a user through WhatsApp by sending a location request to there device. If the user is lost, this is a great tool to use, easily get there location to assist! Requires parameters: to, text.',

@@ -4,16 +4,35 @@ const renderTools = (toolsToRender) => {
     const toolsContainer = document.getElementById('toolsContainer');
     toolsContainer.innerHTML = '';
 
-    toolsToRender.forEach(tool => {
-        const toolItem = document.createElement('div');
-        toolItem.className = 'tool-item';
-        toolItem.innerHTML = `
-            <span class="tool-icon">🔧</span>
-            <span class="tool-name">${tool.function.name}</span>
-            <span class="tool-description">${tool.function.description}</span>
-        `;
-        toolItem.onclick = () => openModal(tool);
-        toolsContainer.appendChild(toolItem);
+    const grouped = toolsToRender.reduce((acc, tool) => {
+        const cat = tool.category || 'Other';
+        if (!acc[cat]) acc[cat] = [];
+        acc[cat].push(tool);
+        return acc;
+    }, {});
+
+    Object.keys(grouped).forEach(category => {
+        const section = document.createElement('div');
+        section.className = 'category-section';
+
+        const heading = document.createElement('h3');
+        heading.className = 'category-heading';
+        heading.textContent = category;
+        section.appendChild(heading);
+
+        grouped[category].forEach(tool => {
+            const toolItem = document.createElement('div');
+            toolItem.className = 'tool-item';
+            toolItem.innerHTML = `
+                <span class="tool-icon">🔧</span>
+                <span class="tool-name">${tool.function.name}</span>
+                <span class="tool-description">${tool.function.description}</span>
+            `;
+            toolItem.onclick = () => openModal(tool);
+            section.appendChild(toolItem);
+        });
+
+        toolsContainer.appendChild(section);
     });
 
     if (toolsToRender.length === 0) {
