@@ -4,7 +4,7 @@ import axios from 'axios';
 import stream from 'stream';
 import OpenAI from 'openai';
 import { promisify } from 'util';
-import { v2 as cloudinary } from 'cloudinary';
+import { cloudinaryConfig as cloudinary } from '../../utils/cloudinaryConfig';
 
 const openai = new OpenAI();
 const pipeline = promisify(stream.pipeline);
@@ -18,15 +18,7 @@ interface ListenToWhatsAppVoiceAudioParams {
 export const listenToWhatsAppVoiceAudio = async (request: ListenToWhatsAppVoiceAudioParams): Promise<any> => {
 	const { mediaId } = request.body;
 
-	try {
-		const isSetOne = Math.random() < 0.5;
-
-		const cloudinaryConfig = {
-			cloud_name: isSetOne ? process.env.CLOUDINARY_CLOUD_NAME : process.env.CLOUDINARY_AUX_CLOUD_NAME,
-			api_key: isSetOne ? process.env.CLOUDINARY_API_KEY : process.env.CLOUDINARY_AUX_API_KEY,
-			api_secret: isSetOne ? process.env.CLOUDINARY_API_SECRET : process.env.CLOUDINARY_AUX_API_SECRET,
-		};
-		cloudinary.config(cloudinaryConfig);
+        try {
 
 		const { data: mediaData } = await axios.get(`${process.env.WHATSAPP_GRAPH_API_URL}/${mediaId}`, {
 			headers: {
