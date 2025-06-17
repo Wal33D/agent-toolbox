@@ -40,18 +40,19 @@ Authorization: Bearer <your-jwt-token>
 
 ## 🌱 Environment Variables
 
-The project relies on several environment variables. Below is a list of the most important ones:
+The project relies on several environment variables. Below is a list of all of them along with a short description of what each one controls:
 
-- `OPENAI_API_KEY`
-- `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`
-- `WHATSAPP_GRAPH_API_TOKEN`, `WHATSAPP_GRAPH_API_URL`, `WHATSAPP_ASSISTANT_PHONE_NUMBER`
-- `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_ASSISTANT_PHONE_NUMBER`
-- `GDRIVE_SERVICE_ACCOUNT_JSON`
-- `GOOGLE_API_KEY`
-- `GMAIL_MAILER_ASSISTANT_NAME`
-- `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`
-- `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`, `DB_CLUSTER`
-- `TRUSTED_API_KEY_1`, `TRUSTED_API_KEY_2`
+- `OPENAI_API_KEY` – token used to call the OpenAI API.
+- `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`, `DB_CLUSTER` – MongoDB connection details.
+- `GDRIVE_SERVICE_ACCOUNT_JSON` – JSON credentials for the Google Drive service account.
+- `TRUSTED_API_KEY_1`, `TRUSTED_API_KEY_2` – secrets used to sign and verify JWT tokens.
+- `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` – Cloudinary configuration for uploading media (screenshots, audio, etc.).
+- `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION` – Azure Speech service credentials for text‑to‑speech features.
+- `WHATSAPP_GRAPH_API_TOKEN`, `WHATSAPP_GRAPH_API_URL`, `WHATSAPP_ASSISTANT_PHONE_NUMBER` – credentials and configuration for the WhatsApp Business API.
+- `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_ASSISTANT_PHONE_NUMBER` – Twilio credentials for sending SMS messages.
+- `GMAIL_MAILER_ASSISTANT_NAME` – display name used when sending email via Gmail.
+- `GOOGLE_API_KEY` – API key used for geocoding and Google search utilities.
+- `OPEN_WEATHER_API_KEY_1`, `OPEN_WEATHER_API_KEY_2`, ... – OpenWeatherMap API keys. Multiple keys can be set for rotation.
 
 
 ## 🛠 Major Functions
