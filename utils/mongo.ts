@@ -31,6 +31,19 @@ export const connectToMongo = async (): Promise<Db> => {
 };
 
 export const getFileIndexCollection = async (): Promise<Collection> => {
-	const db = await connectToMongo();
-	return db.collection('fileIndex');
+        const db = await connectToMongo();
+        return db.collection('fileIndex');
+};
+
+/**
+ * Close the MongoDB client if a connection exists.
+ * Call this at the end of your serverless handler or on process exit
+ * to free up resources.
+ */
+export const closeMongoConnection = async (): Promise<void> => {
+        if (client) {
+                await client.close();
+                client = null;
+                db = null;
+        }
 };
