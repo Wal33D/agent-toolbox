@@ -1,5 +1,6 @@
 import { parseQueryParams } from '../utils/parseQueryParams';
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { verifyRequestToken } from '../utils/verifyJWT';
 
 const convertVolume = ({ from, to, value }: { from: string; to: string; value: number }) => {
 	let convertedValue: number | null = null;
@@ -25,6 +26,9 @@ const convertVolume = ({ from, to, value }: { from: string; to: string; value: n
 };
 
 const handler = async (request: VercelRequest, response: VercelResponse) => {
+	if (request.method !== 'OPTIONS' && !verifyRequestToken(request)) {
+		return response.status(401).json({ status: false, message: 'Unauthorized' });
+	}
 	try {
 		let requests: any[] = [];
 

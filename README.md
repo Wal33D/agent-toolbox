@@ -10,7 +10,7 @@ For a complete list of available tools and their descriptions, visit the [homepa
 
 ## 🔐 JWT Authentication
 
-All API calls require an `Authorization` header containing a valid JWT. Tokens can be generated using the helper `getToken()` which relies on the `TRUSTED_API_KEY_1` and `TRUSTED_API_KEY_2` environment variables.
+All API calls require an `Authorization` header containing a valid JWT. Tokens can be generated using the helper `getToken()` which relies on the `TRUSTED_API_KEY_1` and `TRUSTED_API_KEY_2` environment variables. Incoming tokens are verified using the `JWT_SECRET` environment variable.
 
 ```bash
 Authorization: Bearer <your-jwt-token>
@@ -52,6 +52,7 @@ The project relies on several environment variables. Below is a list of the most
 - `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`
 - `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`, `DB_CLUSTER`
 - `TRUSTED_API_KEY_1`, `TRUSTED_API_KEY_2`
+- `JWT_SECRET`
 
 
 ## 🛠 Major Functions
