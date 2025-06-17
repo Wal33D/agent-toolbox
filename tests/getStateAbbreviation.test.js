@@ -1,4 +1,4 @@
-const { getStateAbbreviation } = require('../dist/utils/getStateAbbreviation.js');
+const { getStateAbbreviation } = require('../utils/getStateAbbreviation.ts');
 
 describe('getStateAbbreviation', () => {
   test('returns abbreviation for known state names', () => {
