@@ -1,5 +1,6 @@
 {
-  "repository": "https://github.com/Wal33D/toolbelt.git",
+  "name": "agent-toolbox",
+  "repository": "https://github.com/Wal33D/agent-toolbox.git",
   "author": "Wal33D",
   "license": "MIT",
   "private": true,

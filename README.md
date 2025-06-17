@@ -1,10 +1,10 @@
-# Toolbelt
+# Agent Toolbox
 
 This repository provides a collection of serverless utilities designed for AI-driven tasks. The project includes REST endpoints for gathering information, communicating via email or WhatsApp, handling Google Drive files, and much more.
 
 ## Project Purpose
 
-Toolbelt exposes a set of serverless APIs for tasks such as location lookup, Google searches, capturing website screenshots, weather data retrieval, and communication integrations. It is optimized for deployment on [Vercel](https://vercel.com) and can be used in other serverless environments.
+Agent Toolbox exposes a set of serverless APIs for tasks such as location lookup, Google searches, capturing website screenshots, weather data retrieval, and communication integrations. It is optimized for deployment on [Vercel](https://vercel.com) and can be used in other serverless environments.
 
 ## Directory Structure
 
