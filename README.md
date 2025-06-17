@@ -10,7 +10,7 @@ For a complete list of available tools and their descriptions, visit the [homepa
 
 ## 🔐 JWT Authentication
 
-All API calls require an `Authorization` header containing a valid JWT. Tokens can be generated using the helper `getToken()` which relies on the `TRUSTED_API_KEY_1` and `TRUSTED_API_KEY_2` environment variables. Incoming tokens are verified using the `JWT_SECRET` environment variable.
+All API calls require an `Authorization` header containing a valid JWT. Tokens can be generated using the helper `getToken()` which relies on the `TRUSTED_API_KEY` environment variable. Incoming tokens are verified using the `JWT_SECRET` environment variable.
 
 ```bash
 Authorization: Bearer <your-jwt-token>
@@ -45,7 +45,7 @@ The project relies on several environment variables. Below is a list of all of t
 - `OPENAI_API_KEY` – token used to call the OpenAI API.
 - `DB_USERNAME`, `DB_PASSWORD`, `DB_NAME`, `DB_CLUSTER` – MongoDB connection details.
 - `GDRIVE_SERVICE_ACCOUNT_JSON` – JSON credentials for the Google Drive service account.
-- `TRUSTED_API_KEY_1`, `TRUSTED_API_KEY_2` – secrets used to sign and verify JWT tokens.
+ - `TRUSTED_API_KEY` – secret used to sign and verify JWT tokens.
 - `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` – Cloudinary configuration for uploading media (screenshots, audio, etc.).
 - `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION` – Azure Speech service credentials for text‑to‑speech features.
 - `WHATSAPP_GRAPH_API_TOKEN`, `WHATSAPP_GRAPH_API_URL`, `WHATSAPP_ASSISTANT_PHONE_NUMBER` – credentials and configuration for the WhatsApp Business API.

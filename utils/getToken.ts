@@ -5,8 +5,7 @@ import { Collection } from 'mongodb';
 import { connectToMongo } from './mongo';
 
 const tokenUrl = 'https://jwt.aquataze.com/';
-const apiKey1 = process.env.TRUSTED_API_KEY_1 || '';
-const apiKey2 = process.env.TRUSTED_API_KEY_2 || '';
+const apiKey = process.env.TRUSTED_API_KEY || '';
 const tokenFilePath = path.resolve(__dirname, 'token.json');
 
 
@@ -34,18 +33,17 @@ const getTokenCollection = async (): Promise<Collection> => {
 
 const fetchToken = async (): Promise<TokenStore> => {
 	try {
-		const response = await axios.post<TokenResponse>(
-			tokenUrl,
-			{
-				apiKey1: apiKey1,
-				apiKey2: apiKey2,
-			},
-			{
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
+                const response = await axios.post<TokenResponse>(
+                        tokenUrl,
+                        {
+                                apiKey: apiKey,
+                        },
+                        {
+                                headers: {
+                                        'Content-Type': 'application/json',
+                                },
+                        }
+                );
 
 		const tokenData = response.data;
 		return {
