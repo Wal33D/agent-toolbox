@@ -59,7 +59,7 @@ const getAddressByCoordinates = async (lat: number, lon: number): Promise<any> =
 		baseEnvName: 'OPEN_WEATHER_API_KEY_',
 	});
 
-        const apiUrl = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${apiKey}`;
+	const apiUrl = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${apiKey}`;
 
 	const data = await fetchCoordinates(apiUrl);
 	if (data && data.length > 0) {
