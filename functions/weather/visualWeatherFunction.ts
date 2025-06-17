@@ -110,11 +110,11 @@ export const getVisualWeather = async (request: VercelRequest) => {
 				data: weatherData,
 			};
 		}
-	} catch (error: any) {
-		return {
-			status: true,
-			data: null,
-			error: error.message,
-		};
-	}
+        } catch (error: any) {
+                return {
+                        status: false,
+                        data: null,
+                        error: error.message,
+                };
+        }
 };
