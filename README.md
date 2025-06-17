@@ -52,6 +52,7 @@ The project relies on several environment variables. Below is a list of all of t
 - `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_ASSISTANT_PHONE_NUMBER` – Twilio credentials for sending SMS messages.
 - `GMAIL_MAILER_ASSISTANT_NAME` – display name used when sending email via Gmail.
 - `GOOGLE_API_KEY` – API key used for geocoding and Google search utilities.
+- `SCALE_SERP_API_KEY` – API key used for web search requests through ScaleSERP.
 - `OPEN_WEATHER_API_KEY_1`, `OPEN_WEATHER_API_KEY_2`, ... – OpenWeatherMap API keys. Multiple keys can be set for rotation.
 - `JWT_SECRET`
 
