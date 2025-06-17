@@ -1,1 +1,45 @@
-<!DOCTYPE html><title>Toolbelt</title><p>Build artifacts</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Serverless Toolbelt</title>
+    <link rel="icon" href="https://assets.vercel.com/image/upload/front/favicon/vercel/favicon.ico" type="image/x-icon">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="custom-container">
+            <span class="online-indicator"></span>
+            <h1>AI Serverless Toolbelt</h1>
+            <p>Welcome to the AI Toolbelt Serverless Collection of single-purpose functions for use with my personal AI.</p>
+            <input type="text" id="searchBar" class="search-bar" placeholder="Search tools...">
+            <div id="toolsContainer" class="tools-container"></div>
+            <div class="footer">
+                <p>🔐 Requests require JWT token verification and are intended for personal use by Wal33D.</p>
+                <p>To use these tools, send a POST request to <code>tool.aquataze.com/belt</code> with the <code>functionName</code> set to the name of the tool you want to use.</p>
+            </div>
+            <p class="link">
+                <i class="fa fa-github github-icon"></i> Check out the code on GitHub:<br>
+                <a href="https://github.com/Wal33D/toolbelt.git" target="_blank">https://github.com/Wal33D/toolbelt.git</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <span class="close">&times;</span>
+            </div>
+            <p id="modalDescription"></p>
+            <h4>Parameters:</h4>
+            <ul id="modalParameters"></ul>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>
