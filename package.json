@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc",
     "test": "echo \"No tests\"",
-    "lint": "eslint \"**/*.ts\"",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint \"**/*.ts\"",
     "format": "prettier --write \"**/*.ts\""
   },
   "devDependencies": {
