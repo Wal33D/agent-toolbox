@@ -25,7 +25,7 @@ Below is a summary of the main functions exposed through `toolsHandler.ts`:
 
 - **IPAddressLookUp** – Resolves IP address information and caches results in MongoDB.
 - **getWebsiteScreenshot** – Uses Puppeteer to capture screenshots of websites and uploads them to Google Drive.
-- **googleImageSearch** – Performs Google image searches using the `g-i-s` package.
+- **googleImageSearch** – Performs Google image searches using the Scale SERP API.
 - **searchGoogle** – Performs Google web searches via Scale SERP.
 - **fetchTodaysWeatherData / fetchWeeklyWeatherData / fetchExtendedWeather** – Retrieve weather information.
 - **getIslamicPrayerTimingsDay / getIslamicPrayerTimingsWeek** – Provide Islamic prayer times.
