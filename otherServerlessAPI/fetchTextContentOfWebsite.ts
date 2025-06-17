@@ -2,6 +2,7 @@ import axios from 'axios';
 import cheerio from 'cheerio';
 import { parseQueryParams } from '../utils/parseQueryParams';
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { verifyRequestToken } from '../utils/verifyJWT';
 
 interface ScrapeRequestBody {
 	url: string;
@@ -27,6 +28,9 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		};
 
 		return response.status(200).json(interfaceDescription);
+	}
+	if (!verifyRequestToken(request)) {
+		return response.status(401).json({ status: false, message: 'Unauthorized' });
 	}
 
 	try {

@@ -10,7 +10,7 @@ For a complete list of available tools and their descriptions, visit the [homepa
 
 ## 🔐 JWT Authentication
 
-All API calls require an `Authorization` header containing a valid JWT. Tokens can be generated using the helper `getToken()` which relies on the `TRUSTED_API_KEY_1` and `TRUSTED_API_KEY_2` environment variables.
+All API calls require an `Authorization` header containing a valid JWT. Tokens can be generated using the helper `getToken()` which relies on the `TRUSTED_API_KEY_1` and `TRUSTED_API_KEY_2` environment variables. Incoming tokens are verified using the `JWT_SECRET` environment variable.
 
 ```bash
 Authorization: Bearer <your-jwt-token>
@@ -53,6 +53,7 @@ The project relies on several environment variables. Below is a list of all of t
 - `GMAIL_MAILER_ASSISTANT_NAME` – display name used when sending email via Gmail.
 - `GOOGLE_API_KEY` – API key used for geocoding and Google search utilities.
 - `OPEN_WEATHER_API_KEY_1`, `OPEN_WEATHER_API_KEY_2`, ... – OpenWeatherMap API keys. Multiple keys can be set for rotation.
+- `JWT_SECRET`
 
 
 ## 🛠 Major Functions

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { load } from 'cheerio';
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { verifyRequestToken } from '../utils/verifyJWT';
 import { parseQueryParams } from '../utils/parseQueryParams';
 
 const openaiApiKey = process.env.OPENAI_API_KEY;
@@ -70,6 +71,9 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 		};
 
 		return response.status(200).json(interfaceDescription);
+	}
+	if (!verifyRequestToken(request)) {
+		return response.status(401).json({ status: false, message: 'Unauthorized' });
 	}
 
 	try {
