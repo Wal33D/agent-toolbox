@@ -1,4 +1,4 @@
-import { parseQueryParams } from '../../utils/parseQueryParams';
+import { parseQueryParams } from '../utils/parseQueryParams';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 
 const convertLength = ({ from, to, value }: { from: string; to: string; value: number }) => {
