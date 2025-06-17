@@ -22,6 +22,7 @@
     "@typescript-eslint/eslint-plugin": "^8.34.1",
     "@typescript-eslint/parser": "^8.34.1",
     "@vercel/node": "^5.2.2",
+    "esbuild": "^0.25.5",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.1",
@@ -38,7 +39,7 @@
     "cloudinary": "^2.2.0",
     "envholster": "^1.0.0",
     "express": "^5.1.0",
-    "form-data": "^4.0.0",    
+    "form-data": "^4.0.0",
     "geo-tz": "^8.0.2",
     "gmail-node-mailer": "^1.9.1",
     "googleapis": "^140.0.0",
@@ -58,6 +59,7 @@
   },
   "overrides": {
     "path-to-regexp": "^8.2.0",
-    "undici": "^7.10.0"
+    "undici": "^7.10.0",
+    "esbuild": "^0.25.5"
   }
 }
