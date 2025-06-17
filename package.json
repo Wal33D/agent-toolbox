@@ -7,7 +7,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "node --max-old-space-size=4096 ./node_modules/typescript/bin/tsc && mkdir -p public",
     "test": "echo \"No tests\"",
     "lint": "eslint \"**/*.ts\"",
     "format": "prettier --write \"**/*.ts\""
