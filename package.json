@@ -47,4 +47,5 @@
     "build": "tsc",
     "test": "echo \"No tests\""
   }
+
 }
