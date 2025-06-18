@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import { verifyJWT } from '../utils/verifyJWT';
+const jwt = require('jsonwebtoken');
+const { verifyJWT } = require('../utils/verifyJWT.ts');
 
 describe('verifyJWT', () => {
   beforeAll(() => {
@@ -7,7 +7,7 @@ describe('verifyJWT', () => {
   });
 
   test('valid token', () => {
-    const token = jwt.sign({ foo: 'bar' }, process.env.JWT_SECRET as string, {
+    const token = jwt.sign({ foo: 'bar' }, process.env.JWT_SECRET, {
       algorithm: 'HS256',
       expiresIn: '1h',
     });
@@ -17,7 +17,7 @@ describe('verifyJWT', () => {
   });
 
   test('expired token', () => {
-    const token = jwt.sign({ foo: 'bar' }, process.env.JWT_SECRET as string, {
+    const token = jwt.sign({ foo: 'bar' }, process.env.JWT_SECRET, {
       algorithm: 'HS256',
       expiresIn: -10,
     });

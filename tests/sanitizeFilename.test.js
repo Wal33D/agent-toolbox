@@ -1,4 +1,4 @@
-import { sanitizeFilename } from '../utils/sanitizeFilename';
+const { sanitizeFilename } = require('../utils/sanitizeFilename.ts');
 
 describe('sanitizeFilename', () => {
   test('removes http or https protocol', () => {
