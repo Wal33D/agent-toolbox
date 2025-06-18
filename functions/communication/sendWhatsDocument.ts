@@ -2,13 +2,25 @@ import axios from 'axios';
 import path from 'path';
 import { SendMessageResponse, SendWhatsAppDocumentRequestParams } from './types';
 
-export const sendWhatsFile = async (request: SendWhatsAppDocumentRequestParams): Promise<SendMessageResponse> => {
-	const { WHATSAPP_GRAPH_API_TOKEN, WHATSAPP_GRAPH_API_URL, WHATSAPP_ASSISTANT_PHONE_NUMBER } = process.env;
+export const sendWhatsFile = async (
+       request: SendWhatsAppDocumentRequestParams
+): Promise<SendMessageResponse> => {
+       const {
+               WHATSAPP_GRAPH_API_TOKEN,
+               WHATSAPP_GRAPH_API_URL,
+               WHATSAPP_ASSISTANT_PHONE_NUMBER,
+               WHATSAPP_PHONE_ID,
+       } = process.env;
 	const { to, url } = request.body;
 
-	if (!WHATSAPP_GRAPH_API_TOKEN?.trim() || !WHATSAPP_GRAPH_API_URL?.trim() || !WHATSAPP_ASSISTANT_PHONE_NUMBER?.trim()) {
-		throw new Error('Error: Missing or invalid configuration. Please contact the administrator.');
-	}
+       if (
+               !WHATSAPP_GRAPH_API_TOKEN?.trim() ||
+               !WHATSAPP_GRAPH_API_URL?.trim() ||
+               !WHATSAPP_PHONE_ID?.trim() ||
+               !WHATSAPP_ASSISTANT_PHONE_NUMBER?.trim()
+       ) {
+               throw new Error('Error: Missing or invalid configuration. Please contact the administrator.');
+       }
 
 	if (!to?.trim()) {
 		throw new Error('Error: Missing required parameter: to. Please provide the recipient number.');
@@ -40,8 +52,8 @@ export const sendWhatsFile = async (request: SendWhatsAppDocumentRequestParams):
 	let error: string | undefined;
 
 	try {
-		const { data: response } = await axios.post(
-			`${WHATSAPP_GRAPH_API_URL}/364023890121748/messages`,
+               const { data: response } = await axios.post(
+                       `${WHATSAPP_GRAPH_API_URL}/${WHATSAPP_PHONE_ID}/messages`,
 			{
 				messaging_product: platform,
 				to,
