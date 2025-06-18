@@ -158,8 +158,8 @@ export const downloadWhatsAppMedia = async (request: DownloadWhatsAppMediaParams
 			);
 		}
 
-                return {
-                        success: true,
+		return {
+			success: true,
 			source,
 			alreadyExists,
 			type: 'image_upload',

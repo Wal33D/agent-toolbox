@@ -50,7 +50,7 @@ export const listenToWhatsAppVoiceAudio = async (request: ListenToWhatsAppVoiceA
 			throw new Error('Upload result is invalid');
 		}
 
-                const filePath = path.join(`${uuidv4()}.mp3`);
+		const filePath = path.join(`${uuidv4()}.mp3`);
 		const audioUrl = uploadResult.secure_url;
 
 		const { data: audioStream } = await axios.get(audioUrl, {
