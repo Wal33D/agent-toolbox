@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import stream from 'stream';
 import OpenAI from 'openai';
@@ -49,7 +50,7 @@ export const listenToWhatsAppVoiceAudio = async (request: ListenToWhatsAppVoiceA
 			throw new Error('Upload result is invalid');
 		}
 
-		const filePath = path.join('temp_audio_file.mp3');
+                const filePath = path.join(`${uuidv4()}.mp3`);
 		const audioUrl = uploadResult.secure_url;
 
 		const { data: audioStream } = await axios.get(audioUrl, {
