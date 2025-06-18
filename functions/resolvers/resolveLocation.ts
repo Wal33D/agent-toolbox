@@ -1,7 +1,7 @@
 import axios from 'axios';
 import gps2zip from 'gps2zip';
 import { connectToMongo } from '../../utils/mongo';
-import { LocationInput, LocationOutput } from './locationTypes';
+import { LocationInput, LocationOutput } from '../../types/location';
 import { getStateAbbreviation } from '../../utils/getStateAbbreviation';
 
 const fetchCoordinates = async (url: string) => {

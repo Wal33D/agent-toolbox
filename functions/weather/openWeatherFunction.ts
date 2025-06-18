@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LocationOutput } from '../resolvers/locationTypes';
+import { LocationOutput } from '../../types/location';
 import { resolveLocation } from '../resolvers/resolveLocation';
 
 const fetchWeatherData = async ({ lat, lon, zipCode }: { lat?: number; lon?: number; zipCode?: string }) => {
