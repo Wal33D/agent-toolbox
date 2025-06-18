@@ -1,6 +1,6 @@
 import { VercelRequest } from '@vercel/node';
 import { resolveLocation } from './resolveLocation';
-import { LocationInput, LocationOutput } from './locationTypes';
+import { LocationInput, LocationOutput } from '../../types/location';
 
 export const getLocationData = async (request: VercelRequest): Promise<any> => {
 	try {
