@@ -22,7 +22,6 @@
     "@typescript-eslint/eslint-plugin": "^8.34.1",
     "@typescript-eslint/parser": "^8.34.1",
     "@vercel/node": "^5.2.2",
-    "esbuild": "^0.25.5",
     "eslint": "^8.57.1",
     "@eslint/eslintrc": "^2.1.4",
     "eslint-config-prettier": "^10.1.5",
@@ -33,13 +32,10 @@
     "typescript": "^4.7.3"
   },
   "dependencies": {
-    "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@types/puppeteer": "^7.0.4",
     "axios": "^1.10.0",
     "cheerio": "^1.0.0-rc.12",
     "cloudinary": "^2.2.0",
-    "envholster": "^1.0.0",
-    "express": "^5.1.0",
     "form-data": "^4.0.0",
     "geo-tz": "^8.0.2",
     "gmail-node-mailer": "^1.9.1",
@@ -49,7 +45,6 @@
     "libphonenumber-js": "^1.11.3",
     "microsoft-cognitiveservices-speech-sdk": "^1.38.0",
     "mongodb": "^6.7.0",
-    "multer": "^2.0.1",
     "node-geocoder": "^4.3.0",
     "openai": "^4.52.0",
     "puppeteer": "^24.10.1",
@@ -60,7 +55,6 @@
   },
   "overrides": {
     "path-to-regexp": "^8.2.0",
-    "undici": "^7.10.0",
-    "esbuild": "^0.25.5"
+    "undici": "^7.10.0"
   }
 }
