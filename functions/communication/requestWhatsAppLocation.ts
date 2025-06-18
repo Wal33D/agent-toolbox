@@ -1,4 +1,8 @@
 import axios from 'axios';
+import { ensureEnv } from '../../utils/validateEnv';
+
+// Validate WhatsApp environment variables on import
+ensureEnv();
 
 interface RequestWhatsAppLocationParams {
 	body: {

@@ -1,4 +1,8 @@
 import { SpeechConfig } from 'microsoft-cognitiveservices-speech-sdk';
+import { ensureEnv } from './validateEnv';
+
+// Validate environment variables for Azure speech
+ensureEnv();
 
 export const AZURE_SPEECH_KEY = process.env.AZURE_SPEECH_KEY;
 export const AZURE_SPEECH_REGION = process.env.AZURE_SPEECH_REGION;

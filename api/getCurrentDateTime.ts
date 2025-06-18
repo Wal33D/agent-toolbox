@@ -2,6 +2,10 @@ import { find } from 'geo-tz';
 import { VercelRequest } from '@vercel/node';
 import { getLocationData } from '../functions/resolvers/location';
 import { getStateAbbreviation } from '../utils/getStateAbbreviation';
+import { ensureEnv } from '../utils/validateEnv';
+
+// Validate all required environment variables once on load
+ensureEnv();
 
 export const getCurrentDateTime = async (request: VercelRequest) => {
 	let { city, state, zipCode, country, lat, lon } = request.body;
