@@ -5,7 +5,7 @@ import FormData from 'form-data';
 import { Collection } from 'mongodb';
 import { connectToMongo } from './mongo';
 
-const tokenUrl = 'https://jwt.aquataze.com/';
+const tokenUrl = process.env.TOKEN_SERVICE_URL || '';
 const apiKey = process.env.TRUSTED_API_KEY || '';
 const tokenFilePath = path.resolve(__dirname, 'token.json');
 
