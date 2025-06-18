@@ -1,4 +1,4 @@
-const { getStateAbbreviation } = require('../utils/getStateAbbreviation.ts');
+import { getStateAbbreviation } from '../utils/getStateAbbreviation';
 
 describe('getStateAbbreviation', () => {
   test('returns abbreviation for known state names', () => {
