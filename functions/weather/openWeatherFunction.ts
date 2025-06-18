@@ -15,8 +15,7 @@ const fetchWeatherData = async ({ lat, lon, zipCode }: { lat?: number; lon?: num
 		throw new Error('Either lat/lon or zipCode must be provided');
 	}
 
-	console.log(`Fetching weather data from URL: ${forecastApiUrl}`);
-	const forecastResponse = await axios.get(forecastApiUrl);
+        const forecastResponse = await axios.get(forecastApiUrl);
 
 	return {
 		forecastData: forecastResponse.data,

@@ -106,10 +106,9 @@ export const getIslamicPrayerTimingsWeek = async (request: VercelRequest): Promi
 
 		weeklyTimings.push(dailyTimings);
 	}
-	console.log(weeklyTimings);
-	return {
-		weekTimings: weeklyTimings,
-	};
+        return {
+                weekTimings: weeklyTimings,
+        };
 };
 
 // TypeScript interfaces

@@ -5,8 +5,7 @@ import { LocationInput, LocationOutput } from '../../types/location';
 import { getStateAbbreviation } from '../../utils/getStateAbbreviation';
 
 const fetchCoordinates = async (url: string) => {
-	console.log(`Fetching data from URL: ${url}`);
-	try {
+        try {
 		const response = await axios.get(url);
 		return response.data;
 	} catch (error: any) {
@@ -28,8 +27,7 @@ const getCoordinatesByAddress = async ({ city, state, country }: { city: string;
 	const data = await fetchCoordinates(apiUrl);
 	if (data && data.length > 0) {
 		const { lat, lon, name, country: code } = data[0];
-		console.log(`Coordinates fetched for address: ${lat}, ${lon}`);
-		return { city: name, lat, lon, country: code };
+                return { city: name, lat, lon, country: code };
 	} else {
 		throw new Error('No coordinates found for the given address');
 	}
@@ -42,8 +40,7 @@ const getCoordinatesByZipCode = async (zipCode: string): Promise<any> => {
 	const data = await fetchCoordinates(apiUrl);
 	if (data) {
 		const { lat, lon, name, country } = data;
-		console.log(`Coordinates fetched for zip code: ${lat}, ${lon}`);
-		return { city: name, lat, lon, zipCode, country };
+                return { city: name, lat, lon, zipCode, country };
 	} else {
 		throw new Error('No coordinates found for the given zip code');
 	}
@@ -57,8 +54,7 @@ const getAddressByCoordinates = async (lat: number, lon: number): Promise<any> =
 	const data = await fetchCoordinates(apiUrl);
 	if (data && data.length > 0) {
 		const { name: city, state, country } = data[0];
-		console.log(`Address fetched for coordinates: ${city}, ${state}, ${country}`);
-		return { city, state, lat, lon, country };
+                return { city, state, lat, lon, country };
 	} else {
 		throw new Error('No address found for the given coordinates');
 	}
@@ -96,33 +92,26 @@ export const resolveLocation = async (locationInput: LocationInput): Promise<Loc
 	let locationData = await findInDB(query);
 
 	if (locationData) {
-		console.log('Found existing location data in DB.');
-		delete locationData._id; // Remove the _id field
-		return locationData;
+                delete locationData._id; // Remove the _id field
+                return locationData;
 	}
 
 	// If not found in DB, resolve location
 	if (city && country) {
-		console.log(`Resolving location by city: ${city}, country: ${country}`);
-		const coordinates = await getCoordinatesByAddress({ city, state, country });
+                const coordinates = await getCoordinatesByAddress({ city, state, country });
 		({ lat, lon, country } = coordinates);
 		zipCode = (await gps2zip.gps2zip(lat, lon)).zip_code;
-		console.log(`Resolved to coordinates: ${lat}, ${lon}`);
 	} else if (zipCode) {
-		console.log(`Resolving location by zip code: ${zipCode}`);
-		const coordinates = await getCoordinatesByZipCode(zipCode);
+                const coordinates = await getCoordinatesByZipCode(zipCode);
 		({ city, lat, lon, country } = coordinates);
 		if (lat !== undefined && lon !== undefined) {
 			const addr = await getAddressByCoordinates(lat, lon);
 			state = addr.state;
 		}
-		console.log(`Resolved to coordinates: ${lat}, ${lon}`);
 	} else if (lat !== undefined && lon !== undefined) {
-		console.log(`Resolving location by coordinates: ${lat}, ${lon}`);
-		const addr = await getAddressByCoordinates(lat, lon);
+                const addr = await getAddressByCoordinates(lat, lon);
 		zipCode = (await gps2zip.gps2zip(lat, lon)).zip_code;
 		({ country, city, state } = addr);
-		console.log(`Resolved to address: ${city}, ${state}, ${country}`);
 	} else {
 		throw new Error('Invalid input: unable to resolve location.');
 	}
@@ -132,7 +121,6 @@ export const resolveLocation = async (locationInput: LocationInput): Promise<Loc
 	}
 
 	const address = `${city}, ${state}, ${zipCode}, ${country}`;
-	console.log(`Final resolved address: ${address}`);
 
 	locationData = {
 		zipCode: zipCode!,

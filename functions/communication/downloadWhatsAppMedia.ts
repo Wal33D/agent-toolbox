@@ -157,10 +157,9 @@ export const downloadWhatsAppMedia = async (request: DownloadWhatsAppMediaParams
 				JSON.parse(imageTagsResponse.choices[0].message.content as string).tags
 			);
 		}
-		console.log(cloudinaryResult);
 
-		return {
-			success: true,
+                return {
+                        success: true,
 			source,
 			alreadyExists,
 			type: 'image_upload',
