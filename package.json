@@ -39,19 +39,19 @@
     "form-data": "^4.0.0",
     "geo-tz": "^8.0.2",
     "gmail-node-mailer": "^1.9.1",
-    "googleapis": "^140.0.0",
+    "googleapis": "^150.0.1",
     "gps2zip": "^2.2.0",
     "jsonwebtoken": "^9.0.2",
     "libphonenumber-js": "^1.11.3",
     "microsoft-cognitiveservices-speech-sdk": "^1.38.0",
     "mongodb": "^6.7.0",
     "node-geocoder": "^4.3.0",
-    "openai": "^4.52.0",
+    "openai": "^5.5.1",
     "puppeteer": "^24.10.1",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
     "twilio": "^5.2.0",
-    "uuid": "^10.0.0"
+    "uuid": "^11.1.0"
   },
   "overrides": {
     "path-to-regexp": "^8.2.0",
