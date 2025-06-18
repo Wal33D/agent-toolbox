@@ -5,7 +5,7 @@ import { LocationInput, LocationOutput } from '../../types/location';
 import { getStateAbbreviation } from '../../utils/getStateAbbreviation';
 
 const fetchCoordinates = async (url: string) => {
-        try {
+	try {
 		const response = await axios.get(url);
 		return response.data;
 	} catch (error: any) {
@@ -27,7 +27,7 @@ const getCoordinatesByAddress = async ({ city, state, country }: { city: string;
 	const data = await fetchCoordinates(apiUrl);
 	if (data && data.length > 0) {
 		const { lat, lon, name, country: code } = data[0];
-                return { city: name, lat, lon, country: code };
+		return { city: name, lat, lon, country: code };
 	} else {
 		throw new Error('No coordinates found for the given address');
 	}
@@ -40,7 +40,7 @@ const getCoordinatesByZipCode = async (zipCode: string): Promise<any> => {
 	const data = await fetchCoordinates(apiUrl);
 	if (data) {
 		const { lat, lon, name, country } = data;
-                return { city: name, lat, lon, zipCode, country };
+		return { city: name, lat, lon, zipCode, country };
 	} else {
 		throw new Error('No coordinates found for the given zip code');
 	}
@@ -54,7 +54,7 @@ const getAddressByCoordinates = async (lat: number, lon: number): Promise<any> =
 	const data = await fetchCoordinates(apiUrl);
 	if (data && data.length > 0) {
 		const { name: city, state, country } = data[0];
-                return { city, state, lat, lon, country };
+		return { city, state, lat, lon, country };
 	} else {
 		throw new Error('No address found for the given coordinates');
 	}
@@ -92,24 +92,24 @@ export const resolveLocation = async (locationInput: LocationInput): Promise<Loc
 	let locationData = await findInDB(query);
 
 	if (locationData) {
-                delete locationData._id; // Remove the _id field
-                return locationData;
+		delete locationData._id; // Remove the _id field
+		return locationData;
 	}
 
 	// If not found in DB, resolve location
 	if (city && country) {
-                const coordinates = await getCoordinatesByAddress({ city, state, country });
+		const coordinates = await getCoordinatesByAddress({ city, state, country });
 		({ lat, lon, country } = coordinates);
 		zipCode = (await gps2zip.gps2zip(lat, lon)).zip_code;
 	} else if (zipCode) {
-                const coordinates = await getCoordinatesByZipCode(zipCode);
+		const coordinates = await getCoordinatesByZipCode(zipCode);
 		({ city, lat, lon, country } = coordinates);
 		if (lat !== undefined && lon !== undefined) {
 			const addr = await getAddressByCoordinates(lat, lon);
 			state = addr.state;
 		}
 	} else if (lat !== undefined && lon !== undefined) {
-                const addr = await getAddressByCoordinates(lat, lon);
+		const addr = await getAddressByCoordinates(lat, lon);
 		zipCode = (await gps2zip.gps2zip(lat, lon)).zip_code;
 		({ country, city, state } = addr);
 	} else {

@@ -31,8 +31,8 @@ const handler = async (request: VercelRequest, response: VercelResponse) => {
 			throw new Error('Invalid request method');
 		}
 
-                const processRequest = async (req: any) => {
-                        const handler = toolsMap[functionName as string];
+		const processRequest = async (req: any) => {
+			const handler = toolsMap[functionName as string];
 			if (!handler) {
 				throw new Error('Invalid function name.');
 			}

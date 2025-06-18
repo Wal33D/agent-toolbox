@@ -61,9 +61,9 @@ const storeInDB = async (ipInfo: IpInfo): Promise<void> => {
 const processIp = async (ip: string): Promise<IpInfo> => {
 	let ipInfo = await findInDB(ip);
 
-        if (ipInfo) {
-                // Existing entry found in database
-        } else {
+	if (ipInfo) {
+		// Existing entry found in database
+	} else {
 		// Fetch from ipapi.co if not found in DB
 		const apiUrl = `https://ipapi.co/${ip}/json/`;
 		const apiResponse = await axios.get<IpInfo>(apiUrl);

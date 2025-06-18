@@ -108,8 +108,8 @@ const createGoogleDoc = async (
 		message = `Error creating Google Docs file: ${error.message}`;
 	} finally {
 		const returnValue: FileCreationResponse = { status, fileId, fileLink, message };
-                return returnValue;
-        }
+		return returnValue;
+	}
 };
 
 const createGoogleSheet = async (
@@ -157,8 +157,8 @@ const createGoogleSheet = async (
 		message = `Error creating Google Sheets file: ${error.message}`;
 	} finally {
 		const returnValue: FileCreationResponse = { status, fileId, fileLink, message };
-                return returnValue;
-        }
+		return returnValue;
+	}
 };
 
 const findGoogleDocByTitle = async (title: string): Promise<FileCreationResponse> => {
@@ -186,8 +186,8 @@ const findGoogleDocByTitle = async (title: string): Promise<FileCreationResponse
 		message = `Error finding Google Docs file: ${error.message}`;
 	} finally {
 		const returnValue: FileCreationResponse = { status, fileId, fileLink, message };
-                return returnValue;
-        }
+		return returnValue;
+	}
 };
 
 const findGoogleSheetByTitle = async (title: string): Promise<FileCreationResponse> => {
@@ -215,8 +215,8 @@ const findGoogleSheetByTitle = async (title: string): Promise<FileCreationRespon
 		message = `Error finding Google Sheets file: ${error.message}`;
 	} finally {
 		const returnValue: FileCreationResponse = { status, fileId, fileLink, message };
-                return returnValue;
-        }
+		return returnValue;
+	}
 };
 
 const updateGoogleDocContent = async (
@@ -257,8 +257,8 @@ const updateGoogleDocContent = async (
 		message = `Error updating Google Docs file: ${error.message}`;
 	} finally {
 		const returnValue: FileCreationResponse = { status, fileId: findResult.fileId, fileLink: findResult.fileLink, message };
-                return returnValue;
-        }
+		return returnValue;
+	}
 };
 
 const updateGoogleSheetContent = async (
@@ -294,8 +294,8 @@ const updateGoogleSheetContent = async (
 		message = `Error updating Google Sheets file: ${error.message}`;
 	} finally {
 		const returnValue: FileCreationResponse = { status, fileId: findResult.fileId, fileLink: findResult.fileLink, message };
-                return returnValue;
-        }
+		return returnValue;
+	}
 };
 
 const setFileEditPermissions = async (fileId: string, emails: string[]): Promise<FileCreationResponse> => {

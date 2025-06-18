@@ -24,7 +24,7 @@ export const viewAndDescribeWhatsAppImage = async (request: viewAndDescribeWhats
 				'Content-Type': 'application/json',
 			},
 		});
-                const mediaUrl = mediaData.url;
+		const mediaUrl = mediaData.url;
 		const { data: mediaStream } = await axios.get(mediaUrl, {
 			headers: {
 				Authorization: `Bearer ${process.env.WHATSAPP_GRAPH_API_TOKEN}`,

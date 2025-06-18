@@ -75,9 +75,9 @@ export const textToAudioFile = async ({ body }: { body: any }): Promise<any> => 
 	} finally {
 		try {
 			await fsPromises.unlink(filePath);
-                } catch (cleanupError) {
-                        // Cleanup errors are non-critical
-                }
-                return response;
-        }
+		} catch (cleanupError) {
+			// Cleanup errors are non-critical
+		}
+		return response;
+	}
 };
