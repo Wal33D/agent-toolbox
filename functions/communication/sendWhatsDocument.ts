@@ -1,4 +1,5 @@
 import axios from 'axios';
+import path from 'path';
 import { SendMessageResponse, SendWhatsAppDocumentRequestParams } from './types';
 
 export const sendWhatsFile = async (request: SendWhatsAppDocumentRequestParams): Promise<SendMessageResponse> => {
@@ -13,9 +14,20 @@ export const sendWhatsFile = async (request: SendWhatsAppDocumentRequestParams):
 		throw new Error('Error: Missing required parameter: to. Please provide the recipient number.');
 	}
 
-	if (!url) {
-		throw new Error(`Error: Missing required parameter: document/file URL. Please provide the URL of the document/file to send.`);
-	}
+        if (!url) {
+                throw new Error(`Error: Missing required parameter: document/file URL. Please provide the URL of the document/file to send.`);
+        }
+
+        let filename = 'message.mp3';
+        try {
+                const pathname = new URL(url).pathname;
+                const base = path.basename(pathname);
+                if (base) {
+                        filename = base;
+                }
+        } catch {
+                // keep default filename
+        }
 
 	const platform = 'whatsapp';
 	const type = 'document';
@@ -34,11 +46,11 @@ export const sendWhatsFile = async (request: SendWhatsAppDocumentRequestParams):
 				messaging_product: platform,
 				to,
 				type,
-				document: {
-					link: url,
-					caption: '',
-					filename: 'message.mp3',
-				},
+                                document: {
+                                        link: url,
+                                        caption: '',
+                                        filename,
+                                },
 			},
 			{
 				headers: {
