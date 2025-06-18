@@ -33,6 +33,43 @@ Below is a summary of the main functions exposed through `toolsHandler.ts`:
 
 Other helpers in `functions/unitConversion/` handle unit conversions (length, weight, temperature, etc.).
 
+## Getting Started
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Create a local environment file by copying `.env.example` to `.env` and fill in the required values.
+
+3. Start the development server with [Vercel CLI](https://vercel.com/docs/cli):
+
+   ```bash
+   npx vercel dev
+   ```
+
+   The API will be available at `http://localhost:3000` by default and will load values from your `.env` file.
+
+### Invoking API Routes
+
+Send a JWT in the `Authorization` header when calling any route. The token should be signed with the `JWT_SECRET` defined in your `.env` file.
+
+Example request to perform a Google web search through `api/toolsHandler`:
+
+```bash
+curl -X POST http://localhost:3000/api/toolsHandler \
+  -H "Authorization: Bearer <your-jwt-token>" \
+  -H "Content-Type: application/json" \
+  -d '{"functionName":"googleWebSearch","searchTerm":"serverless"}'
+```
+
+To view the welcome page you can call `api/welcome`:
+
+```bash
+curl -H "Authorization: Bearer <your-jwt-token>" http://localhost:3000/api/welcome
+```
+
 ## Environment Variables
 
 Create a `.env` file using `.env.example` as a reference. Required variables include:
@@ -53,7 +90,7 @@ Create a `.env` file using `.env.example` as a reference. Required variables inc
 - `GOOGLE_API_KEY` – Key for Google APIs
 - `SCALE_SERP_API_KEY` – API key for Scale SERP web search
 
-## Building and Deploying to Vercel
+## Building for Production
 
 1. Install dependencies with `npm install`.
 2. Build the TypeScript sources:
