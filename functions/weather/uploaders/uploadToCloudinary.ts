@@ -1,10 +1,8 @@
 import { Readable } from 'stream';
 import { VercelRequest } from '@vercel/node';
 import { v2 as cloudinary } from 'cloudinary';
-import { ensureEnv } from '../../../utils/validateEnv';
 
-// Validate env vars for Cloudinary config
-ensureEnv();
+// Environment variables are validated at application startup
 
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

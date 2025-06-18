@@ -1,9 +1,7 @@
 import jwt, { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import type { VercelRequest } from '@vercel/node';
-import { ensureEnv } from './validateEnv';
 
-// Validate JWT_SECRET and related configuration
-ensureEnv();
+// Environment variables are validated at application startup
 
 export type JWTVerificationResult<T> = { valid: true; payload: T } | { valid: false; error: 'expired' | 'malformed' | 'invalid' };
 

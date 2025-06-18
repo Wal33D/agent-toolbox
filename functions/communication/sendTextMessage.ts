@@ -1,9 +1,7 @@
 import twilio from 'twilio';
-import { ensureEnv } from '../../utils/validateEnv';
 import { SendTextMessageRequestParams, SendMessageResponse } from './types';
 
-// Validate required environment variables on import
-ensureEnv();
+// Environment variables are validated at application startup
 
 export const sendTextMessage = async (request: SendTextMessageRequestParams): Promise<SendMessageResponse> => {
 	const { TWILIO_ASSISTANT_PHONE_NUMBER, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN } = process.env;

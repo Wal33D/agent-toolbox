@@ -1,7 +1,7 @@
 // Communication functions
 import { handleToolOptions } from '../functions/handleToolOptions';
 import { verifyRequestToken } from '../utils/verifyJWT';
-import { ensureEnv } from '../utils/validateEnv';
+import { validateEnv } from '../utils/validateEnv';
 import { toolsMap } from './toolsMap';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
@@ -10,8 +10,8 @@ interface AIRequest {
 	[key: string]: any;
 }
 
-// Ensure all required environment variables are set when the module loads
-ensureEnv();
+// Validate all required environment variables once when the module loads
+validateEnv();
 
 const handler = async (request: VercelRequest, response: VercelResponse) => {
 	if (request.method === 'OPTIONS') {

@@ -1,8 +1,6 @@
 import axios from 'axios';
-import { ensureEnv } from '../../utils/validateEnv';
 
-// Validate WhatsApp environment variables on import
-ensureEnv();
+// Environment variables are validated at application startup
 
 interface RequestWhatsAppLocationParams {
 	body: {

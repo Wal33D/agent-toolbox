@@ -2,10 +2,8 @@ import axios from 'axios';
 import { VercelRequest } from '@vercel/node';
 import { parseQueryParams } from '../../utils/parseQueryParams';
 import { ImageResult, ImageSearchOptions, ImageSearchResponse } from './searchGoogleTypes';
-import { ensureEnv } from '../../utils/validateEnv';
 
-// Validate API keys used for image search
-ensureEnv();
+// Environment variables are validated at application startup
 
 const fetchImages = async (options: ImageSearchOptions, apiKey: string): Promise<ImageResult[]> => {
 	const params: Record<string, string> = {

@@ -1,8 +1,6 @@
 import { MongoClient, Db, Collection } from 'mongodb';
-import { ensureEnv } from './validateEnv';
 
-// Validate MongoDB environment configuration
-ensureEnv();
+// MongoDB configuration assumes environment variables are validated elsewhere
 
 const { DB_USERNAME: dbUsername = '', DB_PASSWORD: dbPassword = '', DB_NAME: dbName = '', DB_CLUSTER: dbClusterName = '' } = process.env;
 

@@ -3,10 +3,8 @@ import gps2zip from 'gps2zip';
 import { connectToMongo } from '../../utils/mongo';
 import { LocationInput, LocationOutput } from '../../types/location';
 import { getStateAbbreviation } from '../../utils/getStateAbbreviation';
-import { ensureEnv } from '../../utils/validateEnv';
 
-// Run environment validation once when module is imported
-ensureEnv();
+// Environment variables are validated at application startup
 
 const fetchCoordinates = async (url: string) => {
 	try {

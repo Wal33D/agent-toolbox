@@ -1,10 +1,8 @@
 import axios from 'axios';
 import { LocationOutput } from '../../types/location';
 import { resolveLocation } from '../resolvers/resolveLocation';
-import { ensureEnv } from '../../utils/validateEnv';
 
-// Validate environment variables when the module loads
-ensureEnv();
+// Environment variables are validated at application startup
 
 const fetchWeatherData = async ({ lat, lon, zipCode }: { lat?: number; lon?: number; zipCode?: string }) => {
 	const weatherApiKey = process.env.OPEN_WEATHER_API_KEY;
