@@ -13,11 +13,11 @@ const connectWithRetry = async (uri: string, attempts = 5): Promise<MongoClient>
 			const client = new MongoClient(uri);
 			await client.connect();
 			return client;
-                } catch (error: unknown) {
-                        console.error(`Attempt ${attempt} failed: ${(error as Error).message}`);
-                        if (attempt < attempts) await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
-                        else throw error;
-                }
+		} catch (error: unknown) {
+			console.error(`Attempt ${attempt} failed: ${(error as Error).message}`);
+			if (attempt < attempts) await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+			else throw error;
+		}
 	}
 	throw new Error('Connection attempts exceeded.');
 };

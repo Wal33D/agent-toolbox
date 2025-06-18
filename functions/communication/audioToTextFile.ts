@@ -13,8 +13,8 @@ export const audioFileToText = async (request: any): Promise<{ success: boolean;
 		return { success: false, error: 'Missing required parameter: fileUrl' };
 	}
 
-        const tempDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'audio-'));
-        const filePath = path.join(tempDir, 'audio.mp3');
+	const tempDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'audio-'));
+	const filePath = path.join(tempDir, 'audio.mp3');
 
 	try {
 		// Step 1: Download the audio file from the URL
@@ -35,10 +35,10 @@ export const audioFileToText = async (request: any): Promise<{ success: boolean;
 
 		// Step 3: Return the transcription result
 		return { success: true, data: transcription.text };
-        } catch (error: any) {
-                return { success: false, error: error.message };
-        } finally {
-                // Clean up the temporary file
-                await fs.promises.unlink(filePath).catch(() => undefined);
-        }
+	} catch (error: any) {
+		return { success: false, error: error.message };
+	} finally {
+		// Clean up the temporary file
+		await fs.promises.unlink(filePath).catch(() => undefined);
+	}
 };

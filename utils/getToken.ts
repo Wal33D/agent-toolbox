@@ -51,10 +51,10 @@ const fetchToken = async (): Promise<TokenStore> => {
 			issuedAt: tokenData.issuedAt,
 			expiresAt: tokenData.expiresAt,
 		};
-        } catch (error: unknown) {
-                console.error('Error fetching token:', error);
-                throw new Error('Unable to fetch token');
-        }
+	} catch (error: unknown) {
+		console.error('Error fetching token:', error);
+		throw new Error('Unable to fetch token');
+	}
 };
 
 const isTokenExpired = (tokenStore: TokenStore): boolean => {
@@ -86,8 +86,8 @@ const saveTokenToMemory = (tokenStore: TokenStore): void => {
 
 const getTokenFromDatabase = async (): Promise<TokenStore> => {
 	const collection = await getTokenCollection();
-        const tokenDoc = await collection.findOne({ name: 'tokenStore' });
-        return (tokenDoc as TokenStore) ?? {};
+	const tokenDoc = await collection.findOne({ name: 'tokenStore' });
+	return (tokenDoc as TokenStore) ?? {};
 };
 
 const saveTokenToDatabase = async (tokenStore: TokenStore): Promise<void> => {
@@ -122,7 +122,7 @@ export const getToken = async (storage: 'DATABASE' | 'DISK' | 'MEMORY' = 'DATABA
 };
 
 interface UploadGDriveHelperParams {
-        form: FormData;
+	form: FormData;
 }
 
 export const uploadGDriveHelper = async ({ form }: UploadGDriveHelperParams): Promise<AxiosResponse> => {
@@ -136,7 +136,7 @@ export const uploadGDriveHelper = async ({ form }: UploadGDriveHelperParams): Pr
 		});
 		console.log(response);
 		return response;
-        } catch (error: unknown) {
-                throw error as Error;
-        }
+	} catch (error: unknown) {
+		throw error as Error;
+	}
 };
