@@ -4,10 +4,8 @@ import * as path from 'path';
 import FormData from 'form-data';
 import { Collection } from 'mongodb';
 import { connectToMongo } from './mongo';
-import { ensureEnv } from './validateEnv';
 
-// Validate environment variables for token service
-ensureEnv();
+// Token service assumes environment variables are validated at startup
 
 const tokenUrl = process.env.TOKEN_SERVICE_URL || '';
 const apiKey = process.env.TRUSTED_API_KEY || '';

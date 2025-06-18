@@ -4,10 +4,8 @@ import path from 'path';
 import OpenAI from 'openai';
 import { cloudinaryConfig } from '../../utils/cloudinaryConfig';
 import { SendWhatsAppMessageRequestParams, SendMessageResponse } from './types';
-import { ensureEnv } from '../../utils/validateEnv';
 
-// Validate environment variables for OpenAI and WhatsApp API
-ensureEnv();
+// Environment variables are validated at application startup
 
 const openai = new OpenAI();
 

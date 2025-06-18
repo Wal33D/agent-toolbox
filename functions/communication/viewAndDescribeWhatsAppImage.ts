@@ -3,10 +3,8 @@ import stream from 'stream';
 import OpenAI from 'openai';
 import { promisify } from 'util';
 import { cloudinaryConfig as cloudinary } from '../../utils/cloudinaryConfig';
-import { ensureEnv } from '../../utils/validateEnv';
 
-// Validate env vars for OpenAI and Cloudinary
-ensureEnv();
+// Environment variables are validated at application startup
 
 const openai = new OpenAI();
 const pipeline = promisify(stream.pipeline);

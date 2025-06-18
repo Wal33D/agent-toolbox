@@ -2,10 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { verifyRequestToken } from '../utils/verifyJWT';
-import { ensureEnv } from '../utils/validateEnv';
+import { validateEnv } from '../utils/validateEnv';
 
 // Validate environment on module load
-ensureEnv();
+validateEnv();
 
 const handler = async (request: VercelRequest, response: VercelResponse) => {
 	const verification = verifyRequestToken(request);

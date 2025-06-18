@@ -1,10 +1,8 @@
 import { GmailMailer } from 'gmail-node-mailer';
-import { ensureEnv } from '../../utils/validateEnv';
 import { encodeEmailContent, EncodingType } from '../../utils/encodeEmailContent';
 import { SendEmailMessageRequestParams, SendMessageResponse } from './types';
 
-// Ensure required environment variables are set when the module is imported
-ensureEnv();
+// Environment variables are validated at application startup
 
 export const sendEmail = async (request: SendEmailMessageRequestParams): Promise<SendMessageResponse> => {
 	const { to, body, from, subject } = request.body;
