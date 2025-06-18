@@ -44,6 +44,7 @@ Create a `.env` file using `.env.example` as a reference. Required variables inc
 - `GDRIVE_SERVICE_ACCOUNT_JSON` – Google Drive service account JSON
 - `TRUSTED_API_KEY` – Shared API key for protected routes
 - `JWT_SECRET` – Secret used for JWT verification
+- `TOKEN_SERVICE_URL` – URL of the JWT token service
 - Cloudinary credentials: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`
 - Azure speech: `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`
 - WhatsApp integration: `WHATSAPP_GRAPH_API_TOKEN`, `WHATSAPP_GRAPH_API_URL`, `WHATSAPP_PHONE_ID`, `WHATSAPP_ASSISTANT_PHONE_NUMBER`

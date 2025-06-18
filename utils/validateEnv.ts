@@ -16,8 +16,9 @@ export function validateEnv(): void {
 			}
 		},
 		TRUSTED_API_KEY: /.+/,
-		JWT_SECRET: /.+/,
-		CLOUDINARY_CLOUD_NAME: /.+/,
+                JWT_SECRET: /.+/,
+                TOKEN_SERVICE_URL: /^https?:\/\/.+/,
+                CLOUDINARY_CLOUD_NAME: /.+/,
 		CLOUDINARY_API_KEY: /.+/,
 		CLOUDINARY_API_SECRET: /.+/,
 		AZURE_SPEECH_KEY: /.+/,
