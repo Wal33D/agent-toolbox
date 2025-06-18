@@ -710,6 +710,27 @@ export const tools = [
 	{
 		type: 'function',
 		function: {
+			name: 'sendWhatsFile',
+			description: 'Send a document or file to a user via WhatsApp. Requires parameters: to, url.',
+			parameters: {
+				type: 'object',
+				properties: {
+					to: {
+						type: 'string',
+						description: 'The recipient WhatsApp number in E.164 format, e.g., +12695010475',
+					},
+					url: {
+						type: 'string',
+						description: 'Direct URL of the file or document to send.',
+					},
+				},
+				required: ['to', 'url'],
+			},
+		},
+	},
+	{
+		type: 'function',
+		function: {
 			name: 'viewAndDescribeWhatsAppImage',
 			description:
 				'Analyze and describe a WhatsApp image given its media ID and optional quality parameter. Enables AI Assistant to (see) an image through WhatsApp!',

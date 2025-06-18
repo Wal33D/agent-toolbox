@@ -69,6 +69,10 @@ export const toolsMap: Record<string, ToolHandler> = {
 		const { sendWhatsAppVoiceMessage } = await import('../functions/communication/sendWhatsAppVoiceMessage');
 		return sendWhatsAppVoiceMessage(req as any);
 	},
+	sendwhatsfile: async req => {
+		const { sendWhatsFile } = await import('../functions/communication/sendWhatsDocument');
+		return sendWhatsFile(req as any);
+	},
 	creategoogledocsfile: async req => {
 		const { createGoogleDocsFile } = await import('../functions/googleBusinessStuff/createGoogleSheetOrGoogleDoc');
 		return createGoogleDocsFile(req);
