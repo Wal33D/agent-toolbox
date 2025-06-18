@@ -1,9 +1,8 @@
-import { sendTextMessage } from '../functions/communication/sendTextMessage';
-import twilio from 'twilio';
-
 jest.mock('twilio');
+const { sendTextMessage } = require('../functions/communication/sendTextMessage.ts');
+const twilio = require('twilio');
 
-const mockedTwilio = twilio as jest.MockedFunction<typeof twilio>;
+const mockedTwilio = /** @type {jest.MockedFunction<typeof twilio>} */ (twilio);
 
 describe('sendTextMessage', () => {
   beforeEach(() => {
@@ -16,11 +15,11 @@ describe('sendTextMessage', () => {
       messages: {
         create: jest.fn().mockResolvedValue({ status: 'sent', sid: '123' }),
       },
-    } as any);
+    });
   });
 
   test('sends text message successfully', async () => {
-    const result = await sendTextMessage({ body: { to: '+1', body: 'hi' } } as any);
+    const result = await sendTextMessage({ body: { to: '+1', body: 'hi' } });
     expect(result).toEqual(
       expect.objectContaining({ success: true, msgId: '123' }),
     );

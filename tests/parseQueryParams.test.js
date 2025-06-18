@@ -1,14 +1,14 @@
-import { parseQueryParams } from '../utils/parseQueryParams';
+const { parseQueryParams } = require('../utils/parseQueryParams.ts');
 
 describe('parseQueryParams', () => {
   test('parses query values into the correct types', () => {
     const result = parseQueryParams({
       page: '10',
       search: 'abc',
-      active: true as any,
+      active: true,
       score: '5.5',
       other: 'text',
-    } as any);
+    });
     expect(result.page).toBe(10);
     expect(result.search).toBe('abc');
     expect(result.active).toBe(true);

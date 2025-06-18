@@ -1,11 +1,11 @@
-import { convertLength } from '../functions/unitConversion/convertLength';
+const { convertLength } = require('../functions/unitConversion/convertLength.ts');
 
 describe('convertLength', () => {
   test('converts meters to feet', async () => {
     const result = await convertLength({
       method: 'GET',
       query: { from: 'meters', to: 'feet', value: '1' },
-    } as any);
+    });
     expect(result.status).toBe(true);
     expect(result.conversions[0]).toEqual(
       expect.objectContaining({
@@ -20,7 +20,7 @@ describe('convertLength', () => {
     const result = await convertLength({
       method: 'POST',
       body: { from: 'feet', to: 'meters', value: 3.28 },
-    } as any);
+    });
     expect(result.conversions[0]).toEqual(
       expect.objectContaining({
         status: true,
@@ -34,7 +34,7 @@ describe('convertLength', () => {
     const result = await convertLength({
       method: 'GET',
       query: { from: 'inches', to: 'centimeters', value: '1' },
-    } as any);
+    });
     expect(result.conversions[0]).toEqual(
       expect.objectContaining({
         status: true,
@@ -48,7 +48,7 @@ describe('convertLength', () => {
     const result = await convertLength({
       method: 'GET',
       query: { from: 'centimeters', to: 'inches', value: '2.54' },
-    } as any);
+    });
     expect(result.conversions[0]).toEqual(
       expect.objectContaining({
         status: true,
@@ -62,7 +62,7 @@ describe('convertLength', () => {
     const result = await convertLength({
       method: 'GET',
       query: { from: 'yards', to: 'meters', value: '1' },
-    } as any);
+    });
     expect(result.conversions[0]).toEqual(
       expect.objectContaining({
         status: false,
@@ -76,7 +76,7 @@ describe('convertLength', () => {
     const result = await convertLength({
       method: 'GET',
       query: { from: 'meters', to: 'feet', value: 'abc' },
-    } as any);
+    });
     expect(result.conversions[0]).toEqual(
       expect.objectContaining({
         status: false,
@@ -91,7 +91,7 @@ describe('convertLength', () => {
       to: 'feet',
       value: 1,
     }));
-    const result = await convertLength({ method: 'POST', body: many } as any);
+    const result = await convertLength({ method: 'POST', body: many });
     expect(result).toEqual({
       status: false,
       message:

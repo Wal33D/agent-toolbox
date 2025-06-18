@@ -1,14 +1,13 @@
 jest.setTimeout(15000);
-import { getWebsiteScreenshot } from '../functions/screenshot/getWebsiteScreenshot';
-import puppeteer from 'puppeteer-extra';
-import { uploadGDriveHelper } from '../utils/getToken';
-
 jest.mock('puppeteer-extra');
 jest.mock('puppeteer-extra-plugin-stealth', () => jest.fn(() => ({})));
 jest.mock('../utils/getToken');
+const { getWebsiteScreenshot } = require('../functions/screenshot/getWebsiteScreenshot.ts');
+const puppeteer = require('puppeteer-extra');
+const { uploadGDriveHelper } = require('../utils/getToken.ts');
 
-const mockedPuppeteer = puppeteer as jest.Mocked<typeof puppeteer>;
-const mockedUpload = uploadGDriveHelper as jest.MockedFunction<typeof uploadGDriveHelper>;
+const mockedPuppeteer = /** @type {jest.Mocked<typeof puppeteer>} */ (puppeteer);
+const mockedUpload = /** @type {jest.MockedFunction<typeof uploadGDriveHelper>} */ (uploadGDriveHelper);
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -24,7 +23,7 @@ beforeEach(() => {
         },
       ],
     },
-  } as any);
+  });
 
   const page = {
     setViewport: jest.fn(),
@@ -33,12 +32,12 @@ beforeEach(() => {
     goto: jest.fn(),
     mouse: { move: jest.fn(), click: jest.fn() },
     screenshot: jest.fn().mockResolvedValue(Buffer.from('img')),
-  } as any;
+  };
 
   const browser = {
     newPage: jest.fn().mockResolvedValue(page),
     close: jest.fn(),
-  } as any;
+  };
 
   mockedPuppeteer.launch = jest.fn().mockResolvedValue(browser);
   mockedPuppeteer.use = jest.fn();
@@ -49,7 +48,7 @@ afterEach(() => {
 });
 
 test('captures screenshot and uploads', async () => {
-  const promise = getWebsiteScreenshot({ method: 'GET', query: { url: 'https://example.com' } } as any);
+  const promise = getWebsiteScreenshot({ method: 'GET', query: { url: 'https://example.com' } });
   await jest.runAllTimersAsync();
   const result = await promise;
   expect(result).toEqual(

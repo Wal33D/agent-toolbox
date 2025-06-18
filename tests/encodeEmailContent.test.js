@@ -1,4 +1,4 @@
-import { encodeEmailContent, EncodingType } from '../utils/encodeEmailContent';
+const { encodeEmailContent, EncodingType } = require('../utils/encodeEmailContent.ts');
 
 describe('encodeEmailContent', () => {
   test('subject encoding', () => {

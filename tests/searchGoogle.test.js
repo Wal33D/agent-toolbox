@@ -1,9 +1,8 @@
-import axios from 'axios';
-import { searchGoogle } from '../functions/searchGoogle/googleWebSearch';
-
 jest.mock('axios');
+const axios = require('axios');
+const { searchGoogle } = require('../functions/searchGoogle/googleWebSearch.ts');
 
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+const mockedAxios = /** @type {jest.Mocked<typeof axios>} */ (axios);
 
 describe('searchGoogle', () => {
   beforeEach(() => {
@@ -26,7 +25,7 @@ describe('searchGoogle', () => {
   });
 
   test('returns search results', async () => {
-    const result = await searchGoogle({ method: 'GET', query: { searchTerm: 'test' } } as any);
+    const result = await searchGoogle({ method: 'GET', query: { searchTerm: 'test' } });
     expect(result).toEqual(
       expect.objectContaining({
         status: true,
