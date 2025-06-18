@@ -11,7 +11,7 @@ Agent Toolbox exposes a set of serverless APIs for tasks such as location lookup
 ```
 api/                 Vercel API routes that route requests to the functions
 functions/           Core serverless functions
-otherServerlessAPI/  Additional utility APIs (unit conversions, etc.)
+functions/unitConversion/  Utility APIs for unit conversions (length, weight, etc.)
 public/              Static assets served by Vercel
 utils/               Helper modules shared by the functions
 types/               TypeScript type declarations
@@ -31,7 +31,7 @@ Below is a summary of the main functions exposed through `toolsHandler.ts`:
 - **getIslamicPrayerTimingsDay / getIslamicPrayerTimingsWeek** – Provide Islamic prayer times.
 - **Communication utilities** – Send emails, SMS messages, WhatsApp messages, and audio conversions.
 
-Other helpers in `otherServerlessAPI/` handle unit conversions (length, weight, temperature, etc.).
+Other helpers in `functions/unitConversion/` handle unit conversions (length, weight, temperature, etc.).
 
 ## Environment Variables
 
