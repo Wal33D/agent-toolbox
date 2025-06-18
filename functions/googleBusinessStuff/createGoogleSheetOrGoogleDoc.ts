@@ -1,5 +1,9 @@
 import { google } from 'googleapis';
 import { VercelRequest } from '@vercel/node';
+import { ensureEnv } from '../../utils/validateEnv';
+
+// Validate Google Drive service account configuration
+ensureEnv();
 
 function getServiceAccount() {
 	const json = process.env.GDRIVE_SERVICE_ACCOUNT_JSON;

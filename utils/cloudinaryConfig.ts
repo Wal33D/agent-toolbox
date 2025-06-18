@@ -1,4 +1,8 @@
 import { v2 as cloudinary } from 'cloudinary';
+import { ensureEnv } from './validateEnv';
+
+// Validate cloudinary environment variables
+ensureEnv();
 
 const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
 const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;

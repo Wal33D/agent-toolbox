@@ -1,5 +1,9 @@
 import axios from 'axios';
 import { VercelRequest } from '@vercel/node';
+import { ensureEnv } from '../../utils/validateEnv';
+
+// Ensure required environment variables are present
+ensureEnv();
 
 const fetchWeatherData = async ({ city, state, country, zipCode, lat, lon }: any) => {
 	const weatherApiKey = process.env.VISUAL_CROSSING_WEATHER_API_KEY;

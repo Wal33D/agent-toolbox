@@ -3,6 +3,10 @@ import axios from 'axios';
 import OpenAI from 'openai';
 import { cloudinaryConfig } from '../../utils/cloudinaryConfig';
 import { updateCloudinaryMetadata } from '../../utils/updateCloudinaryMetadata';
+import { ensureEnv } from '../../utils/validateEnv';
+
+// Ensure env vars for external services are set
+ensureEnv();
 
 const openai = new OpenAI();
 

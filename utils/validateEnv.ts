@@ -1,3 +1,5 @@
+let validated = false;
+
 export function validateEnv(): void {
 	const rules: Record<string, RegExp | ((v: string) => boolean)> = {
 		OPENAI_API_KEY: /.+/,
@@ -46,4 +48,14 @@ export function validateEnv(): void {
 			throw new Error(`Invalid format for environment variable: ${key}`);
 		}
 	}
+}
+
+export function ensureEnv(): void {
+        if (process.env.NODE_ENV === 'test') {
+                return;
+        }
+        if (!validated) {
+                validateEnv();
+                validated = true;
+        }
 }

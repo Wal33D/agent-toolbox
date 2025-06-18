@@ -1,4 +1,8 @@
 import { google, drive_v3 } from 'googleapis';
+import { ensureEnv } from './validateEnv';
+
+// Validate environment variables for Google Drive access
+ensureEnv();
 
 function getServiceAccount() {
 	const json = process.env.GDRIVE_SERVICE_ACCOUNT_JSON;

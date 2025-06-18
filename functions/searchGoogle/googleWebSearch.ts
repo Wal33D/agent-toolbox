@@ -2,6 +2,10 @@ import axios from 'axios';
 import { parseQueryParams } from '../../utils/parseQueryParams';
 import { SerpSearchRequest, WebSearchResponse, WebSearchResult } from './searchGoogleTypes';
 import { VercelRequest } from '@vercel/node';
+import { ensureEnv } from '../../utils/validateEnv';
+
+// Validate environment variables for Scale SERP
+ensureEnv();
 
 export const searchGoogle = async (request: VercelRequest): Promise<WebSearchResponse> => {
 	try {

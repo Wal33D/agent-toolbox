@@ -1,5 +1,9 @@
 import NodeGeocoder from 'node-geocoder';
 import { VercelRequest } from '@vercel/node';
+import { ensureEnv } from '../../utils/validateEnv';
+
+// Validate environment variables when this module is loaded
+ensureEnv();
 
 const geocoder = NodeGeocoder({
 	provider: 'google',

@@ -2,6 +2,10 @@ import axios from 'axios';
 import { load } from 'cheerio';
 import { VercelRequest } from '@vercel/node';
 import { parseQueryParams } from '../../utils/parseQueryParams';
+import { ensureEnv } from '../../utils/validateEnv';
+
+// Validate OpenAI API configuration
+ensureEnv();
 
 const openaiApiKey = process.env.OPENAI_API_KEY;
 

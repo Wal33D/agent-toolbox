@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { validateEnv } from '../../utils/validateEnv';
+import { ensureEnv } from '../../utils/validateEnv';
 import { SendWhatsAppMessageRequestParams, SendMessageResponse } from './types';
 
 // Check environment when module loads
-validateEnv();
+ensureEnv();
 
 export const sendWhatsAppMessage = async (request: SendWhatsAppMessageRequestParams): Promise<SendMessageResponse> => {
 	const { WHATSAPP_GRAPH_API_TOKEN, WHATSAPP_GRAPH_API_URL, WHATSAPP_ASSISTANT_PHONE_NUMBER, WHATSAPP_PHONE_ID } = process.env;
