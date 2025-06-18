@@ -4,33 +4,33 @@ import { parseQueryParams } from '../../utils/parseQueryParams';
 import { ImageResult, ImageSearchOptions, ImageSearchResponse } from './searchGoogleTypes';
 
 const fetchImages = async (options: ImageSearchOptions, apiKey: string): Promise<ImageResult[]> => {
-        const params: Record<string, string> = {
-                api_key: apiKey,
-                q: options.searchTerm,
-                search_type: 'images',
-        };
+	const params: Record<string, string> = {
+		api_key: apiKey,
+		q: options.searchTerm,
+		search_type: 'images',
+	};
 
-        if (options.size) {
-                params.image_size = options.size;
-        }
+	if (options.size) {
+		params.image_size = options.size;
+	}
 
-        const response = await axios.get('https://api.scaleserp.com/search', { params });
+	const response = await axios.get('https://api.scaleserp.com/search', { params });
 
-        return (response.data.image_results || []).map((result: any) => ({
-                url: result.image || result.link,
-                width: result.width || 0,
-                height: result.height || 0,
-        }));
+	return (response.data.image_results || []).map((result: any) => ({
+		url: result.image || result.link,
+		width: result.width || 0,
+		height: result.height || 0,
+	}));
 };
 
 export const googleImageSearch = async (request: VercelRequest): Promise<ImageSearchResponse> => {
-        try {
-                const apiKey = process.env.SCALE_SERP_API_KEY;
-                if (!apiKey) {
-                        throw new Error('SCALE_SERP_API_KEY environment variable is not set');
-                }
+	try {
+		const apiKey = process.env.SCALE_SERP_API_KEY;
+		if (!apiKey) {
+			throw new Error('SCALE_SERP_API_KEY environment variable is not set');
+		}
 
-                let requestBody: ImageSearchOptions[];
+		let requestBody: ImageSearchOptions[];
 
 		if (request.method === 'GET') {
 			requestBody = [parseQueryParams(request.query) as ImageSearchOptions];
@@ -58,23 +58,23 @@ export const googleImageSearch = async (request: VercelRequest): Promise<ImageSe
 					throw new Error('Search term is required');
 				}
 
-                                const images = await fetchImages(options, apiKey);
-                                return images;
-                        })
-                );
+				const images = await fetchImages(options, apiKey);
+				return images;
+			})
+		);
 
 		return {
 			status: true,
 			message: 'Images retrieved successfully.',
 			data: results,
 		};
-        } catch (error: unknown) {
-                return {
-                        status: false,
-                        message: `Error: ${(error as Error).message}`,
-                        data: [],
-                };
-        }
+	} catch (error: unknown) {
+		return {
+			status: false,
+			message: `Error: ${(error as Error).message}`,
+			data: [],
+		};
+	}
 };
 
 export default googleImageSearch;

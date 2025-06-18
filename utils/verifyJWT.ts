@@ -1,9 +1,7 @@
 import jwt, { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import type { VercelRequest } from '@vercel/node';
 
-export type JWTVerificationResult<T> =
-        | { valid: true; payload: T }
-        | { valid: false; error: 'expired' | 'malformed' | 'invalid' };
+export type JWTVerificationResult<T> = { valid: true; payload: T } | { valid: false; error: 'expired' | 'malformed' | 'invalid' };
 
 /**
  * Verify the JWT from an Authorization header.
@@ -17,10 +15,10 @@ export function verifyJWT<T = Record<string, unknown>>(authorizationHeader?: str
 	}
 	const token = authorizationHeader.split(' ')[1];
 	try {
-                const payload = jwt.verify(token, secret, {
-                        algorithms: ['HS256'],
-                }) as T;
-                return { valid: true, payload };
+		const payload = jwt.verify(token, secret, {
+			algorithms: ['HS256'],
+		}) as T;
+		return { valid: true, payload };
 	} catch (err) {
 		if (err instanceof TokenExpiredError) {
 			return { valid: false, error: 'expired' };
@@ -35,7 +33,9 @@ export function verifyJWT<T = Record<string, unknown>>(authorizationHeader?: str
 /**
  * Convenience helper to verify the token of a request object.
  */
-export function verifyRequestToken<T = Record<string, unknown>>(request: VercelRequest | { headers: Record<string, string | string[] | undefined> }): JWTVerificationResult<T> {
-        const header = request.headers?.authorization || request.headers?.Authorization;
-        return verifyJWT<T>(typeof header === 'string' ? header : undefined);
+export function verifyRequestToken<T = Record<string, unknown>>(
+	request: VercelRequest | { headers: Record<string, string | string[] | undefined> }
+): JWTVerificationResult<T> {
+	const header = request.headers?.authorization || request.headers?.Authorization;
+	return verifyJWT<T>(typeof header === 'string' ? header : undefined);
 }
