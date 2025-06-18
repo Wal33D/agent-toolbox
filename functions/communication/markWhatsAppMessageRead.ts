@@ -14,13 +14,19 @@ interface MarkMessageReadResponse {
 	error?: string;
 }
 
-export const markWhatsAppMessageRead = async (request: MarkWhatsAppMessageReadRequestParams): Promise<MarkMessageReadResponse> => {
-	const { WHATSAPP_GRAPH_API_TOKEN, WHATSAPP_GRAPH_API_URL } = process.env;
+export const markWhatsAppMessageRead = async (
+       request: MarkWhatsAppMessageReadRequestParams
+): Promise<MarkMessageReadResponse> => {
+       const {
+               WHATSAPP_GRAPH_API_TOKEN,
+               WHATSAPP_GRAPH_API_URL,
+               WHATSAPP_PHONE_ID,
+       } = process.env;
 	const { messageId } = request.body;
 
-	if (!WHATSAPP_GRAPH_API_TOKEN?.trim() || !WHATSAPP_GRAPH_API_URL?.trim()) {
-		throw new Error('Error: Missing or invalid configuration. Please contact the administrator.');
-	}
+       if (!WHATSAPP_GRAPH_API_TOKEN?.trim() || !WHATSAPP_GRAPH_API_URL?.trim() || !WHATSAPP_PHONE_ID?.trim()) {
+               throw new Error('Error: Missing or invalid configuration. Please contact the administrator.');
+       }
 
 	if (!messageId?.trim()) {
 		throw new Error('Error: Missing required parameter: messageId. Please provide the message ID.');
@@ -33,8 +39,8 @@ export const markWhatsAppMessageRead = async (request: MarkWhatsAppMessageReadRe
 	let error: string | undefined;
 
 	try {
-		await axios.post(
-			`${WHATSAPP_GRAPH_API_URL}/364023890121748/messages`,
+               await axios.post(
+                       `${WHATSAPP_GRAPH_API_URL}/${WHATSAPP_PHONE_ID}/messages`,
 			{
 				messaging_product: 'whatsapp',
 				status: 'read',

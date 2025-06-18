@@ -46,7 +46,7 @@ Create a `.env` file using `.env.example` as a reference. Required variables inc
 - `JWT_SECRET` – Secret used for JWT verification
 - Cloudinary credentials: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`
 - Azure speech: `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`
-- WhatsApp integration: `WHATSAPP_GRAPH_API_TOKEN`, `WHATSAPP_GRAPH_API_URL`, `WHATSAPP_ASSISTANT_PHONE_NUMBER`
+- WhatsApp integration: `WHATSAPP_GRAPH_API_TOKEN`, `WHATSAPP_GRAPH_API_URL`, `WHATSAPP_PHONE_ID`, `WHATSAPP_ASSISTANT_PHONE_NUMBER`
 - Twilio: `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_ASSISTANT_PHONE_NUMBER`
 - `GMAIL_MAILER_ASSISTANT_NAME` – Sender name for Gmail
 - `GOOGLE_API_KEY` – Key for Google APIs
